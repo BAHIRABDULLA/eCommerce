@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>Sign Up Page</title>
+  <style>
+    body {
+      background: url('./users/assets/images/wallpapper2.webp') center center fixed;
+
+
+      background-size: cover;
+    }
+
+    .signup-form {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+
+    .signup-heading {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .signup-button {
+      border-radius: 15px;
+    }
+
+    .signin-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container text-center mt-4">
+    <!-- Logo Space -->
+    <img src="/users/assets/images/logo.png" alt="Molla Logo" width="105" height="25"> 
+
+  </div>
+
+  <div class="container">
+    <% if(errorMessage&&errorMessage.length>0) { %>
+      <div class="alert alert-danger   "  role="alert">
+        <% errorMessage.forEach(function(error) { %>
+          <%= error %><br>  
+        <% }) %> 
+      </div>
+    <% } %>
+
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <!-- <form class="signup-form   "> -->
+          <form class="signup-form" action="/signup" onsubmit="return validateForm() " method="post">
+          <h2 class="signup-heading">Sign Up</h2>
+
+          <!-- Name Input -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"  name="name" placeholder="Enter your name" autocomplete="name" >
+            <small class="text-danger " id="nameError" style="display: none;">Enter your name</small>
+          </div>
+
+          <!-- Email Input -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" autocomplete="eamil" >
+          </div>
+
+          <!-- Phone Input -->
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="number" class="form-control" id="phone" name="phone"  placeholder="Enter your phone number" autocomplete="mobile" >
+            <SMAll class="text-danger" id="phoneError" style="display: none;">Phone number must be 10 digits</SMAll>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password"  name="password" placeholder="Enter your password" >
+            <small class="text-danger" id="passError" style="display: none;">Password cannot be empty</small>
+          </div>
+
+          <!-- Sign Up Button -->
+          <button type="submit" class="btn btn-warning   btn-block signup-button">Sign Up</button>
+
+          <!-- Sign In Link -->
+          <p class="signin-link">Already have an account? <a href="/signIn">Sign in</a></p>
+          <a href="/home">Back</a>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <% 
+    if (typeof message !=='undefined') {
+      %>
+        <p  style="color: hsl(120, 100%, 50%);"><%= message %></p>
+      <%
+      
+    }
+  %>
+  <script>
+   function validateForm(){
+    const name=document.getElementById('name').value.trim()
+    const phone=document.getElementById('phone').value.trim()
+    const pass=document.getElementById('password').value.trim()
+    const nameError=document.getElementById('nameError')
+    const phoneError=document.getElementById('phoneError')
+    const passError=document.getElementById('passError')
+
+    let isValid =true
+    if(name===''){
+      nameError.style.display='block'
+      isValid=false
+    }else{
+      nameError.style.display='none'
+    }
+    if(phone.length !==10 || isNaN(phone)){
+      phoneError.style.display='block'
+      isValid=false
+    }else{
+      phoneError.style.display='none'
+    }
+    if(pass==''){
+      passError.style.display='block'
+      isValid=false
+    }else{
+      passError.style.display='none'
+    }
+    return isValid
+   }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

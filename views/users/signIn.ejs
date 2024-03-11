@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>Sign In Page</title>
+  <style>
+    body {
+        background: url('./users/assets/images/wallpapper2.webp') center center fixed;
+      background-size: cover;
+    }
+
+    .signin-form {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 100px;
+    }
+
+    .signin-heading {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* .signin-button { */
+      /* border-radius: 5px; */
+      /* width: 150px; Adjust the width as needed */
+      /* margin: 0 auto; Center the button */
+    /* } */
+
+    .signin-button {
+      border-radius: 15px;
+    }
+
+    .forgot-password-link,
+    .signup-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container text-center mt-4">
+    <!-- Logo Space -->
+    <img src="your-logo.png" alt="Logo" class="mb-4">
+  </div>
+ 
+
+      <% if (message && message.length > 0) { %>
+      <div id="alertMessage" class="alert alert-primary " style="width: 50%; margin: auto;" role="alert">
+        <%= message %>
+    </div>
+    <script>
+      setTimeout(() => {
+        var alertMessage=document.getElementById('alertMessage')
+        alertMessage.style.display='none'
+      }, 3000);
+    </script>
+    <% } %>
+ 
+    
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form class="signin-form  " action="/signIn"  method="post">
+          <h2 class="signin-heading">Sign In</h2>
+
+          <!-- Email Input -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+          </div>
+
+          <!-- Sign In Button -->
+          <button type="submit" class="btn btn-warning btn-block signin-button">Sign In</button>
+
+          <!-- Forgot Password Link -->
+          <p class="forgot-password-link "><a href="/forgetPass">Forgot Password?</a></p>
+
+          <!-- Sign Up Link -->
+          <p class="signup-link     text-dark ">Don’t have an account? <a href="/signUp">Sign Up</a></p>
+          <a href="/home">Back</a>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

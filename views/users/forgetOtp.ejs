@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>OTP Verification</title>
+  <style>
+    body {
+      background: url('./users/assets/images/wallpapper2.webp') center center fixed;
+
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .otp-container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .verification-header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .otp-input {
+      width: 250px;
+      height: 50px;
+      font-size: 18px;
+      margin: 0 5px;
+      text-align: center;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+      color: #007bff;
+    }
+
+    .otp-input:focus {
+      outline: none;
+      border-color: #0056b3;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .resend-message {
+      margin-top: 20px;
+      text-align: center;
+      color: #000000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="otp-container">
+    <!-- Header -->
+    
+    <p id="msgId"><%= msg %></p>
+    <script>
+      setTimeout(() => {
+        let msgId=document.getElementById('msgId')
+        msgId.style.display='none'
+      }, 3000);
+      
+    </script>
+
+    <form action="/forgetOtp" method="post">
+    <div class="verification-header text-warning">Verification</div>
+
+    <!-- Single OTP Input Box -->
+    <div class="input-field d-flex justify-content-center">
+      <input type="text" class="form-control otp-input" name="otp" maxlength="4" pattern="\d{4}" required>
+    </div>
+  
+
+
+    <input type="hidden"  value="<%= userId %>"  name="userId">
+
+
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-warning  mt-4">Submit</button>
+    
+    <!-- Resend Message -->
+    <div class="resend-message">`
+      Haven't received the verification code? <br> 
+      
+      
+      <a href="/resendOtpPage?userId=<%= userId %>&email=<%= encodeURIComponent(email) %>" class="btn btn-dark text-white " style="color: #2707fc;">Resend</a>
+   
+    </div>
+  </form>
+  <a href="/signIn">Back</a>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

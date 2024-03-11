@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .top-bar {
+            background-color: #063c64;
+            padding: 10px;
+            position: relative;
+        }
+
+        .firsttop {
+            position: absolute;
+            top: 3px;
+            left: 10px;
+        }
+
+        .secondtop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .side-nav {
+            width: 250px;
+            height: 100%;
+            position: fixed;
+            top: 60px;
+            left: 0px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
+            transition: left 0.3s;
+        }
+
+        .side-nav a {
+            display: block;
+            padding: 15px;
+            color: #063c64;
+            text-decoration: none;
+        }
+
+        .side-nav a i {
+            margin-right: 10px;
+        }
+
+        .side-nav a:hover {
+            background-color: #063c64;
+            color: #ffffff;
+            transition: 0.3s;
+        }
+
+        .side-nav .active {
+            background-color: #063c64;
+            color: #ffffff;
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-input {
+            border-radius: 15px;
+            padding: 8px;
+            border: 1px solid #063c64;
+            width: 60%;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .add-category-btn {
+            border: none;
+            background-color: #063c64;
+            color: #ffffff;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .category-table {
+            margin-top: 20px;
+        }
+
+        .category-table th, .category-table td {
+            text-align: center;
+        }
+
+        .category-table .action-btn {
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+
+        .category-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 999;
+            width: 60%;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .modal-footer button {
+            margin: 0 10px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .side-nav {
+                width: 80px;
+            }
+
+            .content {
+                margin-left: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="firsttop"><p class="font-weight-bold">Admin Panel</p></div>
+        <div class="secondtop"><img class="logo" src="your-logo-path.png" alt="Logo"></div>        
+    </div>
+    <div    class="side-nav" id="sideNav">
+    <div >
+        <a href="#" ><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+        <a href="#"><i class="fas fa-users"></i> <span>Customers</span></a>
+        <a href="#" class="active"><i class="fas fa-list"></i> <span>Categories</span></a>
+        <a href="#"><i class="fas fa-box"></i> <span>Products</span></a>
+        <a href="#"><i class="fas fa-shopping-cart"></i> <span>Orders</span></a>
+        <a href="#"><i class="fas fa-undo"></i> <span>Return Request</span></a>
+        <a href="#"><i class="fas fa-percent"></i> <span>Coupon</span></a>
+        <a href="#"><i class="fas fa-image"></i> <span>Banner</span></a>
+        <a href="#"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+    </div>
+    <div class="toggle-nav" onclick="toggleNav()">
+        <i class="fas fa-bars"></i>
+    </div>
+    </div>
+
+    <div class="content">
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="add-category-btn" data-toggle="modal" data-target="#addCategoryModal">Add Category</button>
+        </div>
+
+        <table class="table mt-4 category-table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Sl No</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Add your category data rows here -->
+                <tr>
+                    <th scope="row">1</th>
+                    <td>001</td>
+                    <td>Category 1</td>
+                    <td>
+                        <button class="btn btn-outline-info action-btn" data-toggle="modal" data-target="#editCategoryModal">Edit</button>
+                        <button class="btn btn-outline-danger action-btn" onclick="toggleCategoryStatus()">Listed</button>
+                    </td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+
+        <!-- Add Category Modal -->
+        <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Add your add category form elements here -->
+                        <div class="form-group">
+                            <label for="categoryName">Category Name</label>
+                            <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryDescription">Category Description</label>
+                            <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Category Modal -->
+        <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Add your edit category form elements here -->
+                        <div class="form-group">
+                            <label for="editCategoryName">Category Name</label>
+                            <input type="text" class="form-control" id="editCategoryName" placeholder="Enter category name">
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick="deleteCategory()">Delete Category</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleNav() {
+            const sideNav = document.getElementById("sideNav");
+            sideNav.style.left = sideNav.style.left === "0px" ? "-250px" : "0" ;
+        }
+
+        function toggleCategoryStatus() {
+            // Add logic to toggle category status (Listed/Unlisted)
+            alert("Category status toggled");
+        }
+
+        function deleteCategory() {
+            // Add logic to delete category
+            alert("Category deleted");
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

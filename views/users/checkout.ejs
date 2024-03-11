@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/checkout.html  22 Nov 2019 09:55:06 GMT -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/users/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/users/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/users/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/users/assets/images/icons/site.html">
+    <link rel="mask-icon" href="/users/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/users/assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/users/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/users/assets/css/bootstrap.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/users/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        .form-check-label {
+            padding-left: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+
+                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist
+                                            <span>(3)</span></a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="index.html" class="logo">
+                            <img src="/users/assets/images/logo.png" alt="Molla Logo" width="105" height="25">
+                        </a>
+
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="/home" class="sf-with-ul">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/shop" class="sf-with-ul">Shop</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="sf-with-ul">Pages</a>
+
+                                    <ul>
+                                        <li>
+                                            <a href="about.html" class="sf-with-ul">About</a>
+
+
+                                        </li>
+                                        <li>
+                                            <a href="contact.html" class="sf-with-ul">Contact</a>
+
+
+                                        </li>
+                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="faq.html">FAQs</a></li>
+                                        <li><a href="404.html">Error 404</a></li>
+                                        <li><a href="coming-soon.html">Coming Soon</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="" class="sf-with-ul">Profile</a>
+
+                                    <ul>
+                                        <li><a href="/dashboard">My Account</a></li>
+                                        <li><a href="">Typography</a></li>
+                                        <li><a href="">Titles</a></li>
+
+                                    </ul>
+                                </li>
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <div class="header-search">
+                            <a href="#" class="search-toggle" role="button" title="Search"><i
+                                    class="icon-search"></i></a>
+                            <form action="#" method="get">
+                                <div class="header-search-wrapper">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
+                                        required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+                        <div class="dropdown compare-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static"
+                                title="Compare Products" aria-label="Compare Products">
+                                <i class="icon-random"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <ul class="compare-products">
+                                    <li class="compare-product">
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
+                                        <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a>
+                                        </h4>
+                                    </li>
+                                    <li class="compare-product">
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
+                                        <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a>
+                                        </h4>
+                                    </li>
+                                </ul>
+
+                                <div class="compare-actions">
+                                    <a href="#" class="action-link">Clear All</a>
+                                    <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i
+                                            class="icon-long-arrow-right"></i></a>
+                                </div>
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .compare-dropdown -->
+
+                        <div class="dropdown cart-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count">2</span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="product.html">Beige knitted elastic runner shoes</a>
+                                            </h4>
+
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty">1</span>
+                                                x $84.00
+                                            </span>
+                                        </div><!-- End .product-cart-details -->
+
+                                        <figure class="product-image-container">
+                                            <a href="product.html" class="product-image">
+                                                <img src="/users/assets/images/products/cart/product-1.jpg"
+                                                    alt="product">
+                                            </a>
+                                        </figure>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
+                                    </div><!-- End .product -->
+
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="product.html">Blue utility pinafore denim dress</a>
+                                            </h4>
+
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty">1</span>
+                                                x $76.00
+                                            </span>
+                                        </div><!-- End .product-cart-details -->
+
+                                        <figure class="product-image-container">
+                                            <a href="product.html" class="product-image">
+                                                <img src="/users/assets/images/products/cart/product-2.jpg"
+                                                    alt="product">
+                                            </a>
+                                        </figure>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
+                                    </div><!-- End .product -->
+                                </div><!-- End .cart-product -->
+
+                                <div class="dropdown-cart-total">
+                                    <span>Total</span>
+
+                                    <span class="cart-total-price">$160.00</span>
+                                </div><!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    <a href="cart.html" class="btn btn-primary">View Cart</a>
+                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i
+                                            class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .dropdown-cart-total -->
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+
+        <main class="main">
+            <div class="page-header text-center" style="background-image: url('/users/assets/images/istockphoto.webp')">
+                <div class="container">
+                    <h1 class="page-title">Checkout<span>Shop</span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="checkout">
+                    <div class="container">
+                        <div class="checkout-discount">
+                            <form action="#">
+                                <input type="text" class="form-control" required id="checkout-discount-input">
+                                <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click
+                                        here to enter your code</span></label>
+                            </form>
+                        </div><!-- End .checkout-discount -->
+                        <!-- <div class="input-group  col-lg-6">
+                            <input type="text" class="form-control" required
+                                placeholder="coupon code">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary-2" type="submit"><i
+                                            class="icon-long-arrow-right"></i></button>
+                                </div>
+                        </div> -->
+
+                        <!-- <form action="#"> -->
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h2 class="checkout-title">Shipping Address</h2>
+
+                                <!-- userAddress.address.forEach(address=> {  -->
+                                <% if(userAddress.address.length> 0) { %>
+                                    <div id="selectedAddress">
+                                        <strong>
+                                            <%= userAddress.address[0].name %> &nbsp; <%= userAddress.address[0].phone%>
+                                        </strong><br>
+                                        <%= userAddress.address[0].streetAddress %><br>
+                                            <%= userAddress.address[0].city %>, <%= userAddress.address[0].state %>
+                                                    <%= userAddress.address[0].pincode %>
+                                                        <%= userAddress.address[0].email %>
+                                                            <%= userAddress.address[0].landmark %>
+                                                                <%= userAddress.address[0].phone2 %><br>
+
+                                    </div>
+                                    <button class="btn-primary rounded-pill" data-toggle="modal"
+                                        data-target="#addressModal">Change</button>
+                                <% } else { %>
+                                    <p>No Shipping address found</p>
+                                <% } %>
+                                            <br><br>
+                                            <% if(userAddress.address.length > 3) { %>
+                                            <div class="row ">
+                                                <div class="container">
+                                                    <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                        data-target="#shippingAddressCollapse" aria-expanded="false"
+                                                        aria-controls="shippingAddressCollapse">
+                                                        Add a New Address
+                                                    </button>
+                                                    <div class="collapse" id="shippingAddressCollapse">
+                                                        <div class="card card-body">
+                                                            <form action="/address" method="post">
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6     col-lg-5">
+                                                                        <label for="inputName">Name</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="inputName" name="name"
+                                                                            placeholder="Enter your name">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6  col-lg-5 ">
+                                                                        <label for="inputPhone">Phone</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="inputPhone" name="phone"
+                                                                            placeholder="Enter your phone">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6     col-lg-5">
+                                                                        <label for="inputPincode">Pincode</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="inputPincode" name="pincode"
+                                                                            placeholder="Enter your pincode">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6     col-lg-5">
+                                                                        <label for="inputEmail">Email</label>
+                                                                        <input type="email" class="form-control"
+                                                                            id="inputEmail" name="email"
+                                                                            placeholder="Enter your email">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group  col-lg-10">
+                                                                    <label for="inputAddress">Address (Area and
+                                                                        Street)</label>
+                                                                    <textarea class="form-control" id="inputAddress"
+                                                                        rows="2" name="streetAddress"
+                                                                        placeholder="Enter your address"></textarea>
+                                                                </div>
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6     col-lg-5">
+                                                                        <label
+                                                                            for="inputLocalityDistrict">City/District/Town</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="inputLocalityDistrict" name="city"
+                                                                            placeholder="Enter your city/district/town">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6   col-lg-5">
+                                                                        <label for="inputState">State</label>
+                                                                        <select id="inputState" name="state"
+                                                                            class="form-control">
+                                                                            <option selected>Select your state</option>
+                                                                            <!-- Add options for all 28 states of India -->
+                                                                            <option>Andhra Pradesh</option>
+                                                                            <option>Arunachal Pradesh</option>
+                                                                            <option>Assam</option>
+                                                                            <option>Bihar</option>
+                                                                            <option>Chhattisgarh</option>
+                                                                            <option>Goa</option>
+                                                                            <option>Gujarat</option>
+                                                                            <option>Haryana</option>
+                                                                            <option>Himachal Pradesh</option>
+                                                                            <option>Jharkhand </option>
+                                                                            <option>Karnataka</option>
+                                                                            <option>Kerala</option>
+                                                                            <option>Madhya Pradesh</option>
+                                                                            <option>Maharashtra</option>
+                                                                            <option>Manipur</option>
+                                                                            <option>Meghalaya</option>
+                                                                            <option>Mizoram</option>
+                                                                            <option>Nagaland</option>
+                                                                            <option>Odisha</option>
+                                                                            <option>Punjab</option>
+                                                                            <option>Rajasthan</option>
+                                                                            <option>Sikkim</option>
+                                                                            <option>Tamil Nadu</option>
+                                                                            <option>Telangana</option>
+                                                                            <option>Tripura</option>
+                                                                            <option>Uttar Pradesh</option>
+                                                                            <option>Uttarakhand</option>
+                                                                            <option>West Bengal</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6   col-lg-5">
+                                                                        <label for="inputLandmark">Landmark
+                                                                            (Optional)</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="inputLandmark" name="landmark"
+                                                                            placeholder="Enter your landmark">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6   col-lg-5">
+                                                                        <label for="inputAlternatePhone">Alternate Phone
+                                                                            (Optional)</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="inputAlternatePhone" name="phone2"
+                                                                            placeholder="Enter your alternate phone">
+                                                                    </div>
+                                                                </div>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    data-toggle="collapse"
+                                                                    data-target="#shippingAddressCollapse"
+                                                                    aria-expanded="false"
+                                                                    aria-controls="shippingAddressCollapse">Save</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-toggle="collapse"
+                                                                    data-target="#shippingAddressCollapse"
+                                                                    aria-expanded="false"
+                                                                    aria-controls="shippingAddressCollapse">Cancel</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+
+
+
+
+                                            <br><br>
+                                            <label>Order notes (optional)</label>
+                                            <textarea class="form-control" cols="30" rows="4"
+                                                placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                            </div>
+                            <aside class="col-lg-4">
+                                <div class="summary">
+                                    <h3 class="summary-title">Your Order</h3>
+
+                                    <table class="table table-summary">
+
+                                        <thead>
+                                            <tr>
+                                                  <th>Product</th>
+
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <% cart.products.forEach((product,index)=>{ %>
+                                                <tr>
+                                                    <td hidden><%= product.productId.quantity %></td>
+                                                    <td>
+                                                        <%= product.productId.name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= product.totalPrice %>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+
+                                                    <!-- <tr>
+		                							<td><a href="#">Blue utility pinafore denimdress</a></td>
+		                							<td>$76,00</td>
+		                						</tr> -->
+                                                    <tr class="summary-subtotal">
+                                                        <td>Subtotal:</td>
+                                                        <td>₹<%= subtotal %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Shipping:</td>
+                                                        <% if(deliveryCharges===0) { %>
+                                                            <td>Free shipping</td>
+                                                            <% }else{ %>
+                                                                <td>₹<%= deliveryCharges %>
+                                                                </td>
+                                                                <% } %>
+                                                    </tr>
+                                                    <tr class="summary-total">
+                                                        <td>Total Amount:</td>
+                                                        <td>₹<%= totalAmount %>
+                                                        </td>
+
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="accordion-summary" id="accordion-payment">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="paymentMethod"
+                                                id="Cash on Delivery" checked>
+                                            <label class="form-check-label" for="Cash on Delivery">
+                                                Cash on Delivery
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="paymentMethod"
+                                                id="wallet">
+                                            <label class="form-check-label" for="wallet">
+                                                Wallet
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="paymentMethod"
+                                                id="onlinePayment">
+                                            <label class="form-check-label" for="onlinePayment">
+                                                RazorPay
+                                                <img src="/users/assets/images/payments-summary.png"
+                                                    alt="payments cards">
+
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
+                                        <span class="btn-text">Place Order</span>
+                                        <span class="btn-hover-text">Proceed to Checkout</span>
+                                    </button>
+                                </div>
+                            </aside>
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addressModalLabel">Select Shipping Address</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <% userAddress.address.forEach(address=> { %>
+                                <li class="list-group-item">
+                                    <strong>
+                                        <%= address.name %> &nbsp; <%= address.phone %>
+                                    </strong><br>
+                                    <%= address.streetAddress %>...
+                                        <!-- Add more address details here if needed -->
+                                        <button class="btn btn-primary btn-sm float-right"
+                                            onclick="selectAddress('<%= address._id %>' , <%= JSON.stringify(userAddress) %>)">Select</button>
+                                </li>
+                                <% }) %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <footer class="footer">
+            <div class="footer-middle">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget widget-about">
+                                <img src="/users/assets/images/logo.png" class="footer-logo" alt="Footer Logo"
+                                    width="105" height="25">
+                                <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
+                                    magna eros eu erat. </p>
+
+                                <div class="social-icons">
+                                    <a href="#" class="social-icon" target="_blank" title="Facebook"><i
+                                            class="icon-facebook-f"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Twitter"><i
+                                            class="icon-twitter"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Instagram"><i
+                                            class="icon-instagram"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Youtube"><i
+                                            class="icon-youtube"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+                                            class="icon-pinterest"></i></a>
+                                </div><!-- End .soial-icons -->
+                            </div><!-- End .widget about-widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    <li><a href="about.html">About Molla</a></li>
+                                    <li><a href="#">How to shop on Molla</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="contact.html">Contact us</a></li>
+                                    <li><a href="login.html">Log in</a></li>
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    <li><a href="#">Payment Methods</a></li>
+                                    <li><a href="#">Money-back guarantee!</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Shipping</a></li>
+                                    <li><a href="#">Terms and conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    <li><a href="#">Sign In</a></li>
+                                    <li><a href="cart.html">View Cart</a></li>
+                                    <li><a href="#">My Wishlist</a></li>
+                                    <li><a href="#">Track My Order</a></li>
+                                    <li><a href="#">Help</a></li>
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-middle -->
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+                    <!-- End .footer-copyright -->
+                    <figure class="footer-payments">
+                        <img src="/users/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                    </figure><!-- End .footer-payments -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+            <form action="#" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search"
+                    placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </form>
+
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    <li class="active">
+                        <a href="/home">Home</a>
+
+
+                    </li>
+                    <li>
+                        <a href="/shop">Shop</a>
+
+                    </li>
+
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul>
+                            <li>
+                                <a href="about.html">About</a>
+
+
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+
+
+                            </li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                            <li><a href="404.html">Error 404</a></li>
+                            <li><a href="coming-soon.html">Coming Soon</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="elements-list.html">Elements</a>
+                        <ul>
+                            <li><a href="/dashboard">My Account</a></li>
+                            <li><a href="">Typography</a></li>
+                            <li><a href="">Titles</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </nav><!-- End .mobile-nav -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+
+
+
+    <script>
+        let selectedAddressId
+        function selectAddress(addressId, userAddress) {
+            console.log('Selected address:', addressId);
+
+            selectedAddressId=addressId
+
+            const selectedAddressElement = document.getElementById('selectedAddress');
+            selectedAddressElement.innerHTML = '';
+            const selectedAddress = userAddress.address.find(address => address._id === addressId);
+            renderSelectedAddress(selectedAddress);
+            $('#addressModal').modal('hide');
+        }
+
+        function renderSelectedAddress(address) {
+            const selectedAddressElement = document.getElementById('selectedAddress');
+            selectedAddressElement.innerHTML = `
+                <strong>${address.name} &nbsp; ${address.phone}</strong><br>
+                ${address.streetAddress}<br>
+                ${address.city}, ${address.state} ${address.pincode}<br>
+                ${address.email}<br>
+                ${address.landmark}<br>
+                ${address.phone2}<br>
+            `;
+        }
+
+
+        document.getElementById('placeOrderBtn').addEventListener('click', async () => {
+
+            try {
+
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
+            const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
+            // const selectedAddressId=document.getElementById('selectedAddress').dataset.addressId;
+
+            // const selectedAddressId = document.getElementById('selectedAddress').innerText.trim().split('\n')[0];
+           
+      
+          
+            console.log(selectedAddressId, 'itss selecdt address id ');
+            const orderData = {
+                userId: '<%= user_id %>',
+                totalAmount,
+                orderUserDetails:selectedAddressId,
+                paymentMethod: 'Cash on Delivery',
+            };
+
+            
+                const response = await fetch('/placeOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Order Placed Successfully',
+                        icon: 'success'
+                    });
+                } else {
+                    throw new Error('Failed to place order');
+                }
+            } catch (error) {
+                console.error('Error placing order', error);
+                Swal.fire({
+                    title: 'Failed to Place Order',
+                    text: 'Please try again later',
+                    icon: 'error'
+                });
+            }
+        });
+
+
+
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Plugins JS File -->
+    <script src="/users/assets/js/jquery.min.js"></script>
+    <script src="/users/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/users/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/users/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/users/assets/js/superfish.min.js"></script>
+    <script src="/users/assets/js/owl.carousel.min.js"></script>
+    <!-- Main JS File -->
+    <script src="/users/assets/js/main.js"></script>
+</body>
+
+
+<!-- molla/checkout.html  22 Nov 2019 09:55:06 GMT -->
+
+</html>

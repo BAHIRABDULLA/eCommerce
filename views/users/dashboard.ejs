@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/users/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/users/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/users/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/users/assets/images/icons/site.html">
+    <link rel="mask-icon" href="/users/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/users/assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/users/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/users/assets/css/bootstrap.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/users/assets/css/style.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10"> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<style>
+   .order-details {
+    margin-bottom: 20px;
+}
+
+.product {
+    display: flex;
+}
+
+.product-image {
+    margin-right: 20px;
+ 
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+
+.product-details {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.product-details p {
+    margin: 5px 0;
+}
+
+</style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    
+                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="index.html" class="logo">
+                            <img src="/users/assets/images/logo.png" alt="Molla Logo" width="105" height="25">
+                        </a>
+
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container ">
+                                    <a href="/home" class="sf-with-ul">Home</a>
+
+                                    
+                                </li>
+                                <li>
+                                    <a href="/shop" class="sf-with-ul">Shop</a>
+
+                                    
+                                </li>
+                                
+                                <li>
+                                    <a href="#" class="sf-with-ul">Pages</a>
+
+                                    <ul>
+                                        <li>
+                                            <a href="about.html" class="sf-with-ul">About</a>
+
+                                            <ul>
+                                                <li><a href="about.html">About 01</a></li>
+                                                <li><a href="about-2.html">About 02</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="contact.html" class="sf-with-ul">Contact</a>
+
+                                            <ul>
+                                                <li><a href="contact.html">Contact 01</a></li>
+                                                <li><a href="contact-2.html">Contact 02</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="faq.html">FAQs</a></li>
+                                        <li><a href="404.html">Error 404</a></li>
+                                        <li><a href="coming-soon.html">Coming Soon</a></li>
+                                    </ul>
+                                </li>
+                                
+                                <li     class="active ">
+                                    <a href="elements-list.html" class="sf-with-ul">Profile</a>
+
+                                    <ul>
+                                        <li><a href="/dashboard">My Account</a></li>
+                                        <li><a href="">Wishlist</a></li>
+                                        <li><a href="">Coupon</a></li>
+                                     
+                                </li>
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <div class="header-search">
+                            <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
+                            <form action="#" method="get">
+                                <div class="header-search-wrapper">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+                        <div class="dropdown compare-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
+                                <i class="icon-random"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <ul class="compare-products">
+                                    <li class="compare-product">
+                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a></h4>
+                                    </li>
+                                    <li class="compare-product">
+                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
+                                    </li>
+                                </ul>
+
+                                <div class="compare-actions">
+                                    <a href="#" class="action-link">Clear All</a>
+                                    <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
+                                </div>
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .compare-dropdown -->
+
+                        <div class="dropdown cart-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count">2</span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="product.html">Beige knitted elastic runner shoes</a>
+                                            </h4>
+
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty">1</span>
+                                                x $84.00
+                                            </span>
+                                        </div><!-- End .product-cart-details -->
+
+                                        <figure class="product-image-container">
+                                            <a href="product.html" class="product-image">
+                                                <img src="/users/assets/images/products/cart/product-1.jpg" alt="product">
+                                            </a>
+                                        </figure>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                    </div><!-- End .product -->
+
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="product.html">Blue utility pinafore denim dress</a>
+                                            </h4>
+
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty">1</span>
+                                                x $76.00
+                                            </span>
+                                        </div><!-- End .product-cart-details -->
+
+                                        <figure class="product-image-container">
+                                            <a href="product.html" class="product-image">
+                                                <img src="/users/assets/images/products/cart/product-2.jpg" alt="product">
+                                            </a>
+                                        </figure>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                    </div><!-- End .product -->
+                                </div><!-- End .cart-product -->
+
+                                <div class="dropdown-cart-total">
+                                    <span>Total</span>
+
+                                    <span class="cart-total-price">$160.00</span>
+                                </div><!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    <a href="cart.html" class="btn btn-primary">View Cart</a>
+                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .dropdown-cart-total -->
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+
+        <main class="main">
+            <div class="page-header text-center" style="background-image: url('/users/assets/images/istockphoto.webp')">
+
+        		<div class="container">
+        			<h1 class="page-title">My Account</h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <!-- <li class="breadcrumb-item"><a href="#">Shop</a></li> -->
+                        <li class="breadcrumb-item ">Profile</li>
+                        <li class="breadcrumb-item active" aria-current="page">My Account</li>
+
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="dashboard">
+	                <div class="container">
+	                	<div class="row">
+	                		<aside class="col-md-4 col-lg-3">
+	                			<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+								    <li class="nav-item">
+								        <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+								    </li>
+								    
+								    <li class="nav-item">
+								        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" href="#">Sign Out</a>
+								    </li>
+								</ul>
+	                		</aside><!-- End .col-lg-3 -->
+
+	                		<div class="col-md-8 col-lg-9">
+	                			<div class="tab-content">
+								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+                                        
+								    	<p>Hello <span class="font-weight-normal text-dark"><% if(users) { %><%= users.name %><% }else{ %> User <% } %></span>  
+                                            <!-- (not <span class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>)  -->
+								    	<br>
+								    	From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
+								    </div><!-- .End .tab-pane -->
+
+								    
+
+                                    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+                                        <h2>Orders</h2>
+                                        <% if (orders.length === 0) { %>
+                                            <p>No orders have been made yet.</p>
+                                            <a href="/shop" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+                                        <% } else { %>
+                                            <div class="card card-body">
+                                                <% orders.forEach((order, index) => { %>
+                                                    <div class="order-details">
+                                                        <% order.products.forEach(product => { %>
+                                                            <div class="product">
+                                                                <div class="Product-image">
+                                                                    <img src="/uploads/<%= product.productId.image[0] %>" alt="<%= product.name %>" style="width: 150px; height: 150px;">
+                                                                </div>
+                                                                <div class="product-info">
+                                                                    <p class="product-name"><%= product.name %></p>
+                                                                    <p class="product-quantity">Quantity: <%= product.quantity %></p>
+                                                                    <p class="product-price">Price: <%= product.price %></p>
+                                                                </div>
+                                                                <div class="product-details">
+                                                                    <p class="order-date">Order Date: <%= order.orderDate.toDateString() %></p>
+                                                                    <p class="order-status  btn-dark text-center  ">Status: <%= order.status %></p>
+                                                                    <a href="#" class="btn btn-primary cancel-link" data-order-id="<%= order._id %>">Cancel Order</a>
+                                                                </div>
+                                                            </div>
+                                                        <% }) %>
+                                                    </div>
+                                                <% }) %>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                    
+                                    
+                                    
+                                   
+                                      
+                                    
+                                    
+                                    
+                                    
+                                    
+
+								    
+
+                                
+                                    
+								    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+
+                                        <div class="container">
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#shippingAddressCollapse" aria-expanded="false" aria-controls="shippingAddressCollapse">
+                                                Add a New Address
+                                            </button>
+                                            <div class="collapse" id="shippingAddressCollapse">
+                                                <div class="card card-body">
+                                                    <form  action="/address"   method="post" >
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6     col-lg-5">
+                                                                <label for="inputName">Name</label>
+                                                                <input type="text" class="form-control" id="inputName" name="name" placeholder="Enter your name">
+                                                            </div>
+                                                            <div class="form-group col-md-6  col-lg-5 ">
+                                                                <label for="inputPhone">Phone</label>
+                                                                <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="Enter your phone">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6     col-lg-5">
+                                                                <label for="inputPincode">Pincode</label>
+                                                                <input type="text" class="form-control" id="inputPincode" name="pincode" placeholder="Enter your pincode">
+                                                            </div>
+                                                            <div class="form-group col-md-6     col-lg-5">
+                                                                <label for="inputEmail">Email</label>
+                                                                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Enter your email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group  col-lg-10">
+                                                            <label for="inputAddress">Address (Area and Street)</label>
+                                                            <textarea class="form-control" id="inputAddress" rows="2"  name="streetAddress" placeholder="Enter your address"></textarea>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6     col-lg-5">
+                                                                <label for="inputLocalityDistrict">City/District/Town</label>
+                                                                <input type="text" class="form-control" id="inputLocalityDistrict" name="city"  placeholder="Enter your city/district/town">
+                                                            </div>
+                                                            <div class="form-group col-md-6   col-lg-5">
+                                                                <label for="inputState">State</label>
+                                                                <select id="inputState" name="state" class="form-control">
+                                                                    <option selected>Select your state</option>
+                                                                    <!-- Add options for all 28 states of India -->
+                                                                    <option>Andhra Pradesh</option>
+                                                                    <option>Arunachal Pradesh</option>
+                                                                    <option>Assam</option>
+                                                                    <option>Bihar</option>
+                                                                    <option>Chhattisgarh</option>
+                                                                    <option>Goa</option>
+                                                                    <option>Gujarat</option>
+                                                                    <option>Haryana</option>
+                                                                    <option>Himachal Pradesh</option>
+                                                                    <option>Jharkhand </option>
+                                                                    <option>Karnataka</option>
+                                                                    <option>Kerala</option>
+                                                                    <option>Madhya Pradesh</option>
+                                                                    <option>Maharashtra</option>
+                                                                    <option>Manipur</option>
+                                                                    <option>Meghalaya</option>
+                                                                    <option>Mizoram</option>
+                                                                    <option>Nagaland</option>
+                                                                    <option>Odisha</option>
+                                                                    <option>Punjab</option>
+                                                                    <option>Rajasthan</option>
+                                                                    <option>Sikkim</option>
+                                                                    <option>Tamil Nadu</option>
+                                                                    <option>Telangana</option>
+                                                                    <option>Tripura</option>
+                                                                    <option>Uttar Pradesh</option>
+                                                                    <option>Uttarakhand</option>
+                                                                    <option>West Bengal</option>
+
+
+                                                                    <!-- Add more options here -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6   col-lg-5">
+                                                                <label for="inputLandmark">Landmark (Optional)</label>
+                                                                <input type="text" class="form-control" id="inputLandmark" name="landmark" placeholder="Enter your landmark">
+                                                            </div>
+                                                            <div class="form-group col-md-6   col-lg-5">
+                                                                <label for="inputAlternatePhone">Alternate Phone (Optional)</label>
+                                                                <input type="text" class="form-control" id="inputAlternatePhone" name="phone2" placeholder="Enter your alternate phone">
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary"   data-toggle="collapse" data-target="#shippingAddressCollapse" aria-expanded="false" aria-controls="shippingAddressCollapse">Save</button>
+                                                        <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#shippingAddressCollapse" aria-expanded="false" aria-controls="shippingAddressCollapse">Cancel</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+								    	<p>The following addresses will be used on the checkout page by default.</p>
+
+                                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shippingAddressModal">
+                                            Add a New Address
+                                          </button> -->
+
+								    	<div class="row">
+								    		<div class="col-lg-12">
+								    			<div class="card card-dashboard">
+								    				<div class="card-body">
+								    					<!-- <h3 class="card-title">Manage Address</h3> -->
+                                                        <% if (userAddress && userAddress.address.length > 0) { %>
+                                                            <% userAddress.address.forEach(address => { %>
+                                                                <p>
+                                                                    <strong><%= address.name %> &nbsp; <%= address.phone %></strong><br>
+                                                                    <%= address.streetAddress %><br>
+                                                                    <%= address.city %>, <%= address.state %> <%= address.pincode %>  <%= address.email %> 
+                                                                     <%= address.landmark %>  <%= address.phone2 %><br>
+                                                                    <a href="#"  onclick="showEditForm('<%= address._id %>')">Edit <i class="icon-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <a href="#" onclick="confirmDelete('<%= address._id %>')">Delete <ion-icon name="trash-outline"></ion-icon></a>
+                                                                </p>
+
+                                                                <div class="collapse"  id="editAddressForm<%= address._id %>">
+                                                                    <div class="card  card-body ">
+                                                                        <form action="/address/<%= address._id %>"  method="post">
+                                                                            <div class="form-group">
+                                                                                <label for="editName<%= address._id %>">Name</label>
+                                                                                <input type="text" class="form-control" id="editName<%= address._id %>" name="name" value="<%= address.name %>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="editPhone<%= address._id %>">Phone</label>
+                                                                                <input type="number" class="form-control" id="editPhone<%= address._id %>" name="phone" value="<%= address.phone %>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="editPincode<%= address._id %>">Pincode</label>
+                                                                                <input type="number" class="form-control" id="editPincode<%= address._id %>" name="pincode" value="<%= address.name %>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="editStreetAddress<%= address._id %>">Address</label>
+                                                                                <input type="text" class="form-control " id="editStreetAddress<%= address.streetAddress %>" name="streetAddress" value="<%= address.streetAddress %>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="editCity<%= address._id %>">City</label>
+                                                                                <input type="text" class="form-control " id="editCity<%= address.city %>" name="city" value="<%= address.city %>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="editEmail<%= address._id %>">Email</label>
+                                                                                <input type="email" class="form-control " id="editEmail<%= address.email %>" name="email" value="<%= address.email %>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="editLandmark<%= address._id %>">Landmark</label>
+                                                                                <input type="text" class="form-control " id="editLandmark<%= address.landmard %>" name="landmark" value="<%= address.landmark %>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="editPhone2<%= address._id %>">Phone2</label>
+                                                                                <input type="number" class="form-control " id="editPhone2<%= address.phone2 %>" name="phone2" value="<%= address.phone2 %>">
+                                                                            </div>
+
+                                                                            <br><br>
+                                                                            <button type="submit" class="btn btn-primary ">Save</button>
+                                                                            <button type="button" class="btn btn-secondary" onclick="cancelEdit('<%= address._id %>')">Cancel</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            <% }); %>
+                                                        <% } else { %>
+                                                            <p>No addresses found</p>
+                                                        <% } %>
+                                                        
+                                                        
+								    				</div>
+								    			</div>
+								    		</div>	
+								    	</div>
+								    </div>
+
+								    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+								    	<form action="#">
+			                				<div class="row">
+			                					<div class="col-sm-6">
+			                						<label>First Name *</label>
+			                						<input type="text" class="form-control" required>
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-6">
+			                						<label>Last Name *</label>
+			                						<input type="text" class="form-control" required>
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+		            						<label>Display Name *</label>
+		            						<input type="text" class="form-control" required>
+		            						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+
+		                					<label>Email address *</label>
+		        							<input type="email" class="form-control" required>
+
+		            						<label>Current password (leave blank to leave unchanged)</label>
+		            						<input type="password" class="form-control">
+
+		            						<label>New password (leave blank to leave unchanged)</label>
+		            						<input type="password" class="form-control">
+
+		            						<label>Confirm new password</label>
+		            						<input type="password" class="form-control mb-2">
+
+		                					<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>SAVE CHANGES</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+			                			</form>
+								    </div><!-- .End .tab-pane -->
+								</div>
+	                		</div><!-- End .col-lg-9 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+        <footer class="footer">
+        	<div class="footer-middle">
+	            <div class="container">
+	            	<div class="row">
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget widget-about">
+	            				<img src="/users/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+	            				<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+
+	            				<div class="social-icons">
+	            					<a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+	            				</div><!-- End .soial-icons -->
+	            			</div><!-- End .widget about-widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="about.html">About Molla</a></li>
+	            					<li><a href="#">How to shop on Molla</a></li>
+	            					<li><a href="#">FAQ</a></li>
+	            					<li><a href="contact.html">Contact us</a></li>
+	            					<li><a href="login.html">Log in</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Payment Methods</a></li>
+	            					<li><a href="#">Money-back guarantee!</a></li>
+	            					<li><a href="#">Returns</a></li>
+	            					<li><a href="#">Shipping</a></li>
+	            					<li><a href="#">Terms and conditions</a></li>
+	            					<li><a href="#">Privacy Policy</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Sign In</a></li>
+	            					<li><a href="cart.html">View Cart</a></li>
+	            					<li><a href="#">My Wishlist</a></li>
+	            					<li><a href="#">Track My Order</a></li>
+	            					<li><a href="#">Help</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+	            	</div><!-- End .row -->
+	            </div><!-- End .container -->
+	        </div><!-- End .footer-middle -->
+
+	        <div class="footer-bottom">
+	        	<div class="container">
+	        		<p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+	        		<figure class="footer-payments">
+	        			<img src="/users/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+	        		</figure><!-- End .footer-payments -->
+	        	</div><!-- End .container -->
+	        </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+            <form action="#" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </form>
+            
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    <li class="active">
+                        <a href="/home">Home</a>
+                    </li>
+                    <li>
+                        <a href="/shop">Shop</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul>
+                            <li>
+                                <a href="about.html">About</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+                            </li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                            <li><a href="404.html">Error 404</a></li>
+                            <li><a href="coming-soon.html">Coming Soon</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="elements-list.html">Profile</a>
+                        <ul>
+                            <li><a href="/dashboard">My Account</a></li>
+                            <li><a href="elements-typography.html">Typography</a></li>
+                            <li><a href="elements-titles.html">Titles</a></li>
+                    
+                        </ul>
+                    </li>
+                </ul>
+            </nav><!-- End .mobile-nav -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+    <!-- Sign in / Register Modal -->
+    
+    <!-- <script>
+        function deleteAddress(addressId){
+            fetch(`/address/${addressId}`,{
+                method:'DELETE'
+                
+            })
+            .then(res=>res.json())
+            
+            .then(response=>{
+                if(response.ok){
+                    window.location.reload()
+                }else{
+                    console.error('Failed to delete address');
+                }
+            })
+            
+            .catch(error=>{
+                console.error('Error deleting Address',error);
+            })
+        }
+    </script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+
+document.addEventListener('DOMContentLoaded', function () {
+        const cancelButtons = document.querySelectorAll('.cancel-link');
+
+        cancelButtons.forEach(cancelButton => {
+            cancelButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                const orderId = this.dataset.orderId; 
+
+                swal({
+                    title: "Are you sure?",
+                    text: "Please provide a reason for cancellation:",
+                    content: {
+                        element: "input",
+                        attributes: {
+                            placeholder: "Reason",
+                            type: "text",
+                        },
+                    },
+                    buttons: {
+                        cancel: "Cancel",
+                        confirm: "OK",
+                    },
+                }).then((value) => {
+                    if (value) {
+                        const reason = value;
+                        cancelOrder(orderId, reason);
+                    }
+                });
+            });
+        });
+
+        function cancelOrder(orderId, reason) {
+            
+            fetch(`/userOrderCancel/${orderId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ reason }),
+            }).then(response => {
+                if (response.ok) {
+                    swal("Order cancelled!", "", "success");
+                } else {
+                    swal("Error", "Failed to cancel order", "error");
+                }
+            }).catch(error => {
+                swal("Error", "Failed to cancel order", "error");
+                console.error('Error cancelling order:', error);
+            });
+        }
+    });
+
+
+
+
+
+        function showEditForm(addressId){
+            $('#editAddressForm' + addressId).collapse('show');
+        }
+        function cancelEdit(addressId){
+            $('#editAddressForm' + addressId).collapse('hide');
+        }
+
+        function confirmDelete(addressId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this address.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteAddress(addressId);
+                }
+            });
+        }
+    
+        function deleteAddress(addressId) {
+            fetch(`/address/${addressId}`, {
+                method: 'DELETE'
+            })
+            .then(res => {
+                if (res.ok) {
+                    removeAddressFromPage(addressId);
+                    Swal.fire('Deleted!', 'The address has been deleted.', 'success');
+                } else {
+                    throw new Error('Failed to delete address');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting address:', error);
+                Swal.fire('Error!', 'Failed to delete address. Please try again later.', 'error');
+            });
+        }
+    
+        function removeAddressFromPage(addressId) {
+            const addressElement = document.getElementById(`address_${addressId}`);
+            if (addressElement) {
+                addressElement.remove();
+            }
+        }
+
+
+        function confirmCancel(orderId){
+            Swal({
+                title:"Are you sure?",
+                text: "Once canceled, you will not be able to recover this order!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willCancel) => {
+            if (willCancel) {
+               console.log(willCancel,'will cancell  ');
+                window.location.href = "/cancel-order/" + orderId;
+            } else {
+
+            }
+        });
+        }
+
+        
+
+    </script>
+    
+
+    <!-- Plugins JS File -->
+    <script src="/users/assets/js/jquery.min.js"></script>
+    <script src="/users/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/users/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/users/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/users/assets/js/superfish.min.js"></script>
+    <script src="/users/assets/js/owl.carousel.min.js"></script>
+    <!-- Main JS File -->
+    <script src="/users/assets/js/main.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+
+<!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
+</html>
