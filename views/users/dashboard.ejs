@@ -342,7 +342,11 @@
                                                                 <div class="product-details">
                                                                     <p class="order-date">Order Date: <%= order.orderDate.toDateString() %></p>
                                                                     <p class="order-status  btn-dark text-center  ">Status: <%= order.status %></p>
-                                                                    <a href="#" class="btn btn-primary cancel-link" data-order-id="<%= order._id %>">Cancel Order</a>
+                                                                    <% if(order.status === 'Delivered') { %>
+                                                                        <a href="#" class="btn btn-primary return-link" data-order-id="<%= order._id %>">Return Order</a>
+                                                                    <% }else { %>
+                                                                        <a href="#" class="btn btn-primary cancel-link" data-order-id="<%= order._id %>">Cancel Order</a>
+                                                                    <% } %>
                                                                 </div>
                                                             </div>
                                                         <% }) %>
@@ -865,6 +869,57 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
         }
+
+
+        document.addEventListener('click',function(event) {
+            if(event.target.classList.contains('return-link')){
+                event.preventDefault()
+            
+            Swal.fire({
+                title:'Return Order',
+                html:`
+                    <label for="reason">Reason for return:</label>
+                    <input type="text" id="reason" class="form-control " required>
+                `,
+                showCancelButton:true,
+                confirmButtonText:'Submit',
+                cancelButtonText:'Cancel',
+                preConfirm:()=>{
+                    const reason = Swal.getPopup().querySelector("#reason").value
+                    if(!reason){
+                        Swal.showValidationMessage('Please enter a reason for return ')
+                    }
+                    return {reason:reason.trim()}
+                }
+
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    console.log('result.isConfirmed')
+                    const orderId=event.target.getAttribute('data-order-id')
+                    console.log(orderId,'result.isConfirmed');
+                    const reason=result.value.reason
+                    console.log(reason,'reason result.isConfirmed');
+                    return fetch(`/returnOrder/${orderId}`,{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({reason})
+                    })
+                }
+            }).then((response)=>{
+                console.log(response,'response');
+                if(response.ok){
+                    Swal.fire('Order returned', 'Your return request has been submitted.', 'success')
+                }else{
+                    Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
+                }
+            }).catch((error)=>{
+                console.error('Error submitting return request', error);
+                Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
+            })
+        }
+    })
 
         
 

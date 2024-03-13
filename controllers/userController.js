@@ -1,9 +1,9 @@
 const User = require('../models/userModel')
-const Category=require('../models/categoryModel')
+const Category = require('../models/categoryModel')
 const Product = require('../models/productModel')
 const Address = require('../models/addressModel')
 const Cart = require('../models/cartModel')
-const Order =require('../models/orderModel')
+const Order = require('../models/orderModel')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const { ObjectId } = require('mongodb');
@@ -136,8 +136,8 @@ const otpPage = async (req, res) => {
         //console.log(generateOTP,'its in otppage');
         // console.log("step1");
         // const userID=new ObjectId(userId)
-   
-        res.render('signupOtp', { userId: userId, email: email,message:'' })
+
+        res.render('signupOtp', { userId: userId, email: email, message: '' })
 
     } catch (error) {
 
@@ -149,7 +149,7 @@ const otpPage = async (req, res) => {
 const verifyOTP = async (req, res) => {
     try {
         const enteredOTP = req.body.otp
-        console.log(req.body.otp,'its body otp');
+        console.log(req.body.otp, 'its body otp');
         // console.log('check veify otp');
         const { userOTP, userId } = req.body
         console.log(req.body.userOTP, 'its in form page');
@@ -201,10 +201,10 @@ const verifyOTP = async (req, res) => {
             // console.log('its going');
         } else {
             console.log('its wring otp')
-            req.flash('error','Invalid OTP')
+            req.flash('error', 'Invalid OTP')
             // Handle invalid OTP
             // res.render('signupOtp', { userId: req.body.userId, email: req.body.email, message: 'Invalid OTP' });
-            res.render('signupOtp', { userId: userId, email: req.query.email, message:req.flash('error')})
+            res.render('signupOtp', { userId: userId, email: req.query.email, message: req.flash('error') })
         }
     } catch (error) {
         console.log(error.message);
@@ -239,7 +239,7 @@ const loadSignIn = async (req, res) => {
 const verifySignIn = async (req, res) => {
     try {
         const { email, password } = req.body
-        console.log(email, password,'its req.body email and password in verify sign in ');
+        console.log(email, password, 'its req.body email and password in verify sign in ');
 
         const user = await User.findOne({ email })
         if (!user) {
@@ -251,7 +251,7 @@ const verifySignIn = async (req, res) => {
             console.log('invalid second');
             req.flash('error', 'Invalid email or password,please ty again ')
 
-            return res.render('signIn',{message:req.flash('error')})
+            return res.render('signIn', { message: req.flash('error') })
 
         }
         if (user.is_verified === 0 || user.is_active === false) {
@@ -327,7 +327,7 @@ const logout = async (req, res) => {
 const forgetPass = async (req, res) => {
     try {
         // console.log('its trying to enter forget pass');
-        res.render('forgetPass',{message:''})
+        res.render('forgetPass', { message: '' })
         // console.log('its enter forget pass');
     } catch (error) {
         console.log(error.message);
@@ -335,41 +335,41 @@ const forgetPass = async (req, res) => {
 }
 
 
-    // this is email pass and otp page rendering 
-    const forgetUpdate = async (req, res) => {
-        try {
-        
-            const { email } = req.body;
-            console.log('Forget password email:', email);
+// this is email pass and otp page rendering 
+const forgetUpdate = async (req, res) => {
+    try {
 
-            const user = await User.findOne({ email });
-            if (!user) {
-                req.flash('error','Your email is incorrect')
-                return res.render('forgetPass', { message: req.flash('error') });
-            }
-        
-            const generateOTP = generate4DigitOTP();
-            console.log('its genereate otp after forget update');
-            req.session.otp = { value: generateOTP, timestamp: Date.now() };
-            req.session.userId = user._id;
-            console.log(req.session.userId,'this is session userId in forget update');
-            sendVerifyMail(user.name, email, generateOTP);
+        const { email } = req.body;
+        console.log('Forget password email:', email);
 
-            
-            // res.redirect(`/forgetOtp?userId=${user._id}&email=${user.email}`);
-            res.redirect(`/forgetOtp?userId=${user._id}&email=${encodeURIComponent(email)}`);
-        } catch (error) {
-            console.log(error.message);
+        const user = await User.findOne({ email });
+        if (!user) {
+            req.flash('error', 'Your email is incorrect')
+            return res.render('forgetPass', { message: req.flash('error') });
         }
+
+        const generateOTP = generate4DigitOTP();
+        console.log('its genereate otp after forget update');
+        req.session.otp = { value: generateOTP, timestamp: Date.now() };
+        req.session.userId = user._id;
+        console.log(req.session.userId, 'this is session userId in forget update');
+        sendVerifyMail(user.name, email, generateOTP);
+
+
+        // res.redirect(`/forgetOtp?userId=${user._id}&email=${user.email}`);
+        res.redirect(`/forgetOtp?userId=${user._id}&email=${encodeURIComponent(email)}`);
+    } catch (error) {
+        console.log(error.message);
     }
+}
 
 
 
 const forgetOtpLoad = async (req, res) => {
     try {
-      const msg=req.flash('m')
-    //   console.log(msg)
-        res.render('forgetOtp',{userId:req.query.userId,email:req.query.email,msg});
+        const msg = req.flash('m')
+        //   console.log(msg)
+        res.render('forgetOtp', { userId: req.query.userId, email: req.query.email, msg });
     } catch (error) {
         console.error(error.message);
     }
@@ -377,25 +377,25 @@ const forgetOtpLoad = async (req, res) => {
 
 
 
- const  forgetOtpUpdate = async (req, res) => {
+const forgetOtpUpdate = async (req, res) => {
     try {
         const { userId, otp } = req.body;
-        const {email} = req.query
+        const { email } = req.query
         console.log(email);
         // console.log(otp ,'otp body otp ');
         const sessionUserId = req.session.userId;
         // console.log(sessionUserId,'session userId');
         const sessionOtp = req.session.otp;
-      
+
         if (!sessionUserId || !sessionOtp || sessionOtp.value !== otp) {
-            req.flash('m','Invalid OTP')
-               console.log('iiiiiiiiiiiiiiiiiiiiii');
+            req.flash('m', 'Invalid OTP')
+            console.log('iiiiiiiiiiiiiiiiiiiiii');
             // res.redirect(`/forgetOtp`);  
             res.redirect(`/forgetOtp?userId=${userId}&email=${encodeURIComponent(email)}`);
 
-         
 
-        }else{
+
+        } else {
             res.redirect('/resetPassword');
         }
     } catch (error) {
@@ -411,23 +411,23 @@ const resendOtpPage = async (req, res) => {
     try {
 
         const { userId, email } = req.query;
-        
+
         console.log(email, 'this is resendotp email');
         console.log(userId, 'this is resendotp userid');
-        
+
         // Fetch user details from the database
         const user = await User.findById(userId);
         if (!user || user.email !== email) {
             throw new Error('User not found or email mismatch');
         }
-        
+
         // Generate a new OTP
         const generateOTP = generate4DigitOTP();
         req.session.otp = { value: generateOTP, timestamp: Date.now() };
-        
+
         // Send the new OTP via email
         sendVerifyMail(user.name, email, generateOTP);
-        
+
         // Redirect back to the same page where resend was requested
         // Assuming the page URL is stored in req.headers.referer
         const referer = req.headers.referer || '/forgetOtp';
@@ -443,7 +443,7 @@ const resendOtpPage = async (req, res) => {
 
 
 
- 
+
 
 // this is the newPass rendering
 const newPassLoad = async (req, res) => {
@@ -493,59 +493,59 @@ const newPassUpadate = async (req, res) => {
 
 const loadShop = async (req, res) => {
     try {
-        const categories=await Category.find({})
+        const categories = await Category.find({})
         // const products = await Product.find().populate('category')
         let products;
 
-        
-        const selectedCategory=req.query.category||'allCategory'
 
-        const sortBy=req.query.sortby ||'popularity'
-        switch(sortBy){
-            case 'lowToHigh' :
-                products =await Product.find().sort({price:1}).populate('category')
+        const selectedCategory = req.query.category || 'allCategory'
+
+        const sortBy = req.query.sortby || 'popularity'
+        switch (sortBy) {
+            case 'lowToHigh':
+                products = await Product.find().sort({ price: 1 }).populate('category')
                 break;
-            case 'highToLow' :
-                products = await Product.find().sort({price:-1}).populate('category')
+            case 'highToLow':
+                products = await Product.find().sort({ price: -1 }).populate('category')
                 break;
-            case 'alphabetical' :
-                products =await Product.find().sort({name:1}).populate('category')
+            case 'alphabetical':
+                products = await Product.find().sort({ name: 1 }).populate('category')
                 break;
             case 'analphabetic':
-                products=await Product.find().sort({name:-1}).populate('category')  
+                products = await Product.find().sort({ name: -1 }).populate('category')
                 break;
-            case 'latest' :
-                products=await Product.find().sort({_id:-1}).populate('category')
+            case 'latest':
+                products = await Product.find().sort({ _id: -1 }).populate('category')
                 break;
-            default :
-                products=await Product.find().populate('category')  
+            default:
+                products = await Product.find().populate('category')
                 break;
         }
-        res.render('shop', { products: products ,categories:categories,selectedCategory})
+        res.render('shop', { products: products, categories: categories, selectedCategory })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const products=async(req,res)=>{
+const products = async (req, res) => {
     try {
-        const selectedCategory=req.query.category||'allCategory'
-        
+        const selectedCategory = req.query.category || 'allCategory'
+
         const categoryId = req.query.category;
-        const categories =await Category.find({})
+        const categories = await Category.find({})
 
         console.log(categoryId)
-        if(categoryId==='allCateogry'){
+        if (categoryId === 'allCateogry') {
             // console.log('ininin')
-        const product=await Product.find({}).populate('category');
-          return  res.render('shop', { products: product ,categories:categories,selectedCategory})
+            const product = await Product.find({}).populate('category');
+            return res.render('shop', { products: product, categories: categories, selectedCategory })
         }
 
         // console.log(categoryId,'category Id in products paage');
         // const category =await Category.find({_id:categoryId})
-        const product=await Product.find({category:categoryId}).populate('category')
+        const product = await Product.find({ category: categoryId }).populate('category')
         // console.log('ihn');
-        res.render('shop', { products: product ,categories:categories,selectedCategory})
+        res.render('shop', { products: product, categories: categories, selectedCategory })
 
 
         // console.log(product,'fdjfdkf')
@@ -674,7 +674,7 @@ const loadSingleProduct = async (req, res) => {
 //         const price = product.price * quantity
 
 //         let cart = await Cart.findOne({ userId: req.session.user_id })
-        
+
 //         console.log('caaaaaaaaaaaaaarrrrrrrrttttttttt');
 //         if (!cart) {
 //             cart = new Cart({
@@ -719,16 +719,16 @@ const addToCart = async (req, res) => {
                 products: []
             });
         }
-        
+
         const existingProduct = await Cart.findOneAndUpdate(
-            { userId: req.session.user_id, 'products.productId': productId  },
+            { userId: req.session.user_id, 'products.productId': productId },
             { $inc: { 'products.$.quantity': quantity, 'products.$.totalPrice': price } },
             { new: true }
         );
-        console.log(existingProduct,'existing product');
+        console.log(existingProduct, 'existing product');
 
         if (existingProduct) {
-            res.json({ success: true, exists: true }); 
+            res.json({ success: true, exists: true });
         } else {
             cart.products.push({
                 productId: productId,
@@ -737,7 +737,7 @@ const addToCart = async (req, res) => {
                 totalPrice: price
             });
             await cart.save();
-            res.json({ success: true, exists: false }); 
+            res.json({ success: true, exists: false });
         }
     } catch (error) {
         console.log(error.message);
@@ -929,66 +929,138 @@ const loadCheckout = async (req, res) => {
         const cart = await Cart.findOne({ userId }).populate('products.productId')
         // console.log(cart,'this is loadcheck out cart');
         const subtotal = cart.products.reduce((accu, curr) => accu + curr.totalPrice, 0)
-        console.log(subtotal,'this is subtotal in loadCheckout page');
+        console.log(subtotal, 'this is subtotal in loadCheckout page');
         const deliveryCharges = subtotal < 500 ? 50 : 0
-        console.log(deliveryCharges,'this is delivery charges in loadcheck out page');
-        const totalAmount = subtotal+deliveryCharges
-        console.log(totalAmount,'this is total amount in load check out page ');
+        console.log(deliveryCharges, 'this is delivery charges in loadcheck out page');
+        const totalAmount = subtotal + deliveryCharges
+        console.log(totalAmount, 'this is total amount in load check out page ');
 
-        const userAddress = await Address.findOne({ userId :req.session.user_id})
-        console.log(userAddress,'userAddress in load checkout page ');
-        res.render('checkout', {user_id:userId, userAddress, cart , subtotal , deliveryCharges , totalAmount })
+        const userAddress = await Address.findOne({ userId: req.session.user_id })
+        console.log(userAddress, 'userAddress in load checkout page ');
+        res.render('checkout', { user_id: userId, userAddress, cart, subtotal, deliveryCharges, totalAmount })
     } catch (error) {
         console.log(error.message);
     }
 }
 
 
-const placeOrder=async(req,res)=>{
+const placeOrder = async (req, res) => {
     try {
-        const {userId,products,totalAmount,orderUserDetails,paymentMethod} = req.body
+        const { userId, products, totalAmount, orderUserDetails, paymentMethod } = req.body
         // const address=await Address.findById({orderUserDetails})
-        console.log(userId,'userId in placeholder page');
-        console.log(orderUserDetails,'ordreUserDetails in my placeorder page')
+        console.log(userId, 'userId in placeholder page');
+        console.log(orderUserDetails, 'ordreUserDetails in my placeorder page')
 
 
         const cart = await Cart.findOne({ userId }).populate('products.productId')
         // const address = await Address.findOne({"address._id":orderUserDetails});
 
         // console.log(address,'address in placeorder page');
-        
 
-      
-        const productData=cart.products.map((product)=>({ 
+
+
+        const productData = cart.products.map((product) => ({
             productId: product.productId._id,
-            quantity:product.quantity ,
-            name:product.productId.name
+            quantity: product.quantity,
+            name: product.productId.name
         }))
 
 
         // console.log(address,'orderuser details in place holder page');
-        const order=new Order({
+        const order = new Order({
             userId,
-            products:productData,
+            products: productData,
             totalAmount,
             orderUserDetails,
             paymentMethod,
-            status:'Pending',
-            orderDate:new Date()
+            status: 'Pending',
+            orderDate: new Date()
         })
         await order.save()
-        for(const product of productData){
-            const updateProduct=await Product.findByIdAndUpdate(product.productId, {
-                $inc:{quantity:-product.quantity}
+        for (const product of productData) {
+            const updateProduct = await Product.findByIdAndUpdate(product.productId, {
+                $inc: { quantity: -product.quantity }
             })
         }
 
         await Cart.updateOne({ userId }, { $set: { products: [] } });
-        res.json({status:true})
+        res.json({ status: true })
     } catch (error) {
         console.log(error.message);
     }
 }
+
+
+
+
+const Razorpay = require('razorpay');
+
+const createOrder = async (req, res) => {
+    try {
+        console.log('its here create order function in user controller ');
+        const { totalAmount } = req.body;
+        console.log(totalAmount,'totalAmount in create order function in usercon');
+        const { RAZORPAYKEYID, RAZORPAYSECRETKEY } = process.env;
+        console.log(RAZORPAYKEYID,'razorpaykeyid ');
+        console.log(RAZORPAYSECRETKEY,'razorpaykeysecret');
+
+        const razorpay = new Razorpay({
+            key_id: RAZORPAYKEYID,
+            key_secret: RAZORPAYSECRETKEY,
+        });
+
+        const options = {
+            amount: totalAmount * 100, 
+            currency: 'INR',
+            receipt: 'order_rcptid_11'
+        };
+
+        razorpay.orders.create(options, (err, order) => {
+            if (err) {
+                console.error('Error creating Razorpay order:', err);
+                res.status(500).json({ error: 'Failed to create Razorpay order' });
+            } else {
+                console.log('Razorpay order created:', order);
+                res.json({ orderId: order.id });
+            }
+        });
+    } catch (error) {
+        console.error('Error creating Razorpay order:', error);
+        res.status(500).json({ error: 'Failed to create Razorpay order' });
+    }
+};
+
+
+const verifyRazorpay = async (req, res) => {
+    try {
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+        console.log(razorpay_order_id,'razorpay order id ',razorpay_payment_id,'payment id',
+        razorpay_signature,'signature');
+
+        // Construct the string to be signed
+        const text = `${razorpay_order_id}|${razorpay_payment_id}`;
+        console.log(text,'text in verify razorpay');
+        
+        // Generate the HMAC signature
+        const hmac = crypto.createHmac('sha256', process.env.RAZORPAYKEYSECRET);
+        console.log(hmac,'hmac');
+        hmac.update(text);
+        const generatedSignature = hmac.digest('hex');
+
+        // Compare the signatures
+        if (generatedSignature === razorpay_signature) {
+            // Signature matches, payment is valid
+            res.status(200).json({ message: 'Payment verified successfully' });
+        } else {
+            // Signature does not match, payment is not valid
+            res.status(400).json({ error: 'Invalid signature' });
+        }
+    } catch (error) {
+        console.error('Error verifying Razorpay payment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 
 
 module.exports = {
@@ -1020,5 +1092,8 @@ module.exports = {
     // updateCart,
     removeFromCart,
     loadCheckout,
-    placeOrder
+    placeOrder,
+    createOrder,
+    verifyRazorpay
+   
 }

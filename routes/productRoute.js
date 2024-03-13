@@ -35,6 +35,8 @@ product_route.post('/product/:id/updateStatus',productController.updateProductSt
 product_route.get('/orders',adminAuth.isLogin,productController.loadOrderAdmin)
 product_route.get('/orderEdit/:orderId',productController.loadOrderEdit)
 product_route.post('/updateOrderStatus/:orderId',productController.updateOrderStatus)
+product_route.post('/cancel-order/:orderId',productController.cancelOrder)    //this is adminside
+
 // product_route.get('/orderEdit',productController.loadOrderEdit)
 
 

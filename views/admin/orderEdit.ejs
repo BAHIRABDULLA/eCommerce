@@ -64,6 +64,10 @@
       resize: vertical;
       /* Allow vertical resizing */
     }
+    .start .return-input {
+      height: 90px;
+      resize: vertical;
+    }
   </style>
 </head>
 
@@ -241,22 +245,29 @@
                           </div>
                           <div class="col-md-6">
                             <h4 class="bg">Payment Method</h4>
-                            <p>
-                              <%= order.paymentMethod %>
-                            </p>
+                            <input type="text" class="form-control " value="<%= order.paymentMethod %>" disabled>
                           </div>
+                          
                         </div>
 
                         <div class="row">
-                          <div class="col-md-6">
-                            <h3 class="text-danger ">Order Status</h3>
-                            <select class="form-control" onchange="updateOrderStatus('<%= order._id %>',this.value)">
-                              <option <%=order.status==='Pending' ? 'selected' : '' %> value="Pending" >Pending</option>
-                              <option <%=order.status==='Shipped' ? 'selected' : '' %> value="Shipped">Shipped</option>
-                              <option <%=order.status==='Delivered' ? 'selected' : '' %> value="Delivered">Delivered</option>
-                              <option <%=order.status==='Cancelled' ? 'selected' : '' %> value="Cancelled">Cancelled</option>
-                            </select>
-                          </div>
+                            <div class="col-md-6">
+                              <h3 class="text-danger ">Order Status</h3>
+
+                              <select id="orderStatusSelect" class="form-control" onchange="updateOrderStatus('<%= order._id %>',this.value)">
+                                <option <%=order.status==='Pending' ? 'selected' : '' %> value="Pending" >Pending</option>
+                                <option <%=order.status==='Shipped' ? 'selected' : '' %> value="Shipped">Shipped</option>
+                                <option <%=order.status==='Delivered' ? 'selected' : '' %> value="Delivered">Delivered</option>
+                                <option <%=order.status==='Cancelled' ? 'selected' : '' %> value="Cancelled">Cancelled</option>
+                                <option <%=order.status==='Returned' ? 'selected' : '' %> value="Returned">Returned</option>
+                              </select>
+                            </div>
+                            <% if(order.status === 'Returned') { %>
+                              <div class="col-md-6">
+                                <h3 class="text-danger ">Return Reason</h3>
+                                  <textarea class="form-control return-input" name="returnReason" id="returnReason" disabled ><%= order.returnReason %></textarea>
+                              </div>
+                            <% } %>
                         </div>
 
                         <div class="row">
@@ -285,19 +296,13 @@
                               <img src="/uploads/<%= product.firstImage %>" alt="product image" class="img-fluid" style="width: 50px; height: 50px;">
                             </div>
                             <div class="col-md-3">
-                              <p>
-                                <%= product.name %>
-                              </p>
+                              <input type="text" class="form-control" value="<%= product.name %>" disabled >
                             </div>
                             <div class="col-md-3">
-                              <p>
-                                <%= product.quantity %>
-                              </p>
+                              <input type="text" class="form-control" value="<%= product.quantity %>" disabled >
                             </div>
                             <div class="col-md-3">
-                              <p>
-                                <%= product.totalPrice %>
-                              </p>
+                              <input type="text" class="form-control" value="<%= product.totalPrice %>" disabled >
                             </div>
                           </div>
                           <% }) %>
@@ -322,6 +327,13 @@
   </div>
   <!-- container-scroller -->
   <script>
+
+    const orderStatusSelect=document.getElementById('orderStatusSelect')
+    if(orderStatusSelect.value==='Delivered'){
+      console.log(orderStatusSelect,'order status select');
+      orderStatusSelect.disabled=true
+    }
+
     function updateOrderStatus(orderId,status){
      
       fetch(`/admin/updateOrderStatus/${orderId}`,{
@@ -335,6 +347,10 @@
         console.log(response,'response in update order status function ')
         if(response.ok){
           console.log('Order status updated successfully');
+          if(status==='Delivered'){
+            console.log('aftern then ')
+            orderStatusSelect.disabled=true
+          }
         }else{
           console.error('Failed to update order status')
         }

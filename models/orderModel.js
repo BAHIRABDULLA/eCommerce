@@ -44,10 +44,13 @@ const orderSchema=new mongoose.Schema({
     },
     status:{
         type:String,
-        enum:['Delivered','Shipping','Pending','Cancelled'],
+        enum:['Delivered','Shipping','Pending','Cancelled','Returned'],
         default:'Pending'
     },
     cancelReason:{
+        type:String
+    },
+    returnReason:{
         type:String
     }
 

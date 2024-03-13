@@ -24,48 +24,6 @@ const getDashboard = async (req, res) => {
     }
 }
 
-
-const userOrderCancel=async (req,res)=>{
-    try {
-        const { orderId } = req.params;
-        console.log(orderId,'order id in userOrder cancel ');
-        const { reason } = req.body;
-        console.log(reason,'reason in userorder cancel function ');
-
-        // Update order status and store cancellation reason
-        const updatedOrder = await Order.findByIdAndUpdate(
-            orderId,
-            { status: 'Cancelled', cancelReason: reason },
-            { new: true }
-        );
-        
-
-        if (!updatedOrder) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-
-        res.status(200).json({ message: 'Order cancelled successfully', order: updatedOrder });
-    } catch (error) {
-        console.error('Error cancelling order:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-}
-
-
-
-const cancelOrder=async (req,res)=>{
-    try {
-        const orderId=req.params.orderId
-        console.log('orderId in cancelorder page    ',orderId);
-        const order = await Order.findById(orderId)
-        console.log('order in cancel order  ::',order);
-        order.status = 'Cancelled'
-        await order.save()
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
 // const updateAddress=async(req,res)=>{
 //     try {
 //         console.log(req.session.user_id,'this is user_id in update address');
@@ -193,7 +151,6 @@ module.exports={
     updateAddress,
     editAddress,
     getDashboard,
-    cancelOrder,
-    userOrderCancel,
     deleteAddress
+
 }

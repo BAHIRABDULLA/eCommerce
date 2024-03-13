@@ -9,6 +9,7 @@ const productLoad = async (req, res) => {
 
         ).populate('category')
         res.render('products', { products })
+        console.log('product load is working ');
     } catch (error) {
         console.log(error.message);
     }
@@ -152,7 +153,7 @@ const updateProductStatus = async (req, res) => {
 const loadOrderAdmin = async (req, res) => {
     try {
         const orders = await Order.find({}).populate('userId').populate('orderUserDetails');
-        console.log(orders,'orders in load order amdin page');
+        // console.log(orders,'orders in load order amdin page');
        
         res.render('orders', { orders: orders });
     } catch (error) {
@@ -215,6 +216,19 @@ const updateOrderStatus=async (req,res)=>{
 }
 
 
+const cancelOrder=async (req,res)=>{
+    try {
+        const orderId=req.params.orderId
+        console.log('orderId in cancelorder page    ',orderId);
+        const order = await Order.findById(orderId)
+        console.log('order in cancel order  ::',order);
+        order.status = 'Cancelled'
+        await order.save()
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 module.exports = {
     productLoad,
@@ -226,5 +240,6 @@ module.exports = {
     updateProductStatus,
     loadOrderAdmin,
     loadOrderEdit,
-    updateOrderStatus
+    updateOrderStatus,
+    cancelOrder
 }

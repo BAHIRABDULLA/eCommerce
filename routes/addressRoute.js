@@ -21,9 +21,7 @@ address_route.post('/address',addressController.updateAddress)
 address_route.post('/address/:addressId',addressController.editAddress)
 address_route.get('/dashboard',auth.isLogin,addressController.getDashboard)
 
-address_route.post('/userOrderCancel/:orderId',addressController.userOrderCancel)
 
-address_route.post('/cancel-order/:orderId',addressController.cancelOrder)    //this is adminside
 address_route.delete('/address/:addressId',addressController.deleteAddress)
 
 module.exports=address_route

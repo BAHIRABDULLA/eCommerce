@@ -66,6 +66,8 @@ user_route.delete('/cart/remove/:productId',userController.removeFromCart)
 
 user_route.get('/checkout',auth.isLogin,userController.loadCheckout)
 user_route.post('/placeOrder',userController.placeOrder)
+user_route.post('/createOrder',userController.createOrder)
+user_route.post('/api/payment/verify',userController.verifyRazorpay)
 
 // user_route.get('/signIn',userController.loadSignin)
 // user_route.post('/signIn',userController.verifySignIn)
