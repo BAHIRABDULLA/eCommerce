@@ -1,10 +1,10 @@
 const mongoose=require('mongoose')
 const couponSchema=mongoose.Schema({
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
-        required:true
-    },
+    // userId:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'User',
+    //     required:true
+    // },
     name:{
         type:String,
         required:true
@@ -14,7 +14,7 @@ const couponSchema=mongoose.Schema({
         required:true,
         unique:true
     },
-    discription:{
+    description:{
         type:String
     }
     ,

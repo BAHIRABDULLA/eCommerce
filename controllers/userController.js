@@ -30,8 +30,8 @@ const sendVerifyMail = async (name, email, otp) => {
             secure: false,
             requireTLS: true,
             auth: {
-                user: 'bahirbusiness123@gmail.com',
-                pass: 'mtor uklo ubeq atzx'
+                user: process.env.SMTPEMAIL,
+                pass: process.env.SMTPPASS
             }
         })
         const mailOptions = {

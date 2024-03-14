@@ -5,9 +5,7 @@ const Address = require('../models/addressModel')
 
 const productLoad = async (req, res) => {
     try {
-        const products = await Product.find(
-
-        ).populate('category')
+        const products = await Product.find().populate('category')
         res.render('products', { products })
         console.log('product load is working ');
     } catch (error) {
