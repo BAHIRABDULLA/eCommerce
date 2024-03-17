@@ -23,18 +23,18 @@ const loadCouponAdd=async(req,res)=>{
 const couponAdding=async(req,res)=>{
     try {
         const {couponName,couponCode,description,discount,expireDate}=req.body
-        const active=req.body.hasOwnProperty('active')
+
         console.log(couponCode,'couponcode ');
         console.log(expireDate,'expiredate');
-        console.log(active,'active in coupon adding ');
+        console.log(description,'description in coupon add');
         const newCoupon=new Coupon({
             name:couponName,
             code:couponCode,
             description,
             discountAmount:discount,
-            expireDate,
-            active
+            expireDate
 
+            
         })
         const savedCoupon = await newCoupon.save()
         res.redirect('/admin/coupon')
@@ -43,10 +43,52 @@ const couponAdding=async(req,res)=>{
     }
 }
 
+const deleteCoupon=async(req,res)=>{
+    try {
+        const {couponId}=req.params
+        console.log(couponId,'coupon id in deletecoupon');
+        await Coupon.findByIdAndDelete(couponId)
+        res.json({success:true})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
+const couponEdit=async(req,res)=>{
+    try {
+        const {couponId}=req.params
+        console.log(couponId,'coupon id in coupon edit page');
+        const coupon=await Coupon.findById(couponId)
+        res.render("couponEdit",{coupon})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const couponEditPost=async(req,res)=>{
+    try {
+        const {couponId}=req.params
+        const { couponName, couponCode, description, discount, expireDate } = req.body;
+        console.log(couponId,'coupon id in coupond edit post');
+        const editCoupon=await Coupon.findByIdAndUpdate(couponId,{
+            name:couponName,
+            code:couponCode,
+            description,
+            discountAmount:discount,
+            expireDate
+        },{new:true})
+        res.redirect('/admin/coupon')
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports={
     loadCoupon,
     loadCouponAdd,
-    couponAdding
+    couponAdding,
+    deleteCoupon,
+    couponEdit,
+    couponEditPost
 }

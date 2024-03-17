@@ -4,6 +4,7 @@ const Product = require('../models/productModel')
 const Address = require('../models/addressModel')
 const Cart = require('../models/cartModel')
 const Order = require('../models/orderModel')
+const Coupon = require('../models/couponModel')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const { ObjectId } = require('mongodb');
@@ -1061,6 +1062,44 @@ const verifyRazorpay = async (req, res) => {
     }
 };
 
+const couponGet=async(req,res)=>{
+    try {
+        const coupons = await Coupon.find()
+        console.log(coupons,'coupons in coupon get ');
+
+        res.json(coupons)
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const applyCoupon=async (req,res)=>{
+    try {
+        console.log('its here also in apply coupon ');
+        const { couponCode } = req.body;
+         console.log(couponCode,'coupon code in apply code');
+        const coupon = await Coupon.findOne({ code: couponCode });
+        console.log(coupon,'coupon in apply code apply coupon ')
+        if (!coupon) {
+            return res.json({ success: false, message: 'Coupon not found' });
+        }
+        const discountAmount = coupon.discountAmount || 0;
+        console.log(discountAmount,'discount amount in apply code');
+        
+        res.json({ success: true, message: 'Coupon applied', discountAmount });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+const loadWishlist=async(req,res)=>{
+    try {
+        res.render('wishlist')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 module.exports = {
@@ -1094,6 +1133,9 @@ module.exports = {
     loadCheckout,
     placeOrder,
     createOrder,
-    verifyRazorpay
+    verifyRazorpay,
+    loadWishlist,
+    couponGet,
+    applyCoupon
    
 }

@@ -72,4 +72,9 @@ user_route.post('/api/payment/verify',userController.verifyRazorpay)
 // user_route.get('/signIn',userController.loadSignin)
 // user_route.post('/signIn',userController.verifySignIn)
 
+user_route.get('/couponGet',userController.couponGet)
+user_route.post('/applyCoupon',userController.applyCoupon)
+user_route.get('/wishlist',userController.loadWishlist)
+
+
 module.exports=user_route

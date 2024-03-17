@@ -15,4 +15,7 @@ coupon_route.get('/coupon',adminAuth.isLogin,couponController.loadCoupon)
 
 coupon_route.get('/couponAdd',adminAuth.isLogin,couponController.loadCouponAdd)
 coupon_route.post('/coupon-add',couponController.couponAdding)
+coupon_route.delete('/deleteCoupon/:couponId',couponController.deleteCoupon)
+coupon_route.get('/couponEdit/:couponId',couponController.couponEdit)
+coupon_route.post('/coupon-edit/:couponId',couponController.couponEditPost)
 module.exports=coupon_route

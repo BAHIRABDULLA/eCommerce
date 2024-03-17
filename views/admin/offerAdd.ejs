@@ -11,15 +11,14 @@
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
   <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
-  <style>
-    strong {
-      color: red;
-    }
-  </style>
 </head>
 
 <body>
@@ -47,24 +46,9 @@
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item dropdown d-lg-flex d-none">
-                <button type="button" class="btn btn-info font-weight-bold">+ Create New</button>
-            </li>
+           
           
-          <li class="nav-item dropdown d-flex mr-4 ">
-            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
-              <i class="icon-cog"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Settings</p>
-              <a class="dropdown-item preview-item">               
-                  <i class="icon-head"></i> Profile
-              </a>
-              <a class="dropdown-item preview-item">
-                  <i class="icon-inbox"></i> Logout
-              </a>
-            </div>
-          </li>
+          
           <li class="nav-item dropdown mr-4 d-lg-flex d-none">
             <a class="nav-link count-indicatord-flex align-item s-center justify-content-center" href="#">
               <i class="icon-grid"></i>
@@ -78,7 +62,6 @@
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="user-profile">
@@ -154,101 +137,99 @@
         </ul>
       </nav>
       <!-- partial -->
-      <div class="main-panel">
-        
+      <div class="main-panel">        
+        <a href="/admin/offer" class="btn btn-info ">Back</a>
         <div class="content-wrapper">
+
           <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>
-                           <strong>Sl No</strong> 
-                          </th>
-                          <th>
-                           <strong>User Name</strong> 
-                          </th>
-                          <!-- <th>
-                            <strong>User Address</strong>
-                          </th> -->
-                          <th>
-                            <strong>Status</strong>
-                          </th>
-                          <th>
-                           <strong>Payment Method</strong>
-                          </th>
-                          <th><strong>Date </strong></th>
-                          <th>Total</th>
-                          <th>
-                            Details
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% orders.forEach( (order,index)=> { %>
-                        <tr>
-                          <td>
-                            <%= index+1 %>
-                          </td>
-                          <td>
-                            <%= order.userId.name %>
-                            
-                          </td>
-                          <!-- <td class="py-1">
-                            <img src="images/faces/face2.jpg" alt="image"/>
-                          </td> -->
-                          
-                          <td>
-                        
-                            <label class="badge badge-primary"><%= order.status %></label>
-                          </td>
-
-                          <td class="badge  badge-warning mt-2 ">
-                            <%= order.paymentMethod %>
-                          </td>
-                          <td><%= order.orderDate.toDateString() %></td>
-                          <td><%= order.totalAmount %></td>
-                          <td>
-                            <a href="/admin/orderEdit/<%= order._id %>" class="btn btn-primary  ">Show</a>
-                          </td>
-                        </tr> 
-                        <% }) %>
-                      </tbody>
-                    </table>
-                  </div>
+                  <h4 class="card-title">Offer Add</h4>
+                  <form action="/admin/offer-add" method="post"  class="form-sample">
+                    
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Offer Title</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="offerTitle" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Offer %</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="offerPercentage" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="exampleTextarea1">Description</label>
+                          <textarea class="form-control" name="description" id="exampleTextarea1" rows="4"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Start Date</label>
+                          <div class="col-sm-9">
+                            <input type="date" name="startDate" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Expire Date</label>
+                          <div class="col-sm-9">
+                            <input class="form-control" name="expireDate" type="date"  placeholder="dd/mm/yyyy" >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   
+                   <div class="col">
+                    <button type="submit" class="btn btn-info ">Submit</button>
+                   </div>
+                    
+                  </form>
                 </div>
               </div>
-            </div>
-            
-            
-            
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-      
-        <!-- partial -->
+            </div>            
+          </div>
+        </div>
+    
       </div>
-      <!-- main-panel ends -->
+
     </div>
-    <!-- page-body-wrapper ends -->
+
   </div>
   <!-- container-scroller -->
   <!-- base:js -->
+
+ 
+
   <script src="vendors/base/vendor.bundle.base.js"></script>
   <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <!-- End plugin js for this page-->
   <!-- inject:js -->
   <script src="js/off-canvas.js"></script>
   <script src="js/hoverable-collapse.js"></script>
   <script src="js/template.js"></script>
   <!-- endinject -->
   <!-- plugin js for this page -->
+  <script src="vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="vendors/select2/select2.min.js"></script>
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
+  <script src="js/file-upload.js"></script>
+  <script src="js/typeahead.js"></script>
+  <script src="js/select2.js"></script>
   <!-- End custom js for this page-->
 </body>
 

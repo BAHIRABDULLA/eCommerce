@@ -164,9 +164,9 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="pages/icons/feather-icons.html">
+            <a class="nav-link" href="/admin/offer">
               <i class="icon-help menu-icon"></i>
-              <span class="menu-title">Return Request</span>
+              <span class="menu-title">Offer</span>
             </a>
           </li>
           <li class="nav-item">
@@ -240,12 +240,16 @@
 
 
                           <td>
+                            <% console.log(coupon.expireDate,'jdklkjdlfjkld'); %>
                            <%= coupon.expireDate.toLocaleDateString('en-US',{year:"numeric",month:'short',day:'2-digit'}) %>
                           </td>
                           <td>
                             ₹ <%= coupon.discountAmount %>
                           </td>
-                          <td><Button class="btn btn-danger ">True</Button></td>
+                          <td><Button class="btn btn-warning  "><%= coupon.active %></Button></td>
+                          <td><a href="/admin/couponEdit/<%= coupon._id %>" class="btn btn-dark">Edit</a></td>
+
+                          <td><a href="" class="btn btn-danger "  onclick="deleteCoupon('<%= coupon._id %>','<%= index %>')">Delete</a></td>
                         </tr>
                         <% }) %>
                         
@@ -254,23 +258,35 @@
                   </div>
                 </div>
               </div>
-            </div>
-            
-           
-            
+            </div>       
           </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-        
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
+
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
-  <!-- base:js -->
+
+  <script>
+    function deleteCoupon(couponId,i){
+      fetch(`/admin/deleteCoupon/${couponId}`,{
+        method:'DELETE'
+      })
+      .then((response)=>{
+        if(response.ok){
+          console.log(response);
+          const row=document.getElementById(`row${i}`)
+          row.remove()
+        }
+      })
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      const urlPramas=new URLSearchParams(window.location.sear)
+    })
+   
+  </script>
+
   <script src="vendors/base/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->

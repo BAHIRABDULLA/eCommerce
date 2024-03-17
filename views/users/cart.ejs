@@ -292,12 +292,12 @@
                                                 </td>
                                                 <td class="quantity-col">
                                                     <div class="cart-product-quantity">
-                                                        <input type="number" class="form-control  quantity-input"
+                                                        <input type="number" aria-readonly="false" class="form-control   quantity-input" 
                                                             id="quantity_<%= product.productId._id %>"
                                                             data-productid="<%= product.productId._id %>"
                                                             value="<%= product.quantity %>" min="1"
                                                             max="<%= product.productId.quantity %>" step="1"
-                                                            data-decimals="0" required
+                                                            data-decimals="0" onkeydown="return false" required
                                                             onchange="updateTotalPrice(this,'<%= product.productId._id %>')">
                                                     </div>
                                                 </td>
