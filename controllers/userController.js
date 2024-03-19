@@ -5,8 +5,8 @@ const Address = require('../models/addressModel')
 const Cart = require('../models/cartModel')
 const Order = require('../models/orderModel')
 const Coupon = require('../models/couponModel')
-
 const Wallet = require('../models/walletModel')
+const Wishlist= require('../models/wishlistModel')
 
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
@@ -1181,12 +1181,43 @@ const processWalletPayment=async(req,res)=>{
 
 const loadWishlist=async(req,res)=>{
     try {
-        res.render('wishlist')
+        const userId=req.session.user_id
+        console.log(userId,'userId in loadwishlist');
+        const wishlist=await Wishlist.findOne({userId}).populate('products.productId')
+
+        if(!wishlist){
+            return res.render('wishlist',{wishlist:[]})
+        }
+        console.log(wishlist.products,'wishlist.products');
+        console.log(wishlist.products.productId,'wihslist.products.productId');
+        res.render('wishlist',{wishlist})
     } catch (error) {
         console.log(error.message);
     }
 }
 
+const addToWishlist=async(req,res)=>{
+    try {
+        const { productId } = req.body;
+        console.log(productId,'product id in add to wihslist');
+        const userId = req.session.user_id;
+        const wishlist = await Wishlist.findOne({ userId });
+        if(!wishlist){
+            const newWishlist=new Wishlist({
+                userId,
+                products:[{productId}]
+            })
+            await newWishlist.save()
+        }else{
+            if(!wishlist.products.some(product=>product.productId===productId))
+            wishlist.products.push({productId})
+            await wishlist.save()
+        }
+        res.json({success:true,message:'Product added to wishlist'})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 module.exports = {
@@ -1226,7 +1257,8 @@ module.exports = {
     applyCoupon,
     addMoneyToWallet,
     processWalletPayment,
-    loadWishlist
+    loadWishlist,
+    addToWishlist
 
    
 }

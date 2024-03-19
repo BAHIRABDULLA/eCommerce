@@ -82,7 +82,8 @@ user_route.post('/applyCoupon',userController.applyCoupon)
 user_route.post('/addMoneyToWallet',userController.addMoneyToWallet)
 user_route.post('/processWalletPayment',userController.processWalletPayment)
 
-user_route.get('/wishlist',userController.loadWishlist)
+user_route.get('/wishlist',auth.isLogin,userController.loadWishlist)
+user_route.post('/addToWishlist',userController.addToWishlist)
 
 
 

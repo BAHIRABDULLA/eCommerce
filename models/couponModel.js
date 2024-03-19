@@ -1,10 +1,5 @@
 const mongoose=require('mongoose')
-const couponSchema=mongoose.Schema({
-    // userId:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref:'User',
-    //     required:true
-    // },
+const couponSchema=new mongoose.Schema({
     name:{
         type:String,
         required:true

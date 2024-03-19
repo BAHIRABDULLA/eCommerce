@@ -23,7 +23,7 @@ const loadCouponAdd=async(req,res)=>{
 const couponAdding=async(req,res)=>{
     try {
         const {couponName,couponCode,description,discount,expireDate}=req.body
-
+        
         console.log(couponCode,'couponcode ');
         console.log(expireDate,'expiredate');
         console.log(description,'description in coupon add');

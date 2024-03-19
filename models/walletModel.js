@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const walletSchema=mongoose.Schema({
+const walletSchema=new mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',

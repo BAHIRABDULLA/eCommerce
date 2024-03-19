@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const offerSchema=mongoose.Schema({
+const offerSchema=new mongoose.Schema({
     title:{
         type:String,
         reqiured:true

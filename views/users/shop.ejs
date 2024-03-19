@@ -26,11 +26,15 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="/users/assets/css/bootstrap.min.css">
+
+
     <!-- Main CSS File -->
     <link rel="stylesheet" href="/users/assets/css/style.css">
     <link rel="stylesheet" href="/users/assets/css/plugins/owl-carousel/owl.carousel.css">
     <link rel="stylesheet" href="/users/assets/css/plugins/magnific-popup/magnific-popup.css">
     <link rel="stylesheet" href="/users/assets/css/plugins/nouislider/nouislider.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 </head>
 
 <body>
@@ -46,7 +50,7 @@
                                 <a href="#">Links</a>
                                 <ul>
 
-                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist
+                                    <li><a href="/wishlist"><i class="icon-heart-o"></i>Wishlist
                                             <span>(3)</span></a></li>
                                     <li><a href="about.html">About Us</a></li>
                                     <li><a href="contact.html">Contact Us</a></li>
@@ -119,8 +123,7 @@
                                     <ul>
 
                                         <li><a href="/dashboard">My Account</a></li>
-                                        <li><a href="">Wishlist</a></li>
-                                        <li><a href="">Coupon</a></li>
+
 
                                     </ul>
 
@@ -309,11 +312,26 @@
                                                     class="product-image">
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!-- <div class="product-action-vertical">
                                                 <a href="#"
                                                     class="btn-product-icon btn-wishlist btn-expandable"><span>add to
                                                         wishlist</span></a>
+                                            </div> -->
+                                            <!-- Shop Page (product listing) -->
+                                            <div class="product-action-vertical">
+                                                <a href="#"
+                                                    style="display: inline-block; height: 30px; width: 30px; border-radius: 50%; background-color: #ffffff; text-align: center; padding: 4px;"
+                                                    class="addToWishlistBtn" data-product-id="<%= product._id %>">
+                                                    <span class="wishlist-icon  "><i class="bi bi-heart"
+                                                            style="color: #000000;"></i></span>
+                                                    <!-- Unfilled heart icon -->
+                                                    <span class="added-wishlist-icon" style="display: none;"><i
+                                                            class="bi bi-heart-fill" style="color: #ff0000;"></i></span>
+                                                    <!-- Filled heart icon -->
+                                                </a>
                                             </div>
+
+
 
                                             <div class="product-action action-icon-top">
                                                 <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
@@ -862,7 +880,44 @@
 
 
     <script>
+        //    this is for add wishlist
+        document.querySelectorAll('.addToWishlistBtn').forEach(btn => {
+            btn.addEventListener('click', function (event) {
+                event.preventDefault();
 
+                const productId = this.getAttribute('data-product-id');
+                const wishlistIcon = this.querySelector('.wishlist-icon');
+                const addedWishlistIcon = this.querySelector('.added-wishlist-icon');
+
+                // Toggle visibility of heart icons
+                wishlistIcon.style.display = (wishlistIcon.style.display === 'none') ? 'inline' : 'none';
+                addedWishlistIcon.style.display = (addedWishlistIcon.style.display === 'none') ? 'inline' : 'none';
+
+                // Send AJAX request to add product to Wishlist
+                fetch('/addToWishlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ productId: productId })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to add product to Wishlist');
+                        }
+                        // Handle success response if needed
+                    })
+                    .catch(error => {
+                        console.error('Error adding product to Wishlist:', error);
+                        // Handle error
+                    });
+            });
+        });
+
+
+
+
+        // this is for sorting
         const sortSelect = document.getElementById('sortby')
         sortSelect.addEventListener('change', function () {
             const selectedValue = this.value

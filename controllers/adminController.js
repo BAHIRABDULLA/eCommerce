@@ -1,5 +1,7 @@
 // const Admin=require('../models/adminModel')
 const User = require('../models/userModel')
+const Order= require('../models/orderModel')
+const Coupon=require('../models/couponModel')
 // const Category=require('../models/categoryModel')
 const bcrypt = require('bcrypt')
 require('dotenv').config()
@@ -56,6 +58,61 @@ const dashboardLoad = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
+const loadSalesReport=async (req,res)=>{
+    try {
+        const order=await Order.find()
+
+        res.render('salesReport')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const showReport=async(req,res)=>{
+    try {
+        console.log('its here in show report');
+        const { reportType, startDate, endDate } = req.body;
+        console.log(reportType,'report tyep',startDate,'startdate',endDate,'enddate');
+        let query = {};
+
+        // Modify query based on reportType and date range
+        if (reportType === 'daily') {
+            query = { createdAt: { $gte: new Date(startDate), $lt: new Date(endDate) } };
+        } else if (reportType === 'weekly') {
+            // Logic for weekly report
+        } else if (reportType === 'monthly') {
+            // Logic for monthly report
+        } else if (reportType === 'yearly') {
+            // Logic for yearly report
+        } else if (reportType === 'custom') {
+            // Logic for custom date range
+        }
+
+        const orders = await Order.find(query);
+
+ 
+        const totalSalesCount = orders.length;
+        console.log(totalSalesCount,'totalsalescount');
+        const totalOrderAmount = orders.reduce((acc, order) => acc + order.amount, 0);
+        console.log(totalOrderAmount,'totalOrder amount ')
+        const totalDiscountAmount = orders.reduce((acc, order) => acc + order.discount, 0);
+        console.log(totalDiscountAmount,'totalDiscount amount')
+        const totalCoupon = orders.reduce((acc, order) => acc + order.couponCount, 0);
+        console.log(totalCoupon,'totalcoupon');
+
+        res.json({
+            orders,
+            totalSalesCount,
+            totalOrderAmount,
+            totalDiscountAmount,
+            totalCoupon
+        });
+    } catch (error) {
+        console.error('Error founded in showReport',error);
+    }
+}
+
 const customerLoad = async (req, res) => {
     try {
         console.log('wait customer load');
@@ -105,6 +162,7 @@ const updateUserStatus = async (req, res) => {
 };
 
 
+
 const logout=async (req,res)=>{
     try {
         req.session.destroy(err => {
@@ -122,6 +180,8 @@ module.exports = {
     adminLogin,
     adminVerify,
     dashboardLoad,
+    loadSalesReport,
+    showReport,
     customerLoad,
     deleteUser,
     updateUserStatus,

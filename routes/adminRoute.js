@@ -25,11 +25,14 @@ admin_route.get('/',adminAuth.isLogout,adminController.adminLogin)
 admin_route.post('/verify',adminController.adminVerify)
 
 admin_route.get('/dashboard',adminAuth.isLogin,adminController.dashboardLoad)
+admin_route.get('/dashboard/salesReport',adminAuth.isLogin,adminController.loadSalesReport)
+admin_route.post('/dashboard/salesReport/url',adminController.showReport)
 admin_route.get('/customer',adminAuth.isLogin,adminController.customerLoad)
 
 admin_route.post('/user/:id/updateStatus', adminController.updateUserStatus);
 
 admin_route.get('/deleteCustomer/:id',adminController.deleteUser)
+
 admin_route.get('/logout',adminController.logout)
 // admin_route.get('/category',adminController.categoryLoad)
 

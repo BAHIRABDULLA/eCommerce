@@ -8141,6 +8141,9 @@ p {
 .btn-wishlist:before {
     content: '\f234'
 }
+.btn-wishlist.filled:before {
+    content: '\f004'; /* Replace this with the code for your filled icon */
+}
 
 .product-body .btn-wishlist {
     position: absolute;

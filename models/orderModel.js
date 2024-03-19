@@ -52,6 +52,14 @@ const orderSchema=new mongoose.Schema({
     },
     returnReason:{
         type:String
+    },
+    couponApplied:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Coupon'
+    },
+    offerApplied:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Offer'
     }
 
 })
