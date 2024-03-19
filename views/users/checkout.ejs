@@ -368,7 +368,7 @@
                                 <h2 class="checkout-title">Shipping Address</h2>
 
                                 <!-- userAddress.address.forEach(address=> {  -->
-                                <% if(userAddress.address.length> 0) { %>
+                                <% if(userAddress && userAddress.address && userAddress.address.length> 0) { %>
                                     <div id="selectedAddress">
                                         <strong>
                                             <%= userAddress.address[0].name %> &nbsp; <%= userAddress.address[0].phone%>
@@ -383,11 +383,140 @@
                                     </div>
                                     <button class="btn-primary rounded-pill" data-toggle="modal"
                                         data-target="#addressModal">Change</button>
-                                    <% } else { %>
+                                <% } else { %>
                                         <p>No Shipping address found</p>
-                                        <% } %>
-                                            <br><br>
-                                            <% if(userAddress.address.length> 3) { %>
+                                <% } %>
+                                <br><br>
+                                        <% if(userAddress  && userAddress.adderss && userAddress.address.length < 3) { %>
+                                            <p>fdfd</p>
+
+                                                <div class="row ">
+                                                    <div class="container">
+                                                        <button class="btn btn-primary" type="button"
+                                                            data-toggle="collapse"
+                                                            data-target="#shippingAddressCollapse" aria-expanded="false"
+                                                            aria-controls="shippingAddressCollapse">
+                                                            Add a New Address
+                                                        </button>
+                                                        <div class="collapse" id="shippingAddressCollapse">
+                                                            <div class="card card-body">
+                                                                <form action="/address" method="post">
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label for="inputName">Name</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputName" name="name"
+                                                                                placeholder="Enter your name">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6  col-lg-5 ">
+                                                                            <label for="inputPhone">Phone</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputPhone" name="phone"
+                                                                                placeholder="Enter your phone">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label for="inputPincode">Pincode</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputPincode" name="pincode"
+                                                                                placeholder="Enter your pincode">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label for="inputEmail">Email</label>
+                                                                            <input type="email" class="form-control"
+                                                                                id="inputEmail" name="email"
+                                                                                placeholder="Enter your email">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group  col-lg-10">
+                                                                        <label for="inputAddress">Address (Area and
+                                                                            Street)</label>
+                                                                        <textarea class="form-control" id="inputAddress"
+                                                                            rows="1" name="streetAddress"
+                                                                            placeholder="Enter your address"></textarea>
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label
+                                                                                for="inputLocalityDistrict">City/District/Town</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputLocalityDistrict" name="city"
+                                                                                placeholder="Enter your city/district/town">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6   col-lg-5">
+                                                                            <label for="inputState">State</label>
+                                                                            <select id="inputState" name="state"
+                                                                                class="form-control">
+                                                                                <option selected>Select your state
+                                                                                </option>
+                                                                                <!-- Add options for all 28 states of India -->
+                                                                                <option>Andhra Pradesh</option>
+                                                                                <option>Arunachal Pradesh</option>
+                                                                                <option>Assam</option>
+                                                                                <option>Bihar</option>
+                                                                                <option>Chhattisgarh</option>
+                                                                                <option>Goa</option>
+                                                                                <option>Gujarat</option>
+                                                                                <option>Haryana</option>
+                                                                                <option>Himachal Pradesh</option>
+                                                                                <option>Jharkhand </option>
+                                                                                <option>Karnataka</option>
+                                                                                <option>Kerala</option>
+                                                                                <option>Madhya Pradesh</option>
+                                                                                <option>Maharashtra</option>
+                                                                                <option>Manipur</option>
+                                                                                <option>Meghalaya</option>
+                                                                                <option>Mizoram</option>
+                                                                                <option>Nagaland</option>
+                                                                                <option>Odisha</option>
+                                                                                <option>Punjab</option>
+                                                                                <option>Rajasthan</option>
+                                                                                <option>Sikkim</option>
+                                                                                <option>Tamil Nadu</option>
+                                                                                <option>Telangana</option>
+                                                                                <option>Tripura</option>
+                                                                                <option>Uttar Pradesh</option>
+                                                                                <option>Uttarakhand</option>
+                                                                                <option>West Bengal</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6   col-lg-5">
+                                                                            <label for="inputLandmark">Landmark
+                                                                                (Optional)</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputLandmark" name="landmark"
+                                                                                placeholder="Enter your landmark">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6   col-lg-5">
+                                                                            <label for="inputAlternatePhone">Alternate
+                                                                                Phone
+                                                                                (Optional)</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputAlternatePhone" name="phone2"
+                                                                                placeholder="Enter your alternate phone">
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#shippingAddressCollapse"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="shippingAddressCollapse">Save</button>
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#shippingAddressCollapse"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="shippingAddressCollapse">Cancel</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        <% }else if(!userAddress) { %>
+                                            <p>jjjjj</p>
+                                                <% console.log('518'); %>
                                                 <div class="row ">
                                                     <div class="container">
                                                         <button class="btn btn-primary" type="button"
@@ -512,7 +641,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <% } %>
+                                            <% } %>
 
 
 
@@ -522,6 +651,7 @@
                                                     <textarea class="form-control" cols="30" rows="4"
                                                         placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                             </div>
+                           
                             <aside class="col-lg-4">
                                 <div class="summary">
                                     <h3 class="summary-title">Your Order</h3>
@@ -634,6 +764,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <% if(userAddress && userAddress.address) { %>
                     <div class="modal-body">
                         <ul class="list-group">
                             <% userAddress.address.forEach(address=> { %>
@@ -649,6 +780,7 @@
                                 <% }) %>
                         </ul>
                     </div>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -997,31 +1129,43 @@
                     } else {
                         throw new Error('Failed to create Razorpay order');
                     }
-                } else if (paymentMethod === 'cashOnDelivery') {
-                    // Place order with cash on delivery
-                    // const response = await fetch('/placeOrder', {
-                    // method: 'POST',
-                    // headers: {
-                    // 'Content-Type': 'application/json'
-                    // },
-                    // body: JSON.stringify({
-                    // userId: '<%= user_id %>',
-                    // totalAmount,
-                    // orderUserDetails: selectedAddressId,
+                }else if(paymentMethod === 'wallet'){
+                    const walletBalance='<%= walletBalance %>'
+                    console.log(walletBalance,'wallet balance in wallet');
+                    if(walletBalance >=totalAmount){
+                        try {
+                            const response=await fetch('/processWalletPayment',{
+                                method:'POST',
+                                headers:{
+                                    'Content-Type':'application/json'
+                                },
+                                body:JSON.stringify({totalAmount})
+                            })
+                            if(response.ok){
+                                console.log(response,'response in wallet payment');
+                               saveOrderToDatabase('Wallet')
+                            }
+                        } catch (error) {
+                            console.error('Error processing wallet payment:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong! Please try again later.'
+                            });
+                        }
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Insufficient Funds',
+                            text: 'Your wallet does not have enough funds to cover the total amount.'
+                        });
+                    }
+                }else if (paymentMethod === 'cashOnDelivery') {
+                 
                     paymentMethod: 'Cash on Delivery',
-                        // })
-                        // });
-
-                        // if (response.ok) {
-                        // Swal.fire({
-                        // title: 'Order Placed Successfully',
-                        // icon: 'success'
-                        // });
-                        // Save order to the database here
-                        saveOrderToDatabase('Cash on Delivery');
-                    // } else {
-                    // throw new Error('Failed to place order');
-                    // }
+                
+                    saveOrderToDatabase('Cash on Delivery');
+                    
                 }
             } catch (error) {
                 console.error('Error placing order', error);

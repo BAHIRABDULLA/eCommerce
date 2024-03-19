@@ -7,13 +7,27 @@ const walletSchema=mongoose.Schema({
     },
     balance:{
         type:Number,
-        default:0
+        required:true
     },
     transactions:[{
-        type:String,
-        enum:['credit','debit']
+        type:{
+            type:String,
+            enum:['credit','debit'],
+        },
+        reason:{
+            type:String,
+            required:true,
+            enum:['added money to wallet' ,'purchased product','refund']
+        },
+        date:{
+            type:Date,
+            default:Date.now
+        },
+        transactionAmount:{
+            type:Number,
+            required:true
+        }
     }]
-
 })
 
 module.exports=mongoose.model('Wallet',walletSchema)

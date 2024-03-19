@@ -52,6 +52,10 @@ user_route.get('/resetPassword',userController.newPassLoad)
 user_route.post('/resetPassword',userController.newPassUpadate)
 user_route.get('/shop',userController.loadShop)
 user_route.get('/products',userController.products)
+
+user_route.get('/search',userController.searchProducts)
+
+
 user_route.get('/singleProduct/:productId',userController.loadSingleProduct)
 // user_route.get('/dashboard',userController.loadDashboard)
 // user_route.get('/cart',userController.loadFreeCart)
@@ -74,7 +78,13 @@ user_route.post('/api/payment/verify',userController.verifyRazorpay)
 
 user_route.get('/couponGet',userController.couponGet)
 user_route.post('/applyCoupon',userController.applyCoupon)
+
+user_route.post('/addMoneyToWallet',userController.addMoneyToWallet)
+user_route.post('/processWalletPayment',userController.processWalletPayment)
+
 user_route.get('/wishlist',userController.loadWishlist)
+
+
 
 
 module.exports=user_route

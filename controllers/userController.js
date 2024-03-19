@@ -5,6 +5,9 @@ const Address = require('../models/addressModel')
 const Cart = require('../models/cartModel')
 const Order = require('../models/orderModel')
 const Coupon = require('../models/couponModel')
+
+const Wallet = require('../models/walletModel')
+
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const { ObjectId } = require('mongodb');
@@ -554,6 +557,21 @@ const products = async (req, res) => {
         console.log(error.message);
     }
 }
+const searchProducts = async (req, res) => {
+    try {
+        const query = req.query.q;
+        console.log(query,'query in search products');
+        const products = await Product.find({ name: { $regex: query, $options: 'i' } }).populate('category');
+        const categories = await Category.find({});
+        const selectedCategory = 'allCategory';
+        res.render('shop', { products, categories, selectedCategory });
+    } catch (error) {
+        console.error('Error searching products:', error);
+        res.status(500).json({ error: 'Failed to search products' });
+    }
+};
+
+
 
 
 //  this is single product showing 
@@ -938,7 +956,12 @@ const loadCheckout = async (req, res) => {
 
         const userAddress = await Address.findOne({ userId: req.session.user_id })
         console.log(userAddress, 'userAddress in load checkout page ');
-        res.render('checkout', { user_id: userId, userAddress, cart, subtotal, deliveryCharges, totalAmount })
+
+        const wallet= await Wallet.findOne({userId:req.session.user_id})
+        const walletBalance=wallet? wallet.balance:0
+        console.log(walletBalance,'walletbalance');
+        res.render('checkout', { user_id: userId, userAddress, cart, subtotal, deliveryCharges, totalAmount,walletBalance })
+       
     } catch (error) {
         console.log(error.message);
     }
@@ -1092,6 +1115,69 @@ const applyCoupon=async (req,res)=>{
     }
 }
 
+const addMoneyToWallet = async (req, res) => {
+    try {
+        const { amount } = req.body;
+        console.log(amount ,'amount in addmoney to wallet');
+        const userId = req.session.user_id;
+
+        let wallet = await Wallet.findOne({ userId });
+
+        if (!wallet) {
+            wallet = new Wallet({
+                userId,
+                balance: 0,
+                transactions: []
+            });
+        }
+
+        wallet.balance += amount;
+        wallet.transactions.push({
+            type: 'credit',
+            reason: 'added money to wallet',
+            date: new Date(),
+            transactionAmount: amount
+        });
+
+        await wallet.save();
+
+        res.status(200).send('Money added successfully');
+    } catch (error) {
+        console.error('Error adding money to wallet:', error);
+        res.status(500).send('Failed to add money to wallet');
+    }
+};
+
+const processWalletPayment=async(req,res)=>{
+    try {
+        const {totalAmount}=req.body
+        console.log(totalAmount,'totalamount processWallet payment');
+        const userId=req.session.user_id
+        let wallet = await Wallet.findOne({ userId });
+        if (!wallet) {
+            wallet = new Wallet({
+                userId,
+                balance: 0,
+                transactions: []
+            });
+        }
+
+        wallet.balance -= totalAmount;
+        wallet.transactions.push({
+            type: 'debit',
+            reason: 'purchased product',
+            date: new Date(),
+            transactionAmount: totalAmount
+        });
+
+        await wallet.save()
+
+        res.status(200).send('Payment processed successfully');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 const loadWishlist=async(req,res)=>{
     try {
@@ -1100,6 +1186,7 @@ const loadWishlist=async(req,res)=>{
         console.log(error.message);
     }
 }
+
 
 
 module.exports = {
@@ -1114,6 +1201,7 @@ module.exports = {
     logout,
     loadShop,
     products,
+    searchProducts,
     forgetPass,
     forgetUpdate,
     forgetOtpLoad,
@@ -1134,8 +1222,11 @@ module.exports = {
     placeOrder,
     createOrder,
     verifyRazorpay,
-    loadWishlist,
     couponGet,
-    applyCoupon
+    applyCoupon,
+    addMoneyToWallet,
+    processWalletPayment,
+    loadWishlist
+
    
 }

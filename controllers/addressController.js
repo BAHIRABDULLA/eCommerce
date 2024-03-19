@@ -1,24 +1,33 @@
 const Address=require('../models/addressModel')
 const Order=require('../models/orderModel')
 const User=require('../models/userModel')
+const Wallet=require('../models/walletModel')
 
 
 const getDashboard = async (req, res) => {
     try {
-        console.log('haaiiii');
+        // console.log('haaiiii');
         // console.log(req.session.user_id, 'user id in get address');
         const userId = req.session.user_id;
         console.log(userId,'userId in getdashbaord page');
         // console.log('UserId in dashboard',userId);
         const userAddress = await Address.findOne({ userId });
 
+
         const orders = await Order.find({ userId }).populate('products.productId');
     //    console.log(orders[0].products[0].productId.image[0])
         const users=await User.findOne({_id:userId})
+        // console.log(users,'users in dashboard');
 
+        const wallets= await Wallet.find({userId})
+        let walletBalance = 0;
+        if (wallets.length > 0) {
+            walletBalance = wallets[0].balance;
+        }
 
-        console.log(users,'users in dashboard');
-        res.render('dashboard', { userAddress,orders ,users});
+        console.log(wallets,'wallet in get dashbaord page');
+        console.log(walletBalance, 'wallet balance in getdashboard page');
+        res.render('dashboard', { userAddress,orders ,users,walletBalance});
     } catch (error) {
         console.log(error.message);
     }

@@ -39,6 +39,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+   
+
 <style>
    .order-details {
     margin-bottom: 20px;
@@ -73,6 +76,7 @@
 }
 
 </style>
+
 </head>
 
 <body>
@@ -299,6 +303,9 @@
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
 								    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link" id="tab-wallet-link"  data-toggle="tab" href="#tab-wallet"  role="tab" aria-controls="tab-wallet"  aria-selected="false">Wallet</a>
+                                    </li>
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
 								    </li>
@@ -318,7 +325,6 @@
 								    	From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
 								    </div><!-- .End .tab-pane -->
 
-								    
 
                                     <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
                                         <h2>Orders</h2>
@@ -355,20 +361,6 @@
                                             </div>
                                         <% } %>
                                     </div>
-                                    
-                                    
-                                    
-                                   
-                                      
-                                    
-                                    
-                                    
-                                    
-                                    
-
-								    
-
-                                
                                     
 								    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
 
@@ -539,6 +531,33 @@
 								    		</div>	
 								    	</div>
 								    </div>
+
+                                    <div class="tab-pane fade" id="tab-wallet" role="tabpanel" aria-labelledby="tab-wallet-link">
+                                        <div class="row">
+                                            <h3>My E-Wallet</h3>
+                                            <div class="col-lg-12">
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <div class="bg-black">
+                                                            <h4 class="fw-bolder">Available Balance</h4>
+
+                                                            <% if(walletBalance >= 0) { %>
+                                                                <% console.log(walletBalance,'wallet.balance if '); %>
+                                                                <h6 class="text-primary ">₹ <%= walletBalance %></h6>
+                                                            <% } else { %>
+                                                                <% console.log(walletBalance,'wallet.balance else'); %>
+                                                                <h6>Your wallet is empty</h6>
+                                                            <% } %>
+                                                        </div>
+                                                        <input type="text" id="amountInput" placeholder="Enter Amount">
+                                                        <button class="btn btn-dark" style="height: 35px; width: 10px;">Add Now</button>
+                                                    </div>
+                                                    <a class="badge bg-danger text-white" href="">history</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
 
 								    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
 								    	<form action="#">
@@ -921,10 +940,60 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-        
 
+
+    /////////////////
+    const amountInput = document.getElementById('amountInput');
+
+    amountInput.addEventListener('input', function(event) {
+        const inputValue = event.target.value;
+        const sanitizedValue = inputValue.replace(/\D/g, ''); 
+        event.target.value = sanitizedValue;
+    });
+
+
+    document.addEventListener('DOMContentLoaded',()=>{
+        const addMoneyBtn=document.querySelector('#tab-wallet .btn-dark')
+        const amountInput=document.querySelector('#tab-wallet #amountInput')
+
+        addMoneyBtn.addEventListener('click',async ()=>{
+            const amount =parseFloat(amountInput.value)
+            if (isNaN(amount) || amount <= 0) {
+                return alert('Please enter a valid amount.');
+            }
+            try {
+                const response=await fetch('/addMoneyToWallet',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({amount})
+                }).then((response)=>{
+                    if(response.ok){
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Signed in successfully"
+                        });
+                    }
+                })
+            } catch (error) {
+                
+            }
+        })
+    })
     </script>
-    
+
 
     <!-- Plugins JS File -->
     <script src="/users/assets/js/jquery.min.js"></script>
