@@ -6,11 +6,12 @@ console.log('the category page loading ...');
 
 const categoryLoad = async (req, res) => {
     try {
+        const errorMessages=req.flash('error')
         const categoryId=req.params.id
         const categories = await Category.find()
         // res.json(categories)
         // res.render('category', { categories: JSON.stringify(categories) })
-        res.render('category', { categories,categoryId })
+        res.render('category', { categories,categoryId,errorMessages })
         console.log('catogory load is working');
     } catch (error) {
         console.log(error.message);
@@ -37,6 +38,12 @@ const categoryLoad = async (req, res) => {
 const addCategory=async(req,res)=>{
     try {
         const {categoryName,categoryDescription}=req.body
+
+        const existingCategory = await Category.find({name:categoryName})
+        if(existingCategory){
+            req.flash('error','Category with the same name already exists.')
+            return res.redirect('/admin/category')
+        }
         const newCategory=new Category({
             name:categoryName,
             description:categoryDescription,

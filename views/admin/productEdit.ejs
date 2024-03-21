@@ -26,8 +26,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo" href="index.html"><img src="/admin/images/logo.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/admin/images/logo-mini.svg" alt="logo" /></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -83,7 +83,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="user-profile">
           <div class="user-image">
-            <img src="images/faces/face28.png">
+            <img src="/admin/images/faces/face28.png">
           </div>
           <div class="user-name">
             Bahir Abdulla
@@ -143,7 +143,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin/login">
+            <a class="nav-link" href="/admin/logout">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Logout</span>
               <!-- <i class="menu-arrow"></i> -->
@@ -165,7 +165,7 @@
           <div class="col-12 grid-margin">
             <div class="card">
               <div class="card-body">
-               <form action="/admin/productEdit/<%= product._id %>" method="post">
+               <form action="/admin/productEdit/<%= product._id %>" method="post" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
@@ -182,7 +182,7 @@
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Category</label>
                       <div class="col-sm-12">
-                        <select class="form-control">
+                        <select class="form-control" name="category">
                           <% categories.forEach(category=> { %>
                             <option value="<%= category._id %>"><%= category.name %></option>
                             
@@ -215,7 +215,7 @@
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Size</label>
                       <div class="col-sm-4  col-lg-4 ">
-                        <input type="text" class="form-control" value="<%= product.size %>"/>
+                        <input type="text" class="form-control" name="size" value="<%= product.size %>"/>
                       </div>
                     </div>
                   </div>
@@ -224,7 +224,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleTextarea1">Description</label>
-                      <textarea class="form-control" id="exampleTextarea1"  rows="4"><%= product.description %></textarea>
+                      <textarea class="form-control" id="exampleTextarea1" name="description"  rows="4"><%= product.description %></textarea>
                     </div>
 
                   </div>
@@ -257,7 +257,8 @@
                         <label>File upload</label>
                         <input type="file" name="img[]" class="file-upload-default">
                         <div class="input-group col-xs-12">
-                          <input type="text" class="form-control  file-upload-info" onchange="viewImage(event)" disabled placeholder="<%= product.image[0] %>">
+                          <!-- <input type="text" class="form-control  file-upload-info" onchange="viewImage(event)" disabled placeholder=""> -->
+                          <input type="text" class="form-control  file-upload-info" disabled placeholder="<%= product.image[0] %>">
                           <span class="input-group-append">
                             <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                           </span>
@@ -269,7 +270,7 @@
                         <label>File upload</label>
                         <input type="file" name="img[]" class="file-upload-default">
                         <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info"  placeholder="<%= product.image[1] %>">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="<%= product.image[1] %>">
                           <span class="input-group-append">
                             <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                           </span>
@@ -324,27 +325,27 @@
     <!-- container-scroller -->
 
     <script>
-      function viewImage(event){
-        document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
-      }
+      // function viewImage(event){
+      //   document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+      // }
     </script>
 
     <!-- base:js -->
     <script src="/admin/vendors/base/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- inject:js -->
-    <script src="js/off-canvas.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
-    <script src="js/template.js"></script>
+    <script src="/admin/js/off-canvas.js"></script>
+    <script src="/admin/js/hoverable-collapse.js"></script>
+    <script src="/admin/js/template.js"></script>
     <!-- endinject -->
     <!-- plugin js for this page -->
     <script src="/admin/vendors/typeahead.js/typeahead.bundle.min.js"></script>
     <script src="/admin/vendors/select2/select2.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- Custom js for this page-->
-    <script src="js/file-upload.js"></script>
-    <script src="js/typeahead.js"></script>
-    <script src="js/select2.js"></script>
+    <script src="/admin/js/file-upload.js"></script>
+    <script src="/admin/js/typeahead.js"></script>
+    <script src="/admin/js/select2.js"></script>
     <!-- End custom js for this page-->
 </body>
 

@@ -880,40 +880,65 @@
 
 
     <script>
-        //    this is for add wishlist
-        document.querySelectorAll('.addToWishlistBtn').forEach(btn => {
-            btn.addEventListener('click', function (event) {
-                event.preventDefault();
 
-                const productId = this.getAttribute('data-product-id');
-                const wishlistIcon = this.querySelector('.wishlist-icon');
-                const addedWishlistIcon = this.querySelector('.added-wishlist-icon');
-
-                // Toggle visibility of heart icons
-                wishlistIcon.style.display = (wishlistIcon.style.display === 'none') ? 'inline' : 'none';
-                addedWishlistIcon.style.display = (addedWishlistIcon.style.display === 'none') ? 'inline' : 'none';
-
-                // Send AJAX request to add product to Wishlist
-                fetch('/addToWishlist', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ productId: productId })
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            fetch('/wishlistt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch wishlist data');
+                    }
+                    return response.json();
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Failed to add product to Wishlist');
+                .then(wishlistData => {
+                    const wishlistProducts = wishlistData.products;
+                    document.querySelectorAll('.addToWishlistBtn').forEach(btn => {
+                        const productId = btn.getAttribute('data-product-id');
+                        const isInWishlist = wishlistProducts.some(product => product.productId === productId);
+                        const wishlistIcon = btn.querySelector('.wishlist-icon');
+                        const addedWishlistIcon = btn.querySelector('.added-wishlist-icon');
+
+                        if (isInWishlist) {
+                            wishlistIcon.style.display = 'none';
+                            addedWishlistIcon.style.display = 'inline';
+                        } else {
+                            wishlistIcon.style.display = 'inline';
+                            addedWishlistIcon.style.display = 'none';
                         }
-                        // Handle success response if needed
-                    })
-                    .catch(error => {
-                        console.error('Error adding product to Wishlist:', error);
-                        // Handle error
                     });
+                })
+                .catch(error => {
+                    console.error('Error fetching wishlist data:', error);
+                });
+            document.querySelectorAll('.addToWishlistBtn').forEach(btn => {
+                btn.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const productId = this.getAttribute('data-product-id');
+                    const wishlistIcon = this.querySelector('.wishlist-icon');
+                    const addedWishlistIcon = this.querySelector('.added-wishlist-icon');
+                    fetch('/addToWishlist', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId: productId })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Failed to update wishlist');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            wishlistIcon.style.display = data.success ? 'none' : 'inline';
+                            addedWishlistIcon.style.display = data.success ? 'inline' : 'none';
+                        })
+                        .catch(error => {
+                            console.error('Error updating wishlist:', error);
+                        });
+                });
             });
         });
-
 
 
 

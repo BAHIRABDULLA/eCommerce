@@ -144,7 +144,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/login">
+          <a class="nav-link" href="/admin/logout">
             <i class="icon-head menu-icon"></i>
             <span class="menu-title">Logout</span>
             <!-- <i class="menu-arrow"></i> -->
@@ -164,16 +164,18 @@
       <a href="/admin/products" class="btn btn-info   ">Back</a>
       <div class="content-wrapper">
 
+       
         <div class="col-12 grid-margin">
           <div class="card">
             <div class="card-body">
-              <form action="/admin/productAdd" method="post" enctype="multipart/form-data">
+              <form id="productForm" action="/admin/productAdd" method="post" enctype="multipart/form-data">
 
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="exampleInputName1">Product Name</label>
                     <input type="text" class="form-control" id="exampleInputName1" name="name" placeholder="Name">
+                    <small class="text-danger" id="productNameError"></small>
                   </div>
 
                 </div>
@@ -186,13 +188,14 @@
                     <label class="col-sm-3 col-form-label">Category</label>
                     <div class="col-sm-12">
                       <select class="form-control" id="category-select">
+                        <option value="" disabled selected>Select a category</option>
                         <% categories.forEach(category =>{ %>
                         <option value="<%= category._id %>"><%= category.name %></option>
-                        <!-- <option value="Clothes">Clothes</option> -->
-                        <!-- <option value="Accessories">Accessories</option> -->
                         <% }) %>
                       </select>
                     </div>
+                    <small class="text-danger" id="categoryError"></small>
+
                   </div>
                 </div>
               </div>
@@ -206,6 +209,7 @@
                     <div class="col-sm-4  col-lg-4">
                       <input type="text" name="price" class="form-control" />
                     </div>
+                    <small class="text-danger" id="priceError"></small>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -214,6 +218,7 @@
                     <div class="col-sm-4  col-lg-4">
                       <input type="text" name="quantity" class="form-control" />
                     </div>
+                    <small class="text-danger" id="quantityError"></small>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -231,7 +236,7 @@
                     <label for="exampleTextarea1">Description</label>
                     <textarea class="form-control" id="exampleTextarea1" name="description" rows="4"></textarea>
                   </div>
-
+                  <small class="text-danger" id="descriptionError"></small>
                 </div>
 
                 <div class="row">
@@ -245,6 +250,7 @@
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>
                       </div>
+                      <small class="text-danger" id="imageError"></small>
                     </div>
                   </div>
                   <div class="col-lg-3 ">
@@ -257,6 +263,7 @@
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>
                       </div>
+                      <small class="text-danger" id="imageError"></small>
                     </div>
                   </div>
                   <div class="col-lg-3 ">
@@ -269,6 +276,7 @@
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>
                       </div>
+                      <small class="text-danger" id="imageError"></small>
                     </div>
                   </div>
                   <div class="col-lg-3 ">
@@ -281,6 +289,7 @@
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>
                       </div>
+                      <small class="text-danger" id="imageError"></small>
                     </div>
                   </div>
 
@@ -315,7 +324,79 @@
     categorySelect.addEventListener('change',function(){
       const selectedCategory=categorySelect.value
       selectedCategoryInput.value=selectedCategory
+      console.log('selected category ',selectedCategory)
     })
+
+
+    // validation starts here
+    document.getElementById('productForm').addEventListener('submit',(event)=>{
+      event.preventDefault()
+      const productName=document.getElementById('exampleInputName1').value.trim()
+      const price=document.querySelector('input[name="price"]').value.trim()
+      const quantity = document.querySelector('input[name="quantity"]').value.trim();
+      const description = document.getElementById('exampleTextarea1').value.trim();
+      const categorySelect=document.getElementById('category-select')
+      const images=document.querySelectorAll('input[name="image"]')
+
+      const productNameError=document.getElementById('productNameError')
+      const priceError=document.getElementById('priceError')
+      const quantityError=document.getElementById('quantityError')
+      const descriptionError = document.getElementById('descriptionError');
+      const categoryError=document.getElementById('categoryError')
+      const imageError=document.getElementById('imageError')
+
+      let isValid =true
+      if(!productName){
+        productNameError.innerText='Product name cannot be empty'
+        isValid=false
+      }else{
+        productNameError.innerText=''
+      }
+
+      if (!/^\d+(\.\d{1,2})?$/.test(price)) {
+        priceError.innerText = 'Price must be a positive integer ';
+        isValid = false;
+      } else {
+        priceError.innerText = '';
+      }
+
+      if (!/^\d+$/.test(quantity)) {
+        quantityError.innerText = 'Quantity must be a positive integer';
+        isValid = false;
+      } else {
+        quantityError.innerText = '';
+      }
+
+      if (!description) {
+        descriptionError.innerText = 'Description cannot be empty';
+        isValid = false;
+      } else {
+        descriptionError.innerText = '';
+      }
+      if(categorySelect.value===''){
+        categoryError.innerText='Please choose a category'
+        isValid=false;
+      }else{
+        categoryError.innerText=''
+      }
+      let hasImage=false
+      images.forEach((image)=>{
+        if(image.files.length>0){
+          hasImage=true
+        }
+      })
+      if(!hasImage){
+        imageError.innerText='Please upload at least one image'
+        isValid=false
+      }else{
+        imageError.innerText=''
+      }
+      if (isValid) {
+        document.getElementById('productForm').submit(); 
+      }
+      
+    })
+
   </script>
   <!-- container-scroller -->
   <!-- base:js -->

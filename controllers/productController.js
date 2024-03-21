@@ -5,8 +5,9 @@ const Address = require('../models/addressModel')
 
 const productLoad = async (req, res) => {
     try {
+        const errorMessages=req.flash('error')
         const products = await Product.find().populate('category')
-        res.render('products', { products })
+        res.render('products', { products,errorMessages })
         console.log('product load is working ');
     } catch (error) {
         console.log(error.message);
@@ -29,7 +30,11 @@ const insertProduct = async (req, res) => {
     try {
         console.log('insertProduct page');
         const { name, category, quantity, size, price, description } = req.body
-
+        const existingProduct=await Product.findOne({name})
+        if(existingProduct){
+            req.flash('error','A product with the same name already exists')
+            return res.redirect("/admin/products")
+        }
         const imagePath = req.files.map(file => file.filename)
 
 
@@ -62,18 +67,47 @@ const EditProductLoad = async (req, res) => {
     }
 }
 
+// const editProduct = async (req, res) => {
+//     try {
+//         const productId = req.params.productId;
+//         const { name, category, price, quantity, size, description } = req.body
+//         const updateImages=req.files.map(file=>file.filename)
+//         console.log(req.body.description, 'body description');
+//         const update = await Product.findByIdAndUpdate(productId, { name, category, price, quantity, size, description })
+//         console.log(update);
+//         res.redirect('/admin/products')
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
+
+
 const editProduct = async (req, res) => {
     try {
         const productId = req.params.productId;
-        const { name, category, price, quantity, size, description } = req.body
-        console.log(req.body.description, 'body description');
-        const update = await Product.findByIdAndUpdate(productId, { name, category, price, quantity, size, description })
-        console.log(update);
-        res.redirect('/admin/products')
+        const { name, category, price, quantity, size, description } = req.body;
+        const updateImages = req.files.map(file => file.filename);
+        
+        const product = await Product.findById(productId);
+        product.name = name;
+        product.category = category;
+        product.price = price;
+        product.quantity = quantity;
+        product.size = size;
+        product.description = description;
+        if (updateImages.length > 0) {
+            product.image = updateImages;
+        }
+        await product.save();
+
+        console.log('Product updated successfully:', product);
+        res.redirect('/admin/products');
     } catch (error) {
-        console.log(error.message);
+        console.log('Error updating product:', error.message);
+        res.status(500).send('Internal Server Error');
     }
-}
+};
 
 const deleteProduct = async (req, res) => {
     try {

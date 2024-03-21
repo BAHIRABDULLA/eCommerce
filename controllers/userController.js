@@ -1004,7 +1004,8 @@ const placeOrder = async (req, res) => {
         for (const product of productData) {
             const updateProduct = await Product.findByIdAndUpdate(product.productId, {
                 $inc: { quantity: -product.quantity }
-            })
+            }) 
+            
         }
 
         await Cart.updateOne({ userId }, { $set: { products: [] } });
@@ -1196,28 +1197,51 @@ const loadWishlist=async(req,res)=>{
     }
 }
 
-const addToWishlist=async(req,res)=>{
+const getWishlist = async (req, res) => {
+    try {
+        const userId = req.session.user_id;
+        console.log(userId, 'userId in loadwishlist');
+        const wishlist = await Wishlist.findOne({ userId }).populate('products.productId');
+
+        if (!wishlist) {
+            return res.json({ products: [] }); // Return an empty array if wishlist is not found
+        }
+
+        res.json({ products: wishlist.products }); // Return wishlist products as JSON
+    } catch (error) {
+        console.error('Error fetching wishlist data:', error);
+        res.status(500).json({ error: 'Internal server error' }); // Return an error response if there's an error
+    }
+};
+
+const addToWishlist = async (req, res) => {
     try {
         const { productId } = req.body;
-        console.log(productId,'product id in add to wihslist');
         const userId = req.session.user_id;
         const wishlist = await Wishlist.findOne({ userId });
-        if(!wishlist){
-            const newWishlist=new Wishlist({
+
+        if (!wishlist) {
+            const newWishlist = new Wishlist({
                 userId,
-                products:[{productId}]
-            })
-            await newWishlist.save()
-        }else{
-            if(!wishlist.products.some(product=>product.productId===productId))
-            wishlist.products.push({productId})
-            await wishlist.save()
+                products: [{ productId }]
+            });
+            await newWishlist.save();
+        } else {
+        
+            const productExists = wishlist.products.some(product => product.productId.toString() === productId);
+            if (!productExists) {
+                wishlist.products.push({ productId });
+                await wishlist.save();
+            }
         }
-        res.json({success:true,message:'Product added to wishlist'})
+
+        res.json({ success: true, message: 'Product added to wishlist' });
     } catch (error) {
-        console.log(error.message);
+        console.error('Error adding product to wishlist:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
-}
+};
+
 
 
 module.exports = {
@@ -1258,6 +1282,7 @@ module.exports = {
     addMoneyToWallet,
     processWalletPayment,
     loadWishlist,
+    getWishlist,
     addToWishlist
 
    

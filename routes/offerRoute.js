@@ -13,7 +13,7 @@ offer_route.get('/offer',adminAuth.isLogin,offerController.loadOffer)
 offer_route.get('/offerAdd',adminAuth.isLogin,offerController.offerAddLoad)
 offer_route.post('/offer-add',offerController.offerAdding)
 offer_route.delete('/deleteOffer/:offerId',offerController.deleteOffer)
-offer_route.get('/offerEdit/:offerId',offerController.loadOfferEdit)
+offer_route.get('/offerEdit/:offerId',adminAuth.isLogin,offerController.loadOfferEdit)
 offer_route.post('/offerEditPost/:id',offerController.offerEditPost)
 
 module.exports=offer_route
