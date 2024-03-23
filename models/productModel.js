@@ -33,6 +33,9 @@ const productSchema=new mongoose.Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    offerApplied:{
+        type:Object
     }
 })
 module.exports=mongoose.model('Product',productSchema)

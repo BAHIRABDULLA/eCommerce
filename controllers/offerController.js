@@ -1,4 +1,6 @@
 const Offer=require('../models/offerModel')
+const Category=require('../models/categoryModel')
+const Product=require('../models/productModel')
 
 
 const loadOffer=async(req,res)=>{
@@ -16,30 +18,56 @@ console.log('offer load is working ');
 
 const offerAddLoad=async(req,res)=>{
     try {
-        res.render('offerAdd')
+        const products = await Product.find({});
+        const categories = await Category.find({});
+        console.log(categories,'categories in offerAddLoad');
+        console.log(products,'products in offerAddload');
+        res.render('offerAdd',{products,categories})
     } catch (error) {
         console.log(error.message);
     }
 }
 
+const categoriesOffer=async (req,res)=>{
+    try {
+        const categories = await Category.find({});
+        res.json({categories});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const productOffer=async (req,res)=>{
+    try {
+        const products = await Product.find({});
+        res.json({products});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 const offerAdding=async(req,res)=>{
     try {
-        const {offerTitle,offerPercentage,description,startDate,expireDate}=req.body
+        const {offerTitle,offerPercentage,description,startDate,expireDate,offerApplied}=req.body
 
         console.log(offerPercentage,'offer percenteage');
         console.log(startDate,'start date in offer adidng ');
         console.log(expireDate,'expire date in offer adding ');
+
+        const offerAppliedArray=offerApplied.split(',')
+        console.log(offerAppliedArray,'offerApplied array');
 
         const newOffer=new Offer({
             title:offerTitle,
             discountPercentage:offerPercentage,
             description,
             startDate,
-            expireDate
+            expireDate,
+            offerApplied:offerAppliedArray
         })
         await newOffer.save()
         res.redirect('/admin/offer')
+
 
     } catch (error) {
         console.log(error.message);
@@ -93,11 +121,24 @@ const offerEditPost=async(req,res)=>{
     }
 }
 
+const getCategoriesAndProducts=async (req,res)=>{
+    try {
+        const categories=await Category.find()
+        const products=await Product.find()
+        res.json({categories,products})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports={
     loadOffer,
     offerAddLoad,
     offerAdding,
     deleteOffer,
     loadOfferEdit,
-    offerEditPost
+    offerEditPost,
+    getCategoriesAndProducts,
+    productOffer,
+    categoriesOffer
 }

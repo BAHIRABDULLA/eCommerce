@@ -24,7 +24,11 @@ const offerSchema=new mongoose.Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    offerApplied:{
+        type:Array
     }
+    
 })
 
 module.exports=mongoose.model('Offer',offerSchema)
