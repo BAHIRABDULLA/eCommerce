@@ -292,7 +292,8 @@
                                                 </td>
                                                 <td class="quantity-col">
                                                     <div class="cart-product-quantity">
-                                                        <input type="number" aria-readonly="false" class="form-control   quantity-input" 
+                                                        <input type="number" aria-readonly="false"
+                                                            class="form-control quantity-input"
                                                             id="quantity_<%= product.productId._id %>"
                                                             data-productid="<%= product.productId._id %>"
                                                             value="<%= product.quantity %>" min="1"
@@ -302,12 +303,16 @@
                                                     </div>
                                                 </td>
                                                 <td class="total-col">
-                                                    <% const totalPrice=product.productId.price * product.quantity; %>
+                                                    <% const totalPrice=product.productId.offerApplied ?
+                                                        (product.productId.price - (product.productId.price *
+                                                        (product.productId.offerApplied / 100))) * product.quantity :
+                                                        product.productId.price * product.quantity; %>
                                                         ₹<span class="total-price"
-                                                            id="total_<%=  product.productId._id %>">
+                                                            id="total_<%= product.productId._id %>">
                                                             <%= totalPrice %>
                                                         </span>
                                                 </td>
+
                                                 <td class="remove-col">
                                                     <button class="btn-remove"
                                                         onclick="removeFromCart('<%= product.productId._id %>','<%=  index%>')">
@@ -346,40 +351,7 @@
                                                 <td>Subtotal:</td>
                                                 <td>₹</td>
                                             </tr><!-- End .summary-subtotal -->
-                                            <!-- <tr class="summary-shipping">
-	                							<td>Shipping:</td>
-	                							<td>&nbsp;</td>
-	                						</tr>
 
-	                						<tr class="summary-shipping-row">
-	                							<td>
-													<div class="custom-control custom-radio">
-														<input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="free-shipping">Free Shipping</label>
-													</div>
-	                							</td>
-	                							<td>₹0.00</td>
-	                						</tr>
-
-	                						<tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="standart-shipping">Standart:</label>
-													</div>
-	                							</td>
-	                							<td>₹10.00</td>
-	                						</tr> -->
-
-                                            <!-- <tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="express-shipping">Express:</label>
-													</div>
-	                							</td>
-	                							<td>₹20.00</td>
-	                						</tr> -->
 
                                             <tr class="text-dark ">
                                                 <td>Discount:</td>
@@ -399,11 +371,11 @@
 
                                     <a href="/checkout" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
                                         CHECKOUT</a>
-                                </div><!-- End .summary -->
+                                </div>
 
                                 <a href="/shop" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
                                         SHOPPING</span><i class="icon-refresh"></i></a>
-                            </aside><!-- End .col-lg-3 -->
+                            </aside>
                         </div><!-- End .row -->
                     </div><!-- End .container -->
                 </div><!-- End .cart -->
@@ -740,9 +712,9 @@
                                 'Your item has been removed from cart.',
                                 'success'
                             );
-                            subtotalElement.text('₹'+newSubtotal.toFixed(2))
+                            subtotalElement.text('₹' + newSubtotal.toFixed(2))
                             calculateTotal()
-                          
+
                         })
 
                         .catch(error => {
@@ -759,19 +731,19 @@
 
 
 
-     
+
 
 
 
         function updateCartQuantity(productId) {
             const quantity = $('#quantity_' + productId).val();
-            const maxQuantity = parseInt($('#quantity_' + productId).attr('max')) || 0;
-            console.log(maxQuantity,'maxquantity')
-            const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
-            const totalPrice = pricePerUnit * quantity
+            // const maxQuantity = parseInt($('#quantity_' + productId).attr('max')) || 0;
+            // console.log(maxQuantity, 'maxquantity')
+            // const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
+            // const totalPrice = pricePerUnit * quantity
 
-          
-      
+
+
             $.ajax({
                 type: 'POST',
                 url: '/updateCartQuantity/' + productId,
@@ -787,23 +759,23 @@
                     console.error('Error upadating cart quantity');
                 }
             })
-         
+
         }
 
 
         function updateTotalPrice(input, productId) {
-            const quantity = input.value
-            console.log(quantity,'quantity in cart ejs');
-            const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
-            // / parseInt($('#quantity_'+productId).val())
-            console.log(pricePerUnit,'pricePerUnit in cart ejs');
-            const discountedPricePerUnit=parseFloat($('#discountPrice_'+productId).text().replace('₹', ''))
-            console.log(discountedPricePerUnit,'discountedPricePerUnit');
-            const totalPrice=(discountedPricePerUnit || pricePerUnit)*quantity
-            // const totalPrice = pricePerUnit * quantity
-            console.log(totalPrice,'totalprice in cart ejs');
+            const quantity = input.value;
+            console.log(quantity,'quantity in update totalprice');
+            const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''));
+            console.log(pricePerUnit,'price per unit ');
+            const offerApplied = parseFloat($('#offerApplied_' + productId).text().replace('₹', ''));
+            console.log(offerApplied,'offerApplied');
+            const discountedPricePerUnit = offerApplied ? pricePerUnit - (pricePerUnit * (offerApplied / 100)) : pricePerUnit;
+            console.log(discountedPricePerUnit,'discount price per unit ');
+            const totalPrice = discountedPricePerUnit * quantity;
+            console.log(totalPrice,'totalprice in ejs');
             $('#total_' + productId).text('₹' + totalPrice.toFixed(2));
-            updateCartQuantity(productId, quantity)
+            updateCartQuantity(productId, quantity);
         }
 
 
@@ -824,12 +796,12 @@
 
         calculateTotal();
 
-        $('.quantity-input').on('change', function () {
+        $('.quantity-input').off('change').on('change', function () {
             updateTotalPrice(this);
             calculateTotal()
         })
 
-       
+
     </script>
 
     <!-- Plugins JS File -->

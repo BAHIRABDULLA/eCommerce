@@ -619,8 +619,8 @@ const addToCart = async (req, res) => {
         const price = product.price * quantity;
 
         if(product.offerApplied){
-            const discountPrice=product.price -(product.price *(product.offerApplied/100))
-            price=discountPrice*quantity
+            const discountPrice = product.price - (product.price * (product.offerApplied / 100));
+            price = discountPrice * quantity;
         }
 
 
@@ -667,8 +667,9 @@ const updateCartQuantity = async (req, res) => {
         const totalPrice=product.price*quantity
 
         if(product.offerApplied){
-            const discountPrice=product.price - (product.price * (product.offerApplied/100))
-            totalPrice=discountPrice *quantity
+            const discountPrice = product.price - (product.price * (product.offerApplied / 100));
+            totalPrice = discountPrice * quantity;
+
         }
 
         const cart = await Cart.findOneAndUpdate(
