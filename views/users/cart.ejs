@@ -316,7 +316,7 @@
                                             </tr>
                                             <% }) %>
                                     </tbody>
-                                </table><!-- End .table table-wishlist -->
+                                </table>
 
                                 <div class="cart-bottom">
                                     <div class="cart-discount">
@@ -793,12 +793,15 @@
 
         function updateTotalPrice(input, productId) {
             const quantity = input.value
-            console.log(quantity);
+            console.log(quantity,'quantity in cart ejs');
             const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
             // / parseInt($('#quantity_'+productId).val())
-            console.log(pricePerUnit);
-            const totalPrice = pricePerUnit * quantity
-            console.log(totalPrice);
+            console.log(pricePerUnit,'pricePerUnit in cart ejs');
+            const discountedPricePerUnit=parseFloat($('#discountPrice_'+productId).text().replace('₹', ''))
+            console.log(discountedPricePerUnit,'discountedPricePerUnit');
+            const totalPrice=(discountedPricePerUnit || pricePerUnit)*quantity
+            // const totalPrice = pricePerUnit * quantity
+            console.log(totalPrice,'totalprice in cart ejs');
             $('#total_' + productId).text('₹' + totalPrice.toFixed(2));
             updateCartQuantity(productId, quantity)
         }
@@ -826,83 +829,7 @@
             calculateTotal()
         })
 
-        //         async function updateTotalPrice(input) {
-        //     const productId = input.getAttribute('data-productid');
-        //     const quantity = input.value;
-
-        //     // Calculate the total price locally
-        //     const pricePerUnitElement = document.getElementById(`price_${productId}`);
-        //     const pricePerUnit = parseFloat(pricePerUnitElement.innerText.replace('₹', ''));
-        //     const totalPrice = pricePerUnit * quantity;
-
-        //     // Update the total price displayed
-        //     const totalPriceElement = document.getElementById(`total_${productId}`);
-        //     totalPriceElement.innerText = `₹${totalPrice.toFixed(2)}`;
-
-        //     // Recalculate the total amount
-        //     calculateTotalAmount();
-        // }
-
-
-
-        // async function updateTotalPrice(input) {
-        //     const productId = input.getAttribute('data-productid')
-        //     const quantity = input.value
-
-        //     try {
-        //         const response = await fetch(`/updateTotalPrice/${productId}`, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify({ quantity })
-        //         })
-        //         // .then(res=>res.json())
-        //         console.log('its here');
-        //         if (response.ok) {
-        //             const totalPrice = await response.text()
-        //             console.log(totalPrice);
-        //             const totalPriceElement = document.getElementById(`total_${productId}`);
-        //             totalPriceElement.innerText = `₹${totalPrice}`;
-
-        //             // calculateSubtotalAndTotal()
-        //             calculateTotalAmount();
-        //         } else {
-        //             console.error('Failed to update total price');
-        //         }
-        //     } catch (error) {
-        //         console.error('Error updating total price:', error)
-        //     }
-        // }
-
-
-        // function calculateTotalAmount() {
-        //     let subtotal = 0;
-        //     document.querySelectorAll('.total-price').forEach(priceElement => {
-        //         const totalPriceText = priceElement.innerText.replace('₹', '');
-        //         const totalPrice = parseFloat(totalPriceText);
-        //         subtotal += totalPrice;
-        //     });
-
-        //     let deliveryCharges = subtotal < 500 ? 50 : 0;
-        //     const totalAmount = subtotal + deliveryCharges;
-
-        //     document.getElementById('subtotal').innerText = `₹${subtotal.toFixed(2)}`;
-        //     document.getElementById('deliveryCharges').innerText = `₹${deliveryCharges.toFixed(2)}`;
-        //     document.getElementById('totalAmount').innerText = `₹${totalAmount.toFixed(2)}`;
-        // }
-        // calculateTotalAmount();
-        ////////////////////////////////////
-        // document.querySelectorAll('.quantity-input').forEach(input => {
-        //     const productId = input.getAttribute('data-productid');
-        //     const quantity = input.value;
-        //     const priceElement = document.getElementById(`price_${productId}`);
-
-        //     if (priceElement) {
-        //         const productPrice = parseFloat(priceElement.innerText.replace('₹', ''));
-        //         subtotal += quantity * productPrice;
-        //     }
-        // });
+       
     </script>
 
     <!-- Plugins JS File -->

@@ -594,7 +594,12 @@ const loadCart = async (req, res) => {
         if (!userId) {
             return res.render('signIn')
         } else {
-            const cart = await Cart.findOne({ userId }).populate('products.productId')
+            // const cart = await Cart.findOne({ userId }).populate('products.productId')
+            const cart=await Cart.findOne({userId}).populate({
+                path:'products.productId',
+                select:'name price offerApplied image'
+            })
+            console.log(cart,'cart in loadcart');
             if (!cart || !cart.products) {
                 return res.render('cart', { cart: { products: [] } })
             }
@@ -612,6 +617,12 @@ const addToCart = async (req, res) => {
         const { productId, quantity } = req.body;
         const product = await Product.findById(productId);
         const price = product.price * quantity;
+
+        if(product.offerApplied){
+            const discountPrice=product.price -(product.price *(product.offerApplied/100))
+            price=discountPrice*quantity
+        }
+
 
         let cart = await Cart.findOne({ userId: req.session.user_id });
         if (!cart) {
@@ -650,9 +661,15 @@ const addToCart = async (req, res) => {
 const updateCartQuantity = async (req, res) => {
     try {
         const { productId } = req.params
-        const { quantity, totalPrice } = req.body
+        const { quantity} = req.body
 
+        const product = await Product.findById(productId)
+        const totalPrice=product.price*quantity
 
+        if(product.offerApplied){
+            const discountPrice=product.price - (product.price * (product.offerApplied/100))
+            totalPrice=discountPrice *quantity
+        }
 
         const cart = await Cart.findOneAndUpdate(
             { userId: req.session.user_id, 'products.productId': productId },
