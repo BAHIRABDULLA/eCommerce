@@ -12,6 +12,10 @@
         status:{
             type:Boolean,
             default:true
+        },
+        offerApplied:{
+            type:Number
+            
         }
 
     })

@@ -193,6 +193,9 @@
                                         <figure class="product-main-image">
                                             <!-- <img id="product-zoom" src="/users/assets/images/products/single/1.jpg" data-zoom-image="/users/assets/images/products/single/1-big.jpg" alt="product image"> -->
                                             <img id="product-zoom" src="/uploads/<%= product.image[0] %>" data-zoom-image="/uploads/<%= product.image[0] %>" alt="product image">
+                                            <% if(product.offerApplied) { %>
+                                            <span class="product-label rounded  label-new"><%= product.offerApplied %>% OFF</span>
+                                            <% } %>
 
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                 <i class="icon-arrows"></i>
@@ -232,7 +235,14 @@
                                     </div>
 
                                     <div class="product-price">
-                                        ₹<%= product.price %>
+                                        <% if(product.offerApplied){ %>
+                                        
+                                        <span class="small text-dark original-price" style="text-decoration: line-through;">₹<%= product.price %></span>&nbsp;
+                                        <% let discountPrice =product.price -(product.price*(product.offerApplied /100)) %>
+                                        <span class="discount-price">₹  <%= discountPrice %></span>
+                                        <% }else{ %>
+                                            ₹<%= product.price %>
+                                        <% } %>
                                     </div>
 
                                     <div class="product-content">

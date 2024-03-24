@@ -48,14 +48,30 @@ const productOffer=async (req,res)=>{
 
 const offerAdding=async(req,res)=>{
     try {
-        const {offerTitle,offerPercentage,description,startDate,expireDate,offerApplied}=req.body
+        const {offerTitle,offerPercentage,description,startDate,expireDate,selectedItems}=req.body
 
         console.log(offerPercentage,'offer percenteage');
         console.log(startDate,'start date in offer adidng ');
         console.log(expireDate,'expire date in offer adding ');
+        console.log(selectedItems,'selected items in controlelr')
+        
+        for (const itemId of selectedItems) {
+            let offerApplied = 0;
 
-        const offerAppliedArray=offerApplied.split(',')
-        console.log(offerAppliedArray,'offerApplied array');
+            const product = await Product.findById(itemId);
+            if (product) {
+                offerApplied = offerPercentage;
+                product.offerApplied = offerApplied;
+                await product.save();
+            } else {
+                const category = await Category.findById(itemId);
+                if (category) {
+                    offerApplied = offerPercentage;
+                    category.offerApplied = offerApplied;
+                    await category.save();
+                }
+            }
+        }
 
         const newOffer=new Offer({
             title:offerTitle,
@@ -63,10 +79,12 @@ const offerAdding=async(req,res)=>{
             description,
             startDate,
             expireDate,
-            offerApplied:offerAppliedArray
+            selectedItems
+            
         })
         await newOffer.save()
-        res.redirect('/admin/offer')
+        // res.redirect('/admin/offer')
+        res.status(200).json({ message: 'Offer created successfully' });
 
 
     } catch (error) {

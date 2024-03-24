@@ -25,7 +25,7 @@ const offerSchema=new mongoose.Schema({
         type:Boolean,
         default:true
     },
-    offerApplied:{
+    selectedItems:{
         type:Array
     }
     

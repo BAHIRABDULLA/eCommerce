@@ -233,18 +233,25 @@
                       </div>
                       <!-- checked -->
                       <div class="col-md-6">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <label>Items to be offered</label>
                           <select class="js-example-basic-multiple w-100" multiple="multiple" id="offerItemsSelect">
                           </select>
+                        </div> -->
+                        <div class="form-group">
+                          <label>Items to be offered</label>
+                          <select class="w-100" multiple="multiple" id="offerItemsSelect">
+                          </select>
                         </div>
+                        
                       </div>
                     </div>
 
-                    <input type="hidden" name="offerApplied" id="offerApplied" value="">
+                    <input type="hidden" name="selectedItems" id="selectedItems">
+
 
                     <div class="col">
-                      <button onclick="abc()" type="button" class="btn btn-info ">Submit</button>
+                      <button  type="button" onclick="submitForm()" class="btn btn-info ">Submit</button>
                     </div>
 
                   </form>
@@ -334,28 +341,121 @@
 
 
 
+let selectedItems=[]
+
+async function fetchProductItems() {
+    const response = await fetch('/admin/productOffer');
+    const data = await response.json();
+    console.log(data,'fetchProductItems');
+    return data;
+}
 
 
-    async function fetchProductItems() {
-      const response = await fetch('/admin/productOffer');
-      const data = await response.json();
-      console.log(data, 'data in fetchProductItems');
-      return data;
+async function fetchCategoryItems() {
+    const response = await fetch('/admin/categoriesOffer');
+    const data = await response.json();
+    console.log(data,'fetchCategoryItems');
+    return data;
+}
+
+async function updateOfferItems() {
+    const radioProducts = document.getElementById('productsRadio');
+    const radioCategory = document.getElementById('categoryRadio');
+    const offerItemsSelect = document.getElementById('offerItemsSelect');
+
+    if (radioProducts.checked) {
+        const productData = await fetchProductItems();
+        offerItemsSelect.innerHTML = '';
+        productData.products.forEach(item => {
+            offerItemsSelect.innerHTML += `<option value="${item._id}">${item.name}</option>`;
+        });
+    } else if (radioCategory.checked) {
+        const categoryData = await fetchCategoryItems();
+        offerItemsSelect.innerHTML = '';
+        categoryData.categories.forEach(item => {
+            offerItemsSelect.innerHTML += `<option value="${item._id}">${item.name}</option>`;
+        });
     }
 
+}
 
-    async function fetchCategoryItems() {
-      const response = await fetch('/admin/categoriesOffer');
-      const data = await response.json();
-      console.log(data, 'data in fetchCategoryItems');
+function updateSelectedItems(){
+  selectedItems=Array.from(document.querySelectorAll('#offerItemsSelect option:checked')).map(option=>option.value)
+  console.log(selectedItems,'selected items in updateselectedditems');
+}
 
-      return data;
-    }
 
-    let optionTexts;
-    function abc() {
-      console.log("values2 : ", optionTexts);
-    }
+document.getElementById('productsRadio').addEventListener('change',()=>{
+  updateSelectedItems()
+  console.log('product changing');
+  updateOfferItems();
+})
+document.getElementById('categoryRadio').addEventListener('change',()=> {
+  updateSelectedItems()
+  console.log('category changing');
+  updateOfferItems()
+ });
+
+
+ document.getElementById('offerItemsSelect').addEventListener('change', updateSelectedItems);
+updateOfferItems();
+console.log('offeritems select changing');
+updateSelectedItems();
+
+function submitForm() {
+    
+    const form = document.getElementById('offerForm');
+    const formData = new FormData(form);
+    // const selectedItemsString  = formData.get('selectedItems');
+    // console.log(selectedItemsString,'selectedItemsString');
+    // const selectedItemsArray = JSON.parse(selectedItemsString);
+    // formData.append('selectedItems', JSON.stringify(selectedItems));
+
+
+    const data  = {
+        offerTitle: formData.get('offerTitle'),
+        offerPercentage: formData.get('offerPercentage'),
+        description: formData.get('description'),
+        startDate: formData.get('startDate'),
+        expireDate: formData.get('expireDate'),
+        selectedItems: selectedItems
+    };
+   
+    fetch('/admin/offer-add', {
+        method: 'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        console.log(response,'resoponose');
+        window.location.href='/admin/offer'
+    }).catch(error => {
+        console.error('Error founded in catch',error);
+    });
+}
+
+
+    // async function fetchProductItems() {
+    //   const response = await fetch('/admin/productOffer');
+    //   const data = await response.json();
+    //   console.log(data, 'data in fetchProductItems');
+    //   return data;
+    // }
+
+
+    // async function fetchCategoryItems() {
+    //   const response = await fetch('/admin/categoriesOffer');
+    //   const data = await response.json();
+    //   console.log(data, 'data in fetchCategoryItems');
+
+    //   return data;
+    // }
+
+    // let optionTexts;
+    // function abc() {
+    //   console.log("values2 : ", optionTexts);
+    // }
 
     // async function updateOfferItems() {
     //   const radioProducts = document.getElementById('productsRadio');
@@ -388,46 +488,10 @@
     //   offerAppliedInput.value = selectedItems.join(',');
     // }
 
-    async function updateOfferItems() {
-      const radioProducts = document.getElementById('productsRadio');
-      const offerItemsSelect = document.getElementById('offerItemsSelect');
-      const offerAppliedInput = document.getElementById('offerApplied')
+    // document.getElementById('productsRadio').addEventListener('change', updateOfferItems);
+    // document.getElementById('categoryRadio').addEventListener('change', updateOfferItems);
 
-
-      if (radioProducts.checked) {
-        const productData = await fetchProductItems();
-        console.log(productData, 'productData');
-        offerItemsSelect.innerHTML = '';
-        productData.products.forEach(item => {
-          offerItemsSelect.innerHTML += `<option value="${item._id}">${item.name}</option>`;
-        });
-      } else {
-        const categoryData = await fetchCategoryItems();
-        console.log(categoryData, 'categoryData');
-        offerItemsSelect.innerHTML = '';
-        categoryData.categories.forEach(item => {
-          offerItemsSelect.innerHTML += `<option value="${item._id}">${item.name}</option>`;
-        });
-      }
-      console.log("dslkafjdsa : ", offerItemsSelect);
-      // Select all the span elements within the li elements
-      const spanElements = document.querySelectorAll('.select2-selection__choice span');
-
-      // Map through the span elements and extract their text content
-      valuesArray = Array.from(spanElements).map(span => span.textContent.trim());
-
-      // Log the resulting array
-      console.log("VALUES : ", valuesArray);
-
-      const selectedItems = Array.from(offerItemsSelect.selectedOptions).map(option => option.value)
-      console.log(selectedItems, 'selected items for arrya')
-      offerAppliedInput.value = selectedItems.join(',')
-    }
-
-    document.getElementById('productsRadio').addEventListener('change', updateOfferItems);
-    document.getElementById('categoryRadio').addEventListener('change', updateOfferItems);
-
-    updateOfferItems();
+    // updateOfferItems();
 
 
 

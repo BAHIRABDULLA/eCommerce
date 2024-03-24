@@ -35,7 +35,7 @@ const productSchema=new mongoose.Schema({
         default:true
     },
     offerApplied:{
-        type:Object
+        type:Number
     }
 })
 module.exports=mongoose.model('Product',productSchema)
