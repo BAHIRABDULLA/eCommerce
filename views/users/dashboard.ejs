@@ -348,9 +348,20 @@
                                                                 <div class="product-details">
                                                                     <p class="order-date">Order Date: <%= order.orderDate.toDateString() %></p>
                                                                     <p class="order-status  btn-dark text-center  ">Status: <%= order.status %></p>
+                                                                    <!-- <% if(order.status === 'Delivered') { %>
+                                                                        <a href="#" class="btn btn-primary return-link" data-order-id="<%= order._id %>">Return Order</a>
+                                                                    
+                                                                        <% }else { %>
+                                                                        <a href="#" class="btn btn-primary cancel-link" data-order-id="<%= order._id %>">Cancel Order</a>
+                                                                    <% } %> -->
+
+
+
                                                                     <% if(order.status === 'Delivered') { %>
                                                                         <a href="#" class="btn btn-primary return-link" data-order-id="<%= order._id %>">Return Order</a>
-                                                                    <% }else { %>
+                                                                    <% } else if (order.status === 'Cancelled') { %>
+                                                                       
+                                                                    <% } else if (order.status === 'Pending' || order.status === 'Shipping') { %>
                                                                         <a href="#" class="btn btn-primary cancel-link" data-order-id="<%= order._id %>">Cancel Order</a>
                                                                     <% } %>
                                                                 </div>

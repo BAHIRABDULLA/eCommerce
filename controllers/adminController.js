@@ -69,45 +69,89 @@ const loadSalesReport=async (req,res)=>{
         console.log(error.message);
     }
 }
+
+
 const showReport=async(req,res)=>{
     try {
         console.log('its here in show report');
         const { reportType, startDate, endDate } = req.body;
-        console.log(reportType,'report tyep',startDate,'startdate',endDate,'enddate');
+       console.log(reportType,'rT',startDate,'sD',endDate,'eD');
         let query = {};
 
-        // Modify query based on reportType and date range
-        if (reportType === 'daily') {
-            query = { createdAt: { $gte: new Date(startDate), $lt: new Date(endDate) } };
-        } else if (reportType === 'weekly') {
-            // Logic for weekly report
-        } else if (reportType === 'monthly') {
-            // Logic for monthly report
-        } else if (reportType === 'yearly') {
-            // Logic for yearly report
-        } else if (reportType === 'custom') {
-            // Logic for custom date range
+        
+        switch (reportType) {
+            case 'daily':
+                query = {
+                    orderDate: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) } 
+                };
+                break;
+            case 'weekly':
+                query = {
+                    orderDate: {
+                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000), 
+                        $lt: new Date()
+                    }
+                };
+                break;
+            case 'monthly':
+                query = {
+                    orderDate: {
+                        $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1), 
+                        $lt: new Date()
+                    }
+                };
+                break;
+            case 'yearly':
+                query = {
+                    orderDate: {
+                        $gte: new Date(new Date().getFullYear(), 0, 1), 
+                        $lt: new Date()
+                    }
+                };
+                break;
+            case 'custom':
+                query = {
+                    orderDate: {
+                        $gte: new Date(startDate),
+                        $lt: new Date(endDate)
+                    }
+                };
+                break;
+            default:
+                break;
         }
-
         const orders = await Order.find(query);
+        console.log(orders,'orders in sales report ');
+        // const reportData = orders.map(order => ({
+        //     date: order.orderDate ? order.orderDate.toISOString().split('T')[0] : 'N/A',
+        //     salesCount: orders.length,
+        //     revenue: orders.reduce((acc, curr) => acc + curr.totalAmount, 0),
+        //     // coupon: order.couponApplied 
+        // }));
 
- 
-        const totalSalesCount = orders.length;
-        console.log(totalSalesCount,'totalsalescount');
-        const totalOrderAmount = orders.reduce((acc, order) => acc + order.amount, 0);
-        console.log(totalOrderAmount,'totalOrder amount ')
-        const totalDiscountAmount = orders.reduce((acc, order) => acc + order.discount, 0);
-        console.log(totalDiscountAmount,'totalDiscount amount')
-        const totalCoupon = orders.reduce((acc, order) => acc + order.couponCount, 0);
-        console.log(totalCoupon,'totalcoupon');
+        const reportData=await Order.aggregate([
+            {$match:query},
+            {
+                $group:{
+                    _id:{$dateToString:{format:"%Y-%m-%d" ,date:'$orderDate'}},
+                    salesCount:{$sum:1},
+                    revenue:{$sum:'$totalAmount'}
 
-        res.json({
-            orders,
-            totalSalesCount,
-            totalOrderAmount,
-            totalDiscountAmount,
-            totalCoupon
-        });
+                }
+            },
+            {$sort:{_id:1}}
+        ])
+        const formattedReportData=reportData.map(item=>({
+            date:item._id,
+            salesCount:item.salesCount,
+            revenue:item.revenue
+        }))
+        orders.forEach(order=>{
+            console.log(order._id,order.orderDate,'ordre.orderDate');
+        })
+        console.log(reportData,'reportdatea====');
+        console.log(formattedReportData,'formattedReportData#####');
+        res.json(formattedReportData);
     } catch (error) {
         console.error('Error founded in showReport',error);
     }

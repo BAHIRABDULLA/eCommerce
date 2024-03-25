@@ -20,8 +20,8 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="/images/favicon.png" />
 
-<!--  -->
-    
+    <!--  -->
+
 </head>
 
 <body>
@@ -160,16 +160,17 @@
                 </ul>
             </nav>
             <!-- partial -->
-            <div class="main-panel">  
-                <a href="/admin/dashboard" class="btn btn-info  ">Back</a>      
-                     
+            <div class="main-panel">
+                <a href="/admin/dashboard" class="btn btn-info  ">Back</a>
+
                 <div class="content-wrapper">
                     <div class="row">
                         <div class="col-12 grid-margin stretch-card">
-                            <div class="card"> 
+                            <div class="card">
                                 <div class="card-body">
-                                    <button class="btn btn-outline-primary ">Download As pdf</button>      
-                                    <button class="btn btn-outline-primary ">Download as excel</button> 
+                                    <button class="btn btn-outline-primary ">Download As pdf</button>
+                                    <button id="downloadExcelButton" class="btn btn-outline-primary ">Download as
+                                        excel</button>
                                     <br><br>
                                     <h3 class="card-title">Sales Report</h3>
                                     <form id="salesReportForm">
@@ -183,8 +184,8 @@
                                                 <option value="custom">Custom Date Range</option>
                                             </select>
                                         </div>
-                                        
-                                        <div id="customDateRange" class="row" style="display: none;"  >
+
+                                        <div id="customDateRange" class="row" style="display: none;">
                                             <div class="form-group  col-6 ">
                                                 <label for="startDate">Start Date:</label>
                                                 <input type="date" class="form-control" id="startDate">
@@ -194,7 +195,7 @@
                                                 <input type="date" class="form-control" id="endDate">
                                             </div>
                                         </div>
-                                        
+
                                         <button type="submit" class="btn btn-primary">Generate Report</button>
                                     </form>
                                     <br><br>
@@ -202,59 +203,71 @@
                                         <!-- Sales report results will be displayed here -->
                                         <div class="col-lg-12 grid-margin stretch-card">
                                             <div class="card">
-                                              <div class="card-body">
-                                                
-                                                <div class="table-responsive">
-                                                  <table class="table table-striped">
-                                                    <thead>
-                                                      <tr>
-                                                        <th>
-                                                            No
-                                                        </th>
-                                                        <th>Date</th>
-                                                        <th>
-                                                          Sales Count
-                                                        </th>
-                                                        <th>
-                                                          Revenue 
-                                                        </th>
-                                                        <th>
-                                                          Discount Amount
-                                                        </th>
-                                                        <th>Coupon</th>
-                                                      </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      <tr>
-                                                        <td>1</td>
-                                                        <th>13/03/2024</th>
-                                                        <td>
-                                                          333
-                                                        </td>
-                                                        <td>
-                                                          54
-                                                        </td>
-                                                        <td>
-                                                          343
-                                                        </td>
-                                                        <td>3</td>
-                                                      </tr>
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colspan="2"><strong style="color: red;">Total</strong></td>
-                                                            <td id="totalSalesCount"><strong style="color: red;">333</strong></td>
-                                                            <td id="totalOrderAmount"><strong style="color: red;">54</strong></td>
-                                                            <td id="totalDiscountAmount"><strong style="color: red;">343</strong></td>
-                                                            <td id="totalCoupon"><strong style="color: red;">34</strong></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                    
-                                                  </table>
+                                                <div class="card-body">
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        No
+                                                                    </th>
+                                                                    <th>Date</th>
+                                                                    <th>
+                                                                        Sales Count
+                                                                    </th>
+                                                                    <th>
+                                                                        Revenue
+                                                                    </th>
+                                                                    <th>
+                                                                        Discount Amount
+                                                                    </th>
+                                                                    <th>Coupon</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <!-- index shown here -->
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- date shown here -->
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- sales count shown here -->
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- revenue shown here -->
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- discount amount show -->
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- 3 -->
+                                                                    </td>
+                                                                    <input type="hidden" id="salesReportData" value="" />
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="2"><strong
+                                                                            style="color: red;">Total</strong></td>
+                                                                    <td id="totalSalesCount"><strong
+                                                                            style="color: red;">0</strong></td>
+                                                                    <td id="totalOrderAmount"><strong
+                                                                            style="color: red;">0</strong></td>
+                                                                    <td id="totalDiscountAmount"><strong
+                                                                            style="color: red;">0</strong></td>
+                                                                    <td id="totalCoupon"><strong
+                                                                            style="color: red;">0</strong></td>
+                                                                </tr>
+                                                            </tfoot>
+
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
-                                          </div>
+                                        </div>
 
 
                                         <!-- Sales report ended here -->
@@ -265,7 +278,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
 
 
@@ -282,7 +295,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const reportTypeSelect = document.getElementById('reportType');
-    
+            const salesReportForm = document.getElementById('salesReportForm')
+            const downloadExcelButton = document.getElementById('downloadExcelButton')
             reportTypeSelect.addEventListener('change', function () {
                 const customDateRangeDiv = document.getElementById('customDateRange');
                 if (this.value === 'custom') {
@@ -291,56 +305,120 @@
                     customDateRangeDiv.style.display = 'none';
                 }
             });
-        });
 
+            salesReportForm.addEventListener('submit', (event) => {
+                event.preventDefault()
 
+                const reportType = reportTypeSelect.value
+                let startDate = null
+                let endDate = null
 
+                if (reportType === 'custom') {
+                    startDate = document.getElementById('startDate').value
+                    endDate = document.getElementById('endDate').value
+                }
 
+                fetch('/admin/dashboard/sales-report', {
 
-        //product showing 
-        document.addEventListener('DOMContentLoaded', function () {
-        const salesReportForm = document.getElementById('salesReportForm');
-        const salesReportResult = document.getElementById('salesReportResult');
-
-        salesReportForm.addEventListener('submit', async function (event) {
-            event.preventDefault(); // Prevent form submission
-            
-            const reportType = document.getElementById('reportType').value;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-
-            try {
-                const response = await fetch('/admin/dashboard/salesReport/url', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ reportType, startDate, endDate })
-                });
-                
-                const data = await response.json();
-                updateTable(data);
-            } catch (error) {
-                console.error('Error fetching sales data:', error);
-            }
+                })
+                    .then(response => response.json())
+
+                    .then(data => {
+                        console.log(data, 'data from backend');
+                        updateSalesReportTable(data)
+                        // const salesReportDataElement = data
+                        document.getElementById("downloadExcelButton").addEventListener('click', downloadSalesReportAsExcel(data))
+
+
+                    })
+                    .catch(error => {
+                        console.error('Error generating sales report', error);
+                    })
+            })
+            downloadExcelButton.addEventListener('click', function () {
+                const data = JSON.parse(document.getElementById("salesReportData").value);
+                downloadSalesReportAsExcel(data);
+            });
+
         });
 
-        function updateTable(data) {
-            // Update the table with fetched data
-            // For example:
-            salesReportResult.innerHTML = `
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <!-- Table header -->
-                        <!-- Table body with data from 'data.orders' -->
-                        <!-- Table footer with totals -->
-                    </table>
-                </div>
-            `;
+        function updateSalesReportTable(data) {
+
+            const tbody = document.querySelector('#salesReportResult table tbody');
+            tbody.innerHTML = ''
+            data.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.date}</td>
+            <td>${item.salesCount}</td>
+            <td>${item.revenue}</td>
+            <td>${item.discountAmount || 'N/A'}</td>
+            <td>${item.coupon || 'N/A'}</td>
+        `;
+                tbody.appendChild(row);
+            });
+            // table.appendChild(tbody);
+
+            // salesReportResult.appendChild(table);
+
+            const totalSalesCount = data.reduce((acc, curr) => acc + curr.salesCount, 0);
+            const totalRevenue = data.reduce((acc, curr) => acc + curr.revenue, 0);
+
+            document.getElementById('totalSalesCount').textContent = totalSalesCount;
+            document.getElementById('totalOrderAmount').textContent = totalRevenue;
         }
-    });
+
+
+        //excel downloading 
+
+        function downloadSalesReportAsExcel(data) {
+            const workbook = new ExcelJS.Workbook()
+            const worksheet = workbook.addWorksheet('Sales Report');
+
+            worksheet.columns = [
+                { header: 'No', key: 'no', width: 10 },
+                { header: 'Date', key: 'date', width: 20 },
+                { header: 'Sales Count', key: 'salesCount', width: 20 },
+                { header: 'Revenue', key: 'revenue', width: 20 },
+                { header: 'Discount Amount', key: 'discountAmount', width: 20 },
+                { header: 'Coupon', key: 'coupon', width: 20 }
+            ]
+            data.forEach((item, index) => {
+                worksheet.addRow({
+                    no: index + 1,
+                    date: item.date,
+                    salesCount: item.salesCount,
+                    revenue: item.revenue,
+                    discountAmount: item.discountAmount || 'N/A',
+                    coupon: item.coupon || 'N/A'
+                })
+            })
+
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+                const url = URL.createObjectURL(blob)
+                const link = document.createElement('a')
+                link.href = url
+                link.download = 'SalesReport.xlsx'
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link)
+            })
+
+
+        }
+
     </script>
-    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+
     <script src="/admin/vendors/base/vendor.bundle.base.js"></script>
 
     <script src="/admin/js/off-canvas.js"></script>
