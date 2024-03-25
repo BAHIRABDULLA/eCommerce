@@ -290,9 +290,6 @@
                                                         <%= product.productId.price %>
                                                     </span>
                                                 </td>
-                                                <!-- <td class="offer-applied" id="offerApplied_<%= product.productId._id %>">
-                                                    <%= product.productId.offerApplied || 0 %>
-                                                </td> -->
                                                 <td class="quantity-col">
                                                     <div class="cart-product-quantity">
                                                         <input type="number" aria-readonly="false" class="form-control   quantity-input" 
@@ -402,16 +399,16 @@
 
                                     <a href="/checkout" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
                                         CHECKOUT</a>
-                                </div>
+                                </div><!-- End .summary -->
 
                                 <a href="/shop" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
                                         SHOPPING</span><i class="icon-refresh"></i></a>
-                            </aside>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+                            </aside><!-- End .col-lg-3 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .container -->
+                </div><!-- End .cart -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
 
         <footer class="footer">
             <div class="footer-middle">
@@ -793,36 +790,19 @@
          
         }
 
-////////////////////////////////////////////////////////////
-        // function updateTotalPrice(input, productId) {
-        //     const quantity = input.value
-        //     console.log(quantity,'quantity updateTotalPrice');
-        //     const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
-        
-        //     // / parseInt($('#quantity_'+productId).val())
-        //     console.log(pricePerUnit);
-        //     const totalPrice = pricePerUnit * quantity
-        //     console.log(totalPrice);
-        //     $('#total_' + productId).text('₹' + totalPrice.toFixed(2));
-        //     updateCartQuantity(productId, quantity)
-        // }
-/////////////////////////////////////////////////////////////////////////
 
-            function updateTotalPrice(input,productId){
-                const quantity=input.value;
-                const pricePerUnit=parseFloat($('#price_'+productId).text().replace('₹', ''))
-                let totalPrice
-                const offerApplied=parseFloat($('#offerApplied_'+productId).text())
-                if(offerApplied) {
-                    const discountPricePerUnit=pricePerUnit-(pricePerUnit*(offerApplied/100))
-                    totalPrice=discountPricePerUnit*quantity
-                }else{
-                    totalPrice=pricePerUnit*quantity
-                }
-                $('#total_'+productId).text('₹'+totalPrice.toFixed(2))
-                updateCartQuantity(productId,quantity)
+        function updateTotalPrice(input, productId) {
+            const quantity = input.value
+            console.log(quantity);
+            const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
+            // / parseInt($('#quantity_'+productId).val())
+            console.log(pricePerUnit);
+            const totalPrice = pricePerUnit * quantity
+            console.log(totalPrice);
+            $('#total_' + productId).text('₹' + totalPrice.toFixed(2));
+            updateCartQuantity(productId, quantity)
+        }
 
-            }
 
         function calculateTotal() {
             let subtotal = 0

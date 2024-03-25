@@ -606,18 +606,11 @@ const loadCart = async (req, res) => {
 }
 
 
-
 const addToCart = async (req, res) => {
     try {
         const { productId, quantity } = req.body;
         const product = await Product.findById(productId);
-        let  price
-        if(product.offerApplied){
-            const discountPrice = product.price *(1- product.offerApplied/100)
-            price=discountPrice* quantity
-        }else{
-            price=product.price * quantity
-        }
+        const price = product.price * quantity;
 
         let cart = await Cart.findOne({ userId: req.session.user_id });
         if (!cart) {
