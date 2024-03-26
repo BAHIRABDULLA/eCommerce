@@ -39,7 +39,7 @@ const addCategory=async(req,res)=>{
     try {
         const {categoryName,categoryDescription}=req.body
 
-        const existingCategory = await Category.find({name:categoryName})
+        const existingCategory = await Category.findOne({name:categoryName})
         if(existingCategory){
             req.flash('error','Category with the same name already exists.')
             return res.redirect('/admin/category')

@@ -30,6 +30,9 @@ const adminLogin = async (req, res) => {
     }
 }
 console.log('adminverify open');
+
+
+
 const adminVerify = async (req, res) => {
     try {
 
@@ -51,6 +54,7 @@ const adminVerify = async (req, res) => {
         console.log(error.message);
     }
 }
+
 const dashboardLoad = async (req, res) => {
     try {
         res.render('dashboard')

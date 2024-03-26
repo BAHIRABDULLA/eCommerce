@@ -139,14 +139,18 @@
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .compare-dropdown -->
 
-                        <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="/users/assets">
+                        <!-- <div class="dropdown cart-dropdown">
+                            <a href="/cart" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="/users/assets">
                                 <i class="icon-shopping-cart"></i>
                                 <span class="cart-count">2</span>
                             </a>
-
-                            
-                        </div><!-- End .cart-dropdown -->
+                        </div> -->
+                        <div class="dropdown cart-dropdown">
+                            <a href="/cart" class="dropdown-toggle" role="button"  aria-haspopup="true" aria-expanded="false"   data-display="/users/assets">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count">2</span>
+                            </a>
+                        </div>
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
@@ -207,7 +211,7 @@
                                     </span>
                                 </td>
 								<td class="action-col">
-									<button class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>Add to Cart</button>
+									<button class="btn btn-block btn-outline-primary-2" onclick="addToCart('<%= item.productId._id %>')"><i class="icon-cart-plus"></i>Add to Cart</button>
 								</td>
 								<td class="remove-col"><button class="btn-remove " onclick="removeFromWishlist('<%= item.productId._id %>','<%= index %>')"><i class="icon-close"></i></button></td>
                                 <% console.log(item.productId,'fdfd'); %>
@@ -430,6 +434,30 @@
         }
 
 
+
+        /// product add to cart funcction
+
+        function addToCart(productId){
+            fetch('/addToCart',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({productId,quantity:1})
+            })
+            .then(response=>response.json())
+            .then(data=>{
+                if(data.exists){
+                    Swal.fire("Product Quantity Updated!", "", "success");
+                }else{
+                    Swal.fire("Product Added to Cart!", "", "success");
+                }
+            })
+            .catch(error=>{
+                Swal.fire("Error", "Failed to add product to cart", "error");
+                console.error('Error adding product to cart:',error);
+            })
+        }
     
   </script>
     

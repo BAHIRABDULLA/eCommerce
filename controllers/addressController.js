@@ -1,3 +1,4 @@
+const { stat } = require('fs')
 const Address=require('../models/addressModel')
 const Order=require('../models/orderModel')
 const User=require('../models/userModel')
@@ -68,26 +69,43 @@ const updateAddress = async (req, res) => {
         const existingAddress = await Address.findOne({ userId: req.session.user_id });
         
         if (existingAddress && existingAddress.address.length >= 3) {
-            // Show an error message
+
             req.flash('error', 'You can add only three addresses.');
             return res.redirect('/dashboard');
         }
+        console.log('for shahazad');
 
         if (existingAddress) {
-            existingAddress.address.push({
-                name,
-                phone,
-                pincode,
-                email,
-                streetAddress,
-                city,
-                state,
-                landmark,
-                phone2
-            });
-
-            await existingAddress.save();
+            const update = {
+                name:name,
+                    phone:phone,
+                    pincode:pincode,
+                    email:email,
+                    streetAddress:streetAddress,
+                    city:city,
+                    state:state,
+                    landmark:landmark,
+                    phone2:phone2
+            }
+           const ab = await Address.updateOne({userId:req.session.user_id},{$push:{address:update}});
+           console.log(ab)
+            // existingAddress.address.push({
+            //     name:name,
+            //     phone:phone,
+            //     pincode:pincode,
+            //     email:email,
+            //     streetAddress:streetAddress,
+            //     city:city,
+            //     state:state,
+            //     landmark:landmark,
+            //     phone2:phone2
+            // });
+            // console.log(name,'name',phone,'phone',pincode,'pincode',
+            // email,'emaiol',streetAddress,'streetaddress',city,'city',
+            // state,'state');
+            // await existingAddress.save();
             // res.status(201).json({ message: 'Address added successfully', address: existingAddress });
+
         } else {
             
             const newAddress = new Address({

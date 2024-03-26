@@ -923,6 +923,34 @@ const processWalletPayment=async(req,res)=>{
 }
 
 
+const processRefund=async(req,res)=>{
+    try {
+        const {orderId,totalAmount }=req.body
+        const order= await Order.findOne({_id:orderId})
+        console.log(order,'aa');
+        let refundAmount=order.totalAmount
+        
+        console.log(orderId,'order id in process refund ');
+        console.log(refundAmount,'refundAmount in process refund amount');
+        const userId=req.session.user_id
+        let wallet =await Wallet.findOne({userId})
+
+        if(!wallet){
+            return res.redirect('/home')
+        }
+        wallet.balance+=refundAmount 
+        wallet.transactions.push({
+            type:"credit",
+            reason:'refund',
+            date:new Date(),
+            transactionAmount:refundAmount
+        })
+        await wallet.save()
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 const loadWishlist=async(req,res)=>{
     try {
         const userId=req.session.user_id
@@ -971,7 +999,7 @@ const addToWishlist = async (req, res) => {
             await newWishlist.save();
         } else {
         
-            const productExists = wishlist.products.some(product => product.productId.toString() === productId);
+            const productExists = wishlist.products.filter(product => product.productId.toString() === productId);
             if (!productExists) {
                 wishlist.products.push({ productId });
                 await wishlist.save();
@@ -1036,6 +1064,7 @@ module.exports = {
     applyCoupon,
     addMoneyToWallet,
     processWalletPayment,
+    processRefund,
     loadWishlist,
     getWishlist,
     addToWishlist,

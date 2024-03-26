@@ -287,9 +287,13 @@
                                                     </div>
                                                 </td>
                                                 <td class="price-col">₹<span id="price_<%= product.productId._id %>">
-                                                        <%= product.productId.price %>
-                                                    </span>
-                                                </td>
+                                                    <% 
+                                                        const pricePerUnit = product.productId.offerApplied ? 
+                                                                            (product.productId.price - (product.productId.price * (product.productId.offerApplied / 100))) :
+                                                                            product.productId.price;
+                                                    %>
+                                                    <%= pricePerUnit %>
+                                                </span></td>
                                                 <td class="quantity-col">
                                                     <div class="cart-product-quantity">
                                                         <input type="number" aria-readonly="false" class="form-control   quantity-input" 
@@ -302,12 +306,12 @@
                                                     </div>
                                                 </td>
                                                 <td class="total-col">
-                                                    <% const totalPrice=product.productId.price * product.quantity; %>
-                                                        ₹<span class="total-price"
-                                                            id="total_<%=  product.productId._id %>">
-                                                            <%= totalPrice %>
-                                                        </span>
+                                                    <% const totalPrice = pricePerUnit * product.quantity; %>
+                                                    ₹<span class="total-price" id="total_<%= product.productId._id %>">
+                                                        <%= totalPrice %>
+                                                    </span>
                                                 </td>
+                                                
                                                 <td class="remove-col">
                                                     <button class="btn-remove"
                                                         onclick="removeFromCart('<%= product.productId._id %>','<%=  index%>')">
@@ -316,7 +320,7 @@
                                             </tr>
                                             <% }) %>
                                     </tbody>
-                                </table><!-- End .table table-wishlist -->
+                                </table>
 
                                 <div class="cart-bottom">
                                     <div class="cart-discount">
