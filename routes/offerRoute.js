@@ -20,6 +20,6 @@ offer_route.delete('/deleteOffer/:offerId',offerController.deleteOffer)
 offer_route.get('/offerEdit/:offerId',adminAuth.isLogin,offerController.loadOfferEdit)
 offer_route.post('/offerEditPost/:id',offerController.offerEditPost)
 
-offer_route.get('/offer/getCategoriesAndProducts',offerController.getCategoriesAndProducts)
+// offer_route.get('/offer/getCategoriesAndProducts',offerController.getCategoriesAndProducts)
 
 module.exports=offer_route

@@ -38,8 +38,8 @@ const categoryLoad = async (req, res) => {
 const addCategory=async(req,res)=>{
     try {
         const {categoryName,categoryDescription}=req.body
-
-        const existingCategory = await Category.findOne({name:categoryName})
+        // const existingCategory = await Category.findOne({name:new RegExp(categoryName,'i')})
+        const existingCategory = await Category.findOne({ name: { $regex: `${categoryName}`, $options: 'i' } });
         if(existingCategory){
             req.flash('error','Category with the same name already exists.')
             return res.redirect('/admin/category')
@@ -71,14 +71,22 @@ const editCategory=async(req,res)=>{
     console.log(editedName);
     const editedDescription=req.body.des
     console.log(editedDescription);
-    try {
 
-        const updateCategory = await Category.findByIdAndUpdate(categoryId,
-            {name:editedName,description:editedDescription},
-            {new:true});
-        console.log(updateCategory);
-        console.log(' category edited successfull');
-        res.redirect('/admin/category')
+    try {
+        const existingCategoryName=await Category.findOne({name:{$regex:`${editedName}`,$options:'i'}})
+        if(existingCategoryName){
+            console.log('kjfdjfdkjf');
+            req.flash('error','Category with the same name already exists..')
+            return res.redirect('/admin/category')
+        }else{
+            const updateCategory = await Category.findByIdAndUpdate(categoryId,
+                {name:editedName,description:editedDescription},
+                {new:true});
+            console.log(updateCategory);
+            console.log(' category edited successfull');
+            res.redirect('/admin/category')
+        }
+        
     } catch (error) {
         console.log(error.message);
     }

@@ -84,11 +84,13 @@ user_route.post('/processWalletPayment',userController.processWalletPayment)
 user_route.post('/processRefund',userController.processRefund)
 
 user_route.get('/wishlist',auth.isLogin,userController.loadWishlist)
-user_route.get('/wishlistt',auth.isLogin,userController.getWishlist)
+// user_route.get('/wishlistt',auth.isLogin,userController.getWishlist)
 
 user_route.post('/addToWishlist',userController.addToWishlist)
 user_route.delete('/wishlist/remove/:productId',userController.removeFromWishlist)
 
+
+user_route.post('/changeProfile',userController.changeProfile)
 
 
 

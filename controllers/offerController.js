@@ -139,15 +139,15 @@ const offerEditPost=async(req,res)=>{
     }
 }
 
-const getCategoriesAndProducts=async (req,res)=>{
-    try {
-        const categories=await Category.find()
-        const products=await Product.find()
-        res.json({categories,products})
-    } catch (error) {
-        console.log(error.message);
-    }
-}
+// const getCategoriesAndProducts=async (req,res)=>{
+//     try {
+//         const categories=await Category.find()
+//         const products=await Product.find()
+//         res.json({categories,products})
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
 
 module.exports={
     loadOffer,
@@ -156,7 +156,7 @@ module.exports={
     deleteOffer,
     loadOfferEdit,
     offerEditPost,
-    getCategoriesAndProducts,
+    // getCategoriesAndProducts,
     productOffer,
     categoriesOffer
 }

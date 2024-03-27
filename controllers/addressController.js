@@ -25,10 +25,13 @@ const getDashboard = async (req, res) => {
         if (wallets.length > 0) {
             walletBalance = wallets[0].balance;
         }
-
-        console.log(wallets,'wallet in get dashbaord page');
+        let transactions =[]
+        if(wallets.length > 0){
+            transactions=wallets[0].transactions
+        }
+        // console.log(wallets,'wallet in get dashbaord page');
         console.log(walletBalance, 'wallet balance in getdashboard page');
-        res.render('dashboard', { userAddress,orders ,users,walletBalance});
+        res.render('dashboard', { userAddress,orders ,users,walletBalance,transactions,flash:req.flash()});
     } catch (error) {
         console.log(error.message);
     }

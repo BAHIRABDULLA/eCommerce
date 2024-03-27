@@ -610,7 +610,11 @@ const addToCart = async (req, res) => {
     try {
         const { productId, quantity } = req.body;
         const product = await Product.findById(productId);
-        const price = product.price * quantity;
+        if(product.offerApplied){
+            price=product.price-(product.price*product.offerApplied/100)
+        }else{
+            const price = product.price * quantity;
+        }
 
         let cart = await Cart.findOne({ userId: req.session.user_id });
         if (!cart) {
@@ -625,6 +629,10 @@ const addToCart = async (req, res) => {
             { $inc: { 'products.$.quantity': quantity, 'products.$.totalPrice': price } },
             { new: true }
         );
+        const exist=await Cart.findOneAndUpdate(
+            {userId:req.session.user_id,'products.productId':productId},
+            {$addToSet:{products:{quantity:1}}}
+        ) 
         console.log(existingProduct, 'existing product');
 
         if (existingProduct) {
@@ -960,34 +968,31 @@ const loadWishlist=async(req,res)=>{
         if(!wishlist){
             return res.render('wishlist',{wishlist:[]})
         }
-        console.log(wishlist.products,'wishlist.products');
-        console.log(wishlist.products.productId,'wihslist.products.productId');
         res.render('wishlist',{wishlist})
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const getWishlist = async (req, res) => {
-    try {
-        const userId = req.session.user_id;
-        console.log(userId, 'userId in loadwishlist');
-        const wishlist = await Wishlist.findOne({ userId }).populate('products.productId');
-
-        if (!wishlist) {
-            return res.json({ products: [] }); // Return an empty array if wishlist is not found
-        }
-
-        res.json({ products: wishlist.products }); // Return wishlist products as JSON
-    } catch (error) {
-        console.error('Error fetching wishlist data:', error);
-        res.status(500).json({ error: 'Internal server error' }); // Return an error response if there's an error
-    }
-};
+// const getWishlist = async (req, res) => {
+//     try {
+//         const userId = req.session.user_id;
+//         console.log(userId, 'userId in loadwishlist');
+//         const wishlist = await Wishlist.findOne({ userId }).populate('products.productId');
+        
+//         if (!wishlist) {
+//             return res.json({ products: [] }); 
+//         }
+//         res.json({ products: wishlist.products }); 
+//     } catch (error) {
+//         console.error('Error fetching wishlist data:', error);
+//     }
+// };
 
 const addToWishlist = async (req, res) => {
     try {
         const { productId } = req.body;
+        console.log(typeof(productId),'dfdsf',productId,'produ');
         const userId = req.session.user_id;
         const wishlist = await Wishlist.findOne({ userId });
 
@@ -999,17 +1004,25 @@ const addToWishlist = async (req, res) => {
             await newWishlist.save();
         } else {
         
-            const productExists = wishlist.products.filter(product => product.productId.toString() === productId);
+            // const productExists = wishlist.products.some(product => product.productId.toString() === productId);
+            const productExists=await Wishlist.findOne({
+                userId:userId,
+                products:{$elemMatch:{productId:productId}}
+            })
+            console.log(productExists,'product Exists');
+            
             if (!productExists) {
                 wishlist.products.push({ productId });
                 await wishlist.save();
+            }else{
+                console.log('existed')
             }
         }
 
         res.json({ success: true, message: 'Product added to wishlist' });
     } catch (error) {
         console.error('Error adding product to wishlist:', error);
-        res.status(500).json({ success: false, message: 'Internal server error' });
+        res.json({ success: false, message: 'Internal server error' });
     }
 };
 
@@ -1018,14 +1031,62 @@ const removeFromWishlist=async(req,res)=>{
         const userId = req.session.user_id
         const productId = req.params.productId
         let wishlist = await Wishlist.findOne({ userId: userId })
-        wishlist.products = wishlist.products.filter(product => String(product.productId) !== productId)
-        await wishlist.save()
+        // wishlist.products = wishlist.products.filter(product => String(product.productId) !== productId)
+        let removeProduct=await Wishlist.updateOne(
+            {userId:userId},{$pull:{products:{productId:productId}}}
+        )
+
+        console.log(removeProduct,'remove product');
         res.json({ status: true })
     } catch (error) {
         console.log(error.message);
     }
 }
 
+
+const changeProfile=async (req,res)=>{
+    try {
+        const { name ,phone,currentPassword,newPassword,confirmPassword}=req.body
+        console.log(currentPassword,'current password');
+        // const spassword=await securePassword(currentPassword)
+        
+        const userId=req.session.user_id
+        if(name){
+            await User.updateOne({_id:userId},{$set:{name:name}})
+        }
+        if(phone){
+            await User.updateOne({_id:userId},{$set:{phone:phone}})
+        }
+
+        const user=await User.findById(userId)
+        const passwordMatch=await bcrypt.compare(currentPassword,user.password)
+        console.log(passwordMatch,'passwordMatch');
+        if(currentPassword){
+            if(passwordMatch){
+                if(newPassword==confirmPassword){
+                    spassword=await securePassword(newPassword);
+            
+                    console.log(spassword,'spassword win');
+                    const save=await User.findOneAndUpdate({_id:userId},
+                        {
+                        password:spassword
+                    },{new:true})
+                    console.log(save,'savae');
+                
+                    res.redirect('/signIn')
+                }else{
+                    req.flash('error','Password is not matched')
+                }
+            }else{
+                req.flash('error','Password is incorrect,please try again')
+                res.redirect('/dashboard')
+            }
+        }
+        res.redirect('/dashboard')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports = {
     loadSignup,
@@ -1066,9 +1127,10 @@ module.exports = {
     processWalletPayment,
     processRefund,
     loadWishlist,
-    getWishlist,
+    // getWishlist,
     addToWishlist,
-    removeFromWishlist
+    removeFromWishlist,
+    changeProfile
 
    
 }

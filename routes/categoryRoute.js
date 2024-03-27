@@ -1,11 +1,18 @@
 const express=require('express')
 const category_route=express()
+const session=require('express-session')
 const flash=require('connect-flash')
 
 category_route.use(express.json())
 category_route.use(express.urlencoded({extended:true}))
 const adminAuth=require('../middleware/adminAuth')
+category_route.use(session({
+    secret:process.env.SESSION_SECRET ,
+    resave:false,
+    saveUninitialized:true
+}))
 category_route.use(flash())
+
 
 category_route.set('view engine','ejs')
 category_route.set('views','./views/admin')
