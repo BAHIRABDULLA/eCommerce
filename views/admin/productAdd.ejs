@@ -17,6 +17,15 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- start cropper js -->
+  <!-- <link rel="stylesheet" href="cropperJs/cropper.css">
+  <script src="cropperJs/cropper.js"></script> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+  <!-- end cropper js -->
+
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
 </head>
@@ -164,146 +173,149 @@
       <a href="/admin/products" class="btn btn-info   ">Back</a>
       <div class="content-wrapper">
 
-       
+
         <div class="col-12 grid-margin">
           <div class="card">
             <div class="card-body">
               <form id="productForm" action="/admin/productAdd" method="post" enctype="multipart/form-data">
 
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="exampleInputName1">Product Name</label>
-                    <input type="text" class="form-control" id="exampleInputName1" name="name" placeholder="Name">
-                    <small class="text-danger" id="productNameError"></small>
-                  </div>
-
-                </div>
-
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Category</label>
-                    <div class="col-sm-12">
-                      <select class="form-control" id="category-select">
-                        <option value="" disabled selected>Select a category</option>
-                        <% categories.forEach(category =>{ %>
-                        <option value="<%= category._id %>"><%= category.name %></option>
-                        <% }) %>
-                      </select>
-                    </div>
-                    <small class="text-danger" id="categoryError"></small>
-
-                  </div>
-                </div>
-              </div>
-
-              <input type="hidden" id="selected-category" name="category">
-
-              <div class="row ">
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-3  col-form-label">Price</label>
-                    <div class="col-sm-4  col-lg-4">
-                      <input type="text" name="price" class="form-control" />
-                    </div>
-                    <small class="text-danger" id="priceError"></small>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Quantity</label>
-                    <div class="col-sm-4  col-lg-4">
-                      <input type="text" name="quantity" class="form-control" />
-                    </div>
-                    <small class="text-danger" id="quantityError"></small>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Size</label>
-                    <div class="col-sm-4  col-lg-4 ">
-                      <input type="text" name="size" class="form-control" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="exampleTextarea1">Description</label>
-                    <textarea class="form-control" id="exampleTextarea1" name="description" rows="4"></textarea>
-                  </div>
-                  <small class="text-danger" id="descriptionError"></small>
-                </div>
-
                 <div class="row">
-                  <div class="col-lg-3 ">
+                  <div class="col-md-12">
                     <div class="form-group">
-                      <label>File upload</label>
-                      <input type="file" name="image" class="file-upload-default">
-                      <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                      </div>
-                      <small class="text-danger" id="imageError"></small>
+                      <label for="exampleInputName1">Product Name</label>
+                      <input type="text" class="form-control" id="exampleInputName1" name="name" placeholder="Name">
+                      <small class="text-danger" id="productNameError"></small>
                     </div>
-                  </div>
-                  <div class="col-lg-3 ">
-                    <div class="form-group">
-                      <label>File upload</label>
-                      <input type="file" name="image" class="file-upload-default">
-                      <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                      </div>
-                      <small class="text-danger" id="imageError"></small>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 ">
-                    <div class="form-group">
-                      <label>File upload</label>
-                      <input type="file" name="image" class="file-upload-default">
-                      <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                      </div>
-                      <small class="text-danger" id="imageError"></small>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 ">
-                    <div class="form-group">
-                      <label>File upload</label>
-                      <input type="file" name="image" class="file-upload-default">
-                      <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                      </div>
-                      <small class="text-danger" id="imageError"></small>
-                    </div>
+
                   </div>
 
                 </div>
-                <div class="row col-12">
-                  <button type="submit" class="btn btn-primary mr-2">Save</button>
-                  <!-- <a href="/admin/products"><button class="btn btn-light">Back</button></a> -->
+                <div class="row">
+                  <div class="col-md-12">
+
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Category</label>
+                      <div class="col-sm-12">
+                        <select class="form-control" id="category-select">
+                          <option value="" disabled selected>Select a category</option>
+                          <% categories.forEach(category=>{ %>
+                            <option value="<%= category._id %>">
+                              <%= category.name %>
+                            </option>
+                            <% }) %>
+                        </select>
+                      </div>
+                      <small class="text-danger" id="categoryError"></small>
+
+                    </div>
+                  </div>
                 </div>
 
+                <input type="hidden" id="selected-category" name="category">
+
+                <div class="row ">
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-3  col-form-label">Price</label>
+                      <div class="col-sm-4  col-lg-4">
+                        <input type="text" name="price" class="form-control" />
+                      </div>
+                      <small class="text-danger" id="priceError"></small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Quantity</label>
+                      <div class="col-sm-4  col-lg-4">
+                        <input type="text" name="quantity" class="form-control" />
+                      </div>
+                      <small class="text-danger" id="quantityError"></small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Size</label>
+                      <div class="col-sm-4  col-lg-4 ">
+                        <input type="text" name="size" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="exampleTextarea1">Description</label>
+                      <textarea class="form-control" id="exampleTextarea1" name="description" rows="4"></textarea>
+                    </div>
+                    <small class="text-danger" id="descriptionError"></small>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 ">
+                      <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="image" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                          </span>
+                          <button type="button" id="btn-crop">Crop</button>
+                        </div>
+                        <small class="text-danger" id="imageError"></small>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 ">
+                      <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="image" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                          </span>
+                        </div>
+                        <small class="text-danger" id="imageError"></small>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 ">
+                      <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="image" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                          </span>
+                        </div>
+                        <small class="text-danger" id="imageError"></small>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 ">
+                      <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="image" class="file-upload-default" id="imageInput">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                          </span>
+                        </div>
+                        <small class="text-danger" id="imageError"></small>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row col-12">
+                    <button type="submit" class="btn btn-primary mr-2">Save</button>
+                    <!-- <a href="/admin/products"><button class="btn btn-light">Back</button></a> -->
+                  </div>
 
 
 
-              </div>
-            </form>
+
+                </div>
+              </form>
             </div>
           </div>
 
@@ -321,36 +333,36 @@
   <script>
     const categorySelect = document.getElementById('category-select')
     const selectedCategoryInput = document.getElementById('selected-category')
-    categorySelect.addEventListener('change',function(){
-      const selectedCategory=categorySelect.value
-      selectedCategoryInput.value=selectedCategory
-      console.log('selected category ',selectedCategory)
+    categorySelect.addEventListener('change', function () {
+      const selectedCategory = categorySelect.value
+      selectedCategoryInput.value = selectedCategory
+      console.log('selected category ', selectedCategory)
     })
 
 
     // validation starts here
-    document.getElementById('productForm').addEventListener('submit',(event)=>{
+    document.getElementById('productForm').addEventListener('submit', (event) => {
       event.preventDefault()
-      const productName=document.getElementById('exampleInputName1').value.trim()
-      const price=document.querySelector('input[name="price"]').value.trim()
+      const productName = document.getElementById('exampleInputName1').value.trim()
+      const price = document.querySelector('input[name="price"]').value.trim()
       const quantity = document.querySelector('input[name="quantity"]').value.trim();
       const description = document.getElementById('exampleTextarea1').value.trim();
-      const categorySelect=document.getElementById('category-select')
-      const images=document.querySelectorAll('input[name="image"]')
+      const categorySelect = document.getElementById('category-select')
+      const images = document.querySelectorAll('input[name="image"]')
 
-      const productNameError=document.getElementById('productNameError')
-      const priceError=document.getElementById('priceError')
-      const quantityError=document.getElementById('quantityError')
+      const productNameError = document.getElementById('productNameError')
+      const priceError = document.getElementById('priceError')
+      const quantityError = document.getElementById('quantityError')
       const descriptionError = document.getElementById('descriptionError');
-      const categoryError=document.getElementById('categoryError')
-      const imageError=document.getElementById('imageError')
+      const categoryError = document.getElementById('categoryError')
+      const imageError = document.getElementById('imageError')
 
-      let isValid =true
-      if(!productName){
-        productNameError.innerText='Product name cannot be empty'
-        isValid=false
-      }else{
-        productNameError.innerText=''
+      let isValid = true
+      if (!productName) {
+        productNameError.innerText = 'Product name cannot be empty'
+        isValid = false
+      } else {
+        productNameError.innerText = ''
       }
 
       if (!/^\d+(\.\d{1,2})?$/.test(price)) {
@@ -373,29 +385,55 @@
       } else {
         descriptionError.innerText = '';
       }
-      if(categorySelect.value===''){
-        categoryError.innerText='Please choose a category'
-        isValid=false;
-      }else{
-        categoryError.innerText=''
+      if (categorySelect.value === '') {
+        categoryError.innerText = 'Please choose a category'
+        isValid = false;
+      } else {
+        categoryError.innerText = ''
       }
-      let hasImage=false
-      images.forEach((image)=>{
-        if(image.files.length>0){
-          hasImage=true
+      let hasImage = false
+      images.forEach((image) => {
+        if (image.files.length > 0) {
+          hasImage = true
         }
       })
-      if(!hasImage){
-        imageError.innerText='Please upload at least one image'
-        isValid=false
-      }else{
-        imageError.innerText=''
+      if (!hasImage) {
+        imageError.innerText = 'Please upload at least one image'
+        isValid = false
+      } else {
+        imageError.innerText = ''
       }
       if (isValid) {
-        document.getElementById('productForm').submit(); 
+        document.getElementById('productForm').submit();
       }
-      
+
     })
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const image = document.getElementById('imageInput');
+      const cropper = new Cropper(image, {
+        aspectRatio: 1, 
+        viewMode: 1, 
+        
+      });
+
+      
+      image.addEventListener('change', function () {
+        const files = this.files;
+        const file = files[0];
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            cropper.replace(event.target.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+
 
   </script>
   <!-- container-scroller -->

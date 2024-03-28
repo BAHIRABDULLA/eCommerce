@@ -296,7 +296,7 @@
                                                 </span></td>
                                                 <td class="quantity-col">
                                                     <div class="cart-product-quantity">
-                                                        <input type="number" aria-readonly="false" class="form-control   quantity-input" 
+                                                        <input type="number" aria-readonly="false" class="form-control  quantity-input" 
                                                             id="quantity_<%= product.productId._id %>"
                                                             data-productid="<%= product.productId._id %>"
                                                             value="<%= product.quantity %>" min="1"
@@ -309,6 +309,7 @@
                                                     <% const totalPrice = pricePerUnit * product.quantity; %>
                                                     ₹<span class="total-price" id="total_<%= product.productId._id %>">
                                                         <%= totalPrice %>
+                                                        
                                                     </span>
                                                 </td>
                                                 
@@ -336,7 +337,7 @@
                                         </form>
                                     </div><!-- End .cart-discount -->
 
-                                    <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i
+                                    <a href="/cart" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i
                                             class="icon-refresh"></i></a>
                                 </div><!-- End .cart-bottom -->
                             </div><!-- End .col-lg-9 -->
@@ -385,11 +386,11 @@
 	                							<td>₹20.00</td>
 	                						</tr> -->
 
-                                            <tr class="text-dark ">
+                                            <tr class="text-dark summary-discount">
                                                 <td>Discount:</td>
                                                 <td>₹0</td>
                                             </tr>
-                                            <tr class="text-dark ">
+                                            <tr class="text-dark summary-delivery">
                                                 <td>Delivery Charges:</td>
                                                 <td>₹0</td>
                                             </tr>
@@ -762,7 +763,7 @@
         }
 
 
-
+        ////////////////
      
 
 
@@ -771,15 +772,15 @@
             const quantity = $('#quantity_' + productId).val();
             const maxQuantity = parseInt($('#quantity_' + productId).attr('max')) || 0;
             console.log(maxQuantity,'maxquantity')
-            const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
-            const totalPrice = pricePerUnit * quantity
+            // const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
+            // const totalPrice = pricePerUnit * quantity
 
           
       
             $.ajax({
                 type: 'POST',
                 url: '/updateCartQuantity/' + productId,
-                data: { quantity: quantity, totalPrice },
+                data: { quantity: quantity },
                 success: function (response) {
                     if (response.success) {
                         console.log('its success in update cart quantity');
@@ -793,17 +794,17 @@
             })
          
         }
-
+///////////////////////////////////////
 
         function updateTotalPrice(input, productId) {
             const quantity = input.value
-            console.log(quantity);
+            console.log(quantity,'input.value');
             const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
             // / parseInt($('#quantity_'+productId).val())
             console.log(pricePerUnit);
             const totalPrice = pricePerUnit * quantity
             console.log(totalPrice);
-            $('#total_' + productId).text('₹' + totalPrice.toFixed(2));
+            $('#total_' + productId).text('' + totalPrice);
             updateCartQuantity(productId, quantity)
         }
 
@@ -825,88 +826,7 @@
 
         calculateTotal();
 
-        $('.quantity-input').on('change', function () {
-            updateTotalPrice(this);
-            calculateTotal()
-        })
-
-        //         async function updateTotalPrice(input) {
-        //     const productId = input.getAttribute('data-productid');
-        //     const quantity = input.value;
-
-        //     // Calculate the total price locally
-        //     const pricePerUnitElement = document.getElementById(`price_${productId}`);
-        //     const pricePerUnit = parseFloat(pricePerUnitElement.innerText.replace('₹', ''));
-        //     const totalPrice = pricePerUnit * quantity;
-
-        //     // Update the total price displayed
-        //     const totalPriceElement = document.getElementById(`total_${productId}`);
-        //     totalPriceElement.innerText = `₹${totalPrice.toFixed(2)}`;
-
-        //     // Recalculate the total amount
-        //     calculateTotalAmount();
-        // }
-
-
-
-        // async function updateTotalPrice(input) {
-        //     const productId = input.getAttribute('data-productid')
-        //     const quantity = input.value
-
-        //     try {
-        //         const response = await fetch(`/updateTotalPrice/${productId}`, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify({ quantity })
-        //         })
-        //         // .then(res=>res.json())
-        //         console.log('its here');
-        //         if (response.ok) {
-        //             const totalPrice = await response.text()
-        //             console.log(totalPrice);
-        //             const totalPriceElement = document.getElementById(`total_${productId}`);
-        //             totalPriceElement.innerText = `₹${totalPrice}`;
-
-        //             // calculateSubtotalAndTotal()
-        //             calculateTotalAmount();
-        //         } else {
-        //             console.error('Failed to update total price');
-        //         }
-        //     } catch (error) {
-        //         console.error('Error updating total price:', error)
-        //     }
-        // }
-
-
-        // function calculateTotalAmount() {
-        //     let subtotal = 0;
-        //     document.querySelectorAll('.total-price').forEach(priceElement => {
-        //         const totalPriceText = priceElement.innerText.replace('₹', '');
-        //         const totalPrice = parseFloat(totalPriceText);
-        //         subtotal += totalPrice;
-        //     });
-
-        //     let deliveryCharges = subtotal < 500 ? 50 : 0;
-        //     const totalAmount = subtotal + deliveryCharges;
-
-        //     document.getElementById('subtotal').innerText = `₹${subtotal.toFixed(2)}`;
-        //     document.getElementById('deliveryCharges').innerText = `₹${deliveryCharges.toFixed(2)}`;
-        //     document.getElementById('totalAmount').innerText = `₹${totalAmount.toFixed(2)}`;
-        // }
-        // calculateTotalAmount();
-        ////////////////////////////////////
-        // document.querySelectorAll('.quantity-input').forEach(input => {
-        //     const productId = input.getAttribute('data-productid');
-        //     const quantity = input.value;
-        //     const priceElement = document.getElementById(`price_${productId}`);
-
-        //     if (priceElement) {
-        //         const productPrice = parseFloat(priceElement.innerText.replace('₹', ''));
-        //         subtotal += quantity * productPrice;
-        //     }
-        // });
+       
     </script>
 
     <!-- Plugins JS File -->

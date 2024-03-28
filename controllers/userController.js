@@ -609,12 +609,8 @@ const loadCart = async (req, res) => {
 const addToCart = async (req, res) => {
     try {
         const { productId, quantity } = req.body;
-        const product = await Product.findById(productId);
-        if(product.offerApplied){
-            price=product.price-(product.price*product.offerApplied/100)
-        }else{
-            const price = product.price * quantity;
-        }
+        console.log(productId,'productId',quantity,'quantitiy in addToCart');
+       
 
         let cart = await Cart.findOne({ userId: req.session.user_id });
         if (!cart) {
@@ -623,29 +619,27 @@ const addToCart = async (req, res) => {
                 products: []
             });
         }
-
-        const existingProduct = await Cart.findOneAndUpdate(
-            { userId: req.session.user_id, 'products.productId': productId },
-            { $inc: { 'products.$.quantity': quantity, 'products.$.totalPrice': price } },
-            { new: true }
-        );
-        const exist=await Cart.findOneAndUpdate(
-            {userId:req.session.user_id,'products.productId':productId},
-            {$addToSet:{products:{quantity:1}}}
-        ) 
-        console.log(existingProduct, 'existing product');
-
-        if (existingProduct) {
+        console.log(cart,'cart in addtocart');
+        
+        // const existt =await Cart.aggregate([
+        //     {$match:{productId:{$exists:true},productId:productId}}
+        // ])
+        const existt=await Cart.findOne({userId:req.session.user_id,'products.productId':productId})
+        console.log(existt,'existtt ');
+        if(existt){
+            await Cart.findOneAndUpdate(
+                {userId:req.session.user_id,'products.productId':productId},
+                {$inc:{'products.$.quantity':quantity||1}}
+            ) 
             res.json({ success: true, exists: true });
-        } else {
+
+        }else{
             cart.products.push({
-                productId: productId,
-                quantity: quantity,
-                price: product.price,
-                totalPrice: price
-            });
-            await cart.save();
-            res.json({ success: true, exists: false });
+                productId:productId,
+                quantity:quantity
+            })
+            await cart.save()
+            res.json({success:true,exists:false})
         }
     } catch (error) {
         console.log(error.message);
@@ -657,18 +651,22 @@ const addToCart = async (req, res) => {
 const updateCartQuantity = async (req, res) => {
     try {
         const { productId } = req.params
-        const { quantity, totalPrice } = req.body
-
+        console.log(productId,'prodouct id in ');
+        // const { quantity, totalPrice } = req.body
+        const {quantity}=req.body
+        console.log('quantity in updateCartQuantity',quantity);
 
 
         const cart = await Cart.findOneAndUpdate(
             { userId: req.session.user_id, 'products.productId': productId },
-            { $set: { 'products.$.quantity': quantity, 'products.$.totalPrice': totalPrice } },
+            { $set: { 'products.$.quantity': quantity} },
             { new: true }
         )
+        console.log(cart,'cart in update cart quantity');
         res.json({ success: true, cart })
     } catch (error) {
-        console.log(error.message);
+
+        console.log(error.message+'dfdfdff');
     }
 }
 
@@ -692,32 +690,53 @@ const removeFromCart = async (req, res) => {
 }
 
 
+// const loadCheckout = async (req, res) => {
+//     try {
+//         const userId = req.session.user_id
+//         console.log(userId, 'this is loadcheck out userId');
+//         const cart = await Cart.findOne({ userId }).populate('products.productId')
+//         // console.log(cart,'this is loadcheck out cart');
+//         const subtotal = cart.products.reduce((accu, curr) => accu + curr.totalPrice, 0)
+//         console.log(subtotal, 'this is subtotal in loadCheckout page');
+//         const deliveryCharges = subtotal < 500 ? 50 : 0
+//         console.log(deliveryCharges, 'this is delivery charges in loadcheck out page');
+//         const totalAmount = subtotal + deliveryCharges
+//         console.log(totalAmount, 'this is total amount in load check out page ');
+
+//         const userAddress = await Address.findOne({ userId: req.session.user_id })
+//         console.log(userAddress, 'userAddress in load checkout page ');
+
+//         const wallet= await Wallet.findOne({userId:req.session.user_id})
+//         const walletBalance=wallet? wallet.balance:0
+//         console.log(walletBalance,'walletbalance');
+//         res.render('checkout', { user_id: userId, userAddress, cart, subtotal, deliveryCharges, totalAmount,walletBalance })
+       
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
+
+
 const loadCheckout = async (req, res) => {
     try {
         const userId = req.session.user_id
         console.log(userId, 'this is loadcheck out userId');
         const cart = await Cart.findOne({ userId }).populate('products.productId')
-        // console.log(cart,'this is loadcheck out cart');
-        const subtotal = cart.products.reduce((accu, curr) => accu + curr.totalPrice, 0)
-        console.log(subtotal, 'this is subtotal in loadCheckout page');
-        const deliveryCharges = subtotal < 500 ? 50 : 0
-        console.log(deliveryCharges, 'this is delivery charges in loadcheck out page');
-        const totalAmount = subtotal + deliveryCharges
-        console.log(totalAmount, 'this is total amount in load check out page ');
+        // console.log(cart,'this is loadcheck out cart')
 
         const userAddress = await Address.findOne({ userId: req.session.user_id })
-        console.log(userAddress, 'userAddress in load checkout page ');
+        // console.log(userAddress, 'userAddress in load checkout page ');
 
         const wallet= await Wallet.findOne({userId:req.session.user_id})
         const walletBalance=wallet? wallet.balance:0
         console.log(walletBalance,'walletbalance');
-        res.render('checkout', { user_id: userId, userAddress, cart, subtotal, deliveryCharges, totalAmount,walletBalance })
+        res.render('checkout', { user_id: userId, userAddress, cart, walletBalance })
        
     } catch (error) {
         console.log(error.message);
     }
 }
-
 
 const placeOrder = async (req, res) => {
     try {

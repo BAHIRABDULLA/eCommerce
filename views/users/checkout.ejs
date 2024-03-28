@@ -667,7 +667,15 @@
                                         </thead>
 
                                         <tbody>
+                                            <% let subtotal=0 %>
+                                            <% let offer=0 %>
                                             <% cart.products.forEach((product,index)=>{ %>
+                                                <% const price= product.productId.offerApplied ? (product.productId.price-(product.productId.price * product.productId.offerApplied/100))
+                                                        *product.quantity:product.productId.price *product.quantity %>
+                                                        
+                                                <% subtotal+=price %>
+                                                 <% offer+=(product.productId.offerApplied?product.productId.price*product.productId.offerApplied/100:0 )*product.quantity %>
+                                             
                                                 <tr>
                                                     <td hidden>
                                                         <%= product.productId.quantity %>
@@ -676,36 +684,33 @@
                                                         <%= product.productId.name %>
                                                     </td>
                                                     <td>
-                                                        <%= product.totalPrice %>
+                                                        
+                                                        <%= price %>
+                                                        
                                                     </td>
                                                 </tr>
                                                 <% }) %>
 
-                                                    <!-- <tr>
-		                							<td><a href="#">Blue utility pinafore denimdress</a></td>
-		                							<td>$76,00</td>
-		                						</tr> -->
+                                                   
                                                     <tr class="summary-subtotal">
                                                         <td>Subtotal:</td>
-                                                        <td>₹<%= subtotal %>
+                                                        <td>₹ <%= subtotal %>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Shipping:</td>
-                                                        <% if(deliveryCharges===0) { %>
-                                                            <td>Free shipping</td>
-                                                            <% }else{ %>
-                                                                <td>₹<%= deliveryCharges %>
-                                                                </td>
-                                                                <% } %>
+                                                        <td><%= subtotal>=500 ?"Free":50 %></td>
+                                                        
                                                     </tr>
                                                     <tr class="summary-discount">
                                                         <td>Discount</td>
-                                                        <td>0</td>
+                                                        <% console.log(typeof offer,'ffd'); %>
+                                                        <% console.log(offer,'offer'); %>
+                                                        <td>₹ <%= offer %></td>
                                                     </tr>
                                                     <tr class="summary-total">
                                                         <td>Total Amount:</td>
-                                                        <td>₹<%= totalAmount %>
+                                                        <td>₹<%= subtotal + (subtotal>=500?0:50) %>
                                                         </td>
 
                                                     </tr>
@@ -929,16 +934,16 @@
                         </ul>
                     </li>
                 </ul>
-            </nav><!-- End .mobile-nav -->
+            </nav>
 
             <div class="social-icons">
                 <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
                 <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
                 <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
                 <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
-            </div><!-- End .social-icons -->
-        </div><!-- End .mobile-menu-wrapper -->
-    </div><!-- End .mobile-menu-container -->
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -969,117 +974,14 @@
         }
 
 
-        // document.getElementById('placeOrderBtn').addEventListener('click', async () => {
-        //     try {
-        //         const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
-        //         const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
-
-        //         if (paymentMethod === 'razorpay') {
-        //             console.log('itsss here razorpay');
-        //             const response = await fetch('/createOrder', {
-        //                 method: 'POST',
-        //                 headers: {
-        //                     'Content-Type': 'application/json'
-        //                 },
-        //                 body: JSON.stringify({ totalAmount })
-        //             });
-
-        //             if (response.ok) {
-        //                 console.log(response,'response');
-        //                 const data = await response.json();
-        //                 console.log(data,'data in razorpay');
-
-        //                 const orderId = data.orderId;
-        //                 console.log(orderId,'orderId in razorpay');
-        //                 const options = {
-        //                     key: '<%= process.env.RAZORPAYKEYID %>',
-        //                     amount: totalAmount * 100,
-        //                     currency: 'INR',
-        //                     name: 'Your Company Name',
-        //                     description: 'Payment for Order',
-        //                     order_id: orderId,
-        //                     handler: function (response) {
-        //                         // Handle successful payment
-        //                         console.log(response);
-        //                     },
-        //                     prefill: {
-        //                         name: 'Customer Name',
-        //                         email: 'customer@example.com',
-        //                         contact: '+919876543210'
-        //                     },
-        //                     notes: {
-        //                         address: 'Customer Address'
-        //                     },
-        //                     theme: {
-        //                         color: '#F37254'
-        //                     }
-        //                 };
-
-        //                 const rzp = new Razorpay(options);
-        //                 rzp.open();
-        //             } else {
-        //                 throw new Error('Failed to create Razorpay order');
-        //             }
-        //                 const respo=await fetch('/placeOrder',{
-        //                     method:'POST',
-        //                     headers:{
-        //                         'Content-Type':'application/json'
-        //                     },
-        //                     body:JSON.stringify({
-        //                         userId:'<%= user_id %>',
-        //                         totalAmount,
-        //                         orderUserDetails: selectedAddressId,
-        //                         paymentMethod: 'Online Payment',
-        //                     })
-        //                 })
-        //                 if (response.ok) {
-        //                     Swal.fire({
-        //                         title: 'Order Placed Successfully',
-        //                         icon: 'success'
-        //                 });
-        //                 } else {
-        //                     throw new Error('Failed to place order');
-        //                 }
-
-        //         } else if (paymentMethod === 'cashOnDelivery') {
-        //             // Place order with cash on delivery
-        //             const response = await fetch('/placeOrder', {
-        //                 method: 'POST',
-        //                 headers: {
-        //                     'Content-Type': 'application/json'
-        //                 },
-        //                 body: JSON.stringify({
-        //                     userId: '<%= user_id %>',
-        //                     totalAmount,
-        //                     orderUserDetails: selectedAddressId,
-        //                     paymentMethod: 'Cash on Delivery',
-        //                 })
-        //             });
-
-        //             if (response.ok) {
-        //                 Swal.fire({
-        //                     title: 'Order Placed Successfully',
-        //                     icon: 'success'
-        //                 });
-        //             } else {
-        //                 throw new Error('Failed to place order');
-        //             }
-        //         }
-        //     } catch (error) {
-        //         console.error('Error placing order', error);
-        //         Swal.fire({
-        //             title: 'Failed to Place Order',
-        //             text: 'Please try again later',
-        //             icon: 'error'
-        //         });
-        //     }
-        // });
-
+       
 
         document.getElementById('placeOrderBtn').addEventListener('click', async () => {
             try {
                 const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
-                const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
+                // const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
+                const totalAmount=totalAmount
+                console.log(totalAmount,'totalAmount is here ');
 
                 if (paymentMethod === 'razorpay') {
                     console.log('itsss here razorpay');
@@ -1179,7 +1081,8 @@
 
         async function saveOrderToDatabase(paymentMethod) {
             try {
-                const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
+                // const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
+                const totalAmount=totalAmount
                 const response = await fetch('/placeOrder', {
                     method: 'POST',
                     headers: {
