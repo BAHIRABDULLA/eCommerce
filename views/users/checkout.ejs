@@ -321,8 +321,8 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                     </ol>
                 </div><!-- End .container -->
@@ -669,6 +669,8 @@
                                         <tbody>
                                             <% let subtotal=0 %>
                                             <% let offer=0 %>
+                                            <% let totalAmount=0 %> 
+
                                             <% cart.products.forEach((product,index)=>{ %>
                                                 <% const price= product.productId.offerApplied ? (product.productId.price-(product.productId.price * product.productId.offerApplied/100))
                                                         *product.quantity:product.productId.price *product.quantity %>
@@ -710,7 +712,7 @@
                                                     </tr>
                                                     <tr class="summary-total">
                                                         <td>Total Amount:</td>
-                                                        <td>₹<%= subtotal + (subtotal>=500?0:50) %>
+                                                        <td>₹<%= totalAmount=subtotal + (subtotal>=500?0:50) %>
                                                         </td>
 
                                                     </tr>
@@ -979,8 +981,7 @@
         document.getElementById('placeOrderBtn').addEventListener('click', async () => {
             try {
                 const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
-                // const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
-                const totalAmount=totalAmount
+                const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
                 console.log(totalAmount,'totalAmount is here ');
 
                 if (paymentMethod === 'razorpay') {
@@ -1081,8 +1082,7 @@
 
         async function saveOrderToDatabase(paymentMethod) {
             try {
-                // const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
-                const totalAmount=totalAmount
+                const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
                 const response = await fetch('/placeOrder', {
                     method: 'POST',
                     headers: {
@@ -1095,6 +1095,7 @@
                         paymentMethod,
                     })
                 });
+                console.log(selectedAddressId,'after async function');
 
                 if (response.ok) {
                     Swal.fire({

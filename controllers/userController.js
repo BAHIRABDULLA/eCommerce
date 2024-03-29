@@ -305,8 +305,10 @@ const resendOTP = async (req, res) => {
 const loadHome = async (req, res) => {
     try {
         const active = await User.findOne({ is_active: true })
+        const cart=await Cart.findOne({userId:req.session.user_id}).populate('products')
+        const wishlist = await Wishlist.findOne({userId:req.session.user_id}).populate('products')
         // console.log(active);
-        res.render('home', { isLoggedIn: res.locals.loggedIn, active })
+        res.render('home', { isLoggedIn: res.locals.loggedIn, active ,cart,wishlist})
     } catch (error) {
         console.log(error.message);
     }
@@ -738,13 +740,29 @@ const loadCheckout = async (req, res) => {
     }
 }
 
-const placeOrder = async (req, res) => {
+const placeOrder = async (req, res) => {                                               
+
     try {
         const { userId, products, totalAmount, orderUserDetails, paymentMethod } = req.body
         // const address=await Address.findById({orderUserDetails})
         console.log(userId, 'userId in placeholder page');
         console.log(orderUserDetails, 'ordreUserDetails in my placeorder page')
-
+        let check=await Address.findOne({'address._id':orderUserDetails})
+        let matched=check.address.find(address=>address._id.toString()===orderUserDetails)
+        // console.log(matched,'matched');
+        // console.log(check,'check in placeorder');
+        let address={
+            name:matched.name,
+            phone:matched.phone,
+            email:matched.email,
+            pincode:matched.pincode,
+            streetAddress:matched.streetAddress,
+            city:matched.city,
+            state:matched.state,
+            landmark:matched.landmark,
+            phone2:matched.phone2
+        }
+        console.log(address,'address');
 
         const cart = await Cart.findOne({ userId }).populate('products.productId')
         // const address = await Address.findOne({"address._id":orderUserDetails});
@@ -756,7 +774,9 @@ const placeOrder = async (req, res) => {
         const productData = cart.products.map((product) => ({
             productId: product.productId._id,
             quantity: product.quantity,
-            name: product.productId.name
+            name: product.productId.name,
+            price:product.productId.offerApplied?product.productId.price-(product.productId.price*product.productId.offerApplied/100)
+                  : product.productId.price
         }))
 
 
@@ -765,7 +785,7 @@ const placeOrder = async (req, res) => {
             userId,
             products: productData,
             totalAmount,
-            orderUserDetails,
+            orderUserDetails:address,
             paymentMethod,
             status: 'Pending',
             orderDate: new Date()
@@ -789,6 +809,7 @@ const placeOrder = async (req, res) => {
 
 
 const Razorpay = require('razorpay');
+const { default: mongoose } = require('mongoose')
 
 const createOrder = async (req, res) => {
     try {

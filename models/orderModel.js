@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
-const Address = require('../models/addressModel')
+const Address = require('../models/addressModel');
+const { object } = require('webidl-conversions');
 
 const orderSchema=new mongoose.Schema({
     userId:{
@@ -29,9 +30,8 @@ const orderSchema=new mongoose.Schema({
    }]
    ,
     orderUserDetails:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Address',
-        required:true
+        type:Object
+
     },
     totalAmount:{
         type:Number,

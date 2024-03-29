@@ -16,7 +16,7 @@ const getDashboard = async (req, res) => {
 
 
         const orders = await Order.find({ userId }).populate('products.productId');
-    //    console.log(orders[0].products[0].productId.image[0])
+        //console.log(orders[0].products[0].productId.image[0])
         const users=await User.findOne({_id:userId})
         // console.log(users,'users in dashboard');
 

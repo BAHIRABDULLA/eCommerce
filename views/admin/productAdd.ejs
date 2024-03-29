@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,6 +29,15 @@
 
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+
+  <!-- starting cropper js -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+  
+  <!-- ending cropper js -->
 </head>
 
 <body>
@@ -254,34 +264,8 @@
                     <div class="col-lg-3 ">
                       <div class="form-group">
                         <label>File upload</label>
-                        <input type="file" name="image" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                          <button type="button" id="btn-crop">Crop</button>
-                        </div>
-                        <small class="text-danger" id="imageError"></small>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 ">
-                      <div class="form-group">
-                        <label>File upload</label>
-                        <input type="file" name="image" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                        <small class="text-danger" id="imageError"></small>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 ">
-                      <div class="form-group">
-                        <label>File upload</label>
-                        <input type="file" name="image" class="file-upload-default">
+                        
+                        <input type="file" name="image" class="file-upload-default" id="imageInput">
                         <div class="input-group col-xs-12">
                           <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                           <span class="input-group-append">
@@ -304,16 +288,39 @@
                         <small class="text-danger" id="imageError"></small>
                       </div>
                     </div>
+                    <div class="col-lg-3 ">
+                      <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="image" class="file-upload-default" id="imageInput">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                          </span>
+                        </div>
+                        <small class="text-danger" id="imageError"></small>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 ">
+                      <div class="form-group">
+                        <label>File upload</label>
+
+                        <input type="file" name="image" class="file-upload-default " id="imageInput">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                          </span>
+                        </div>
+                        <small class="text-danger" id="imageError"></small>
+                      </div>
+                    </div>
 
                   </div>
                   <div class="row col-12">
                     <button type="submit" class="btn btn-primary mr-2">Save</button>
                     <!-- <a href="/admin/products"><button class="btn btn-light">Back</button></a> -->
                   </div>
-
-
-
-
                 </div>
               </form>
             </div>
@@ -331,6 +338,10 @@
     <!-- page-body-wrapper ends -->
   </div>
   <script>
+
+
+
+
     const categorySelect = document.getElementById('category-select')
     const selectedCategoryInput = document.getElementById('selected-category')
     categorySelect.addEventListener('change', function () {
@@ -411,28 +422,39 @@
 
 
 
+    // this is for image cropping 
+
     document.addEventListener('DOMContentLoaded', function () {
-      const image = document.getElementById('imageInput');
-      const cropper = new Cropper(image, {
-        aspectRatio: 1, 
-        viewMode: 1, 
-        
-      });
+  const imageInputs = document.querySelectorAll('input[name="image"]');
 
-      
-      image.addEventListener('change', function () {
-        const files = this.files;
-        const file = files[0];
+  imageInputs.forEach(function (imageInput, index) {
+    const imageElement = document.createElement('img');
+    imageElement.id = `imageElement${index}`;
+    imageInput.parentNode.insertBefore(imageElement, imageInput.nextSibling);
 
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (event) {
-            cropper.replace(event.target.result);
-          };
-          reader.readAsDataURL(file);
-        }
-      });
+    imageInput.addEventListener('change', function () {
+      const files = this.files;
+      const file = files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          imageElement.src = event.target.result;
+          new Cropper(imageElement, {
+            aspectRatio: 1,
+            viewMode: 1,
+            viewport: {
+              width: 200, 
+              height: 200
+            }
+          });
+        };
+        reader.readAsDataURL(file);
+      }
     });
+  });
+});
+
 
 
   </script>
