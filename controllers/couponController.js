@@ -22,21 +22,20 @@ const loadCouponAdd=async(req,res)=>{
 
 const couponAdding=async(req,res)=>{
     try {
-        const {couponName,couponCode,description,discount,expireDate}=req.body
-        
-        console.log(couponCode,'couponcode ');
+        const {name,code,description,discountAmount,expireDate}=req.body
+    
         console.log(expireDate,'expiredate');
         console.log(description,'description in coupon add');
         const newCoupon=new Coupon({
-            name:couponName,
-            code:couponCode,
+            name,
+            code,
             description,
-            discountAmount:discount,
+            discountAmount,
             expireDate
 
             
         })
-        const savedCoupon = await newCoupon.save()
+         await newCoupon.save()
         res.redirect('/admin/coupon')
     } catch (error) {
         console.log(error.message);

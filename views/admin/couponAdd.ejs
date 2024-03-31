@@ -153,7 +153,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Coupon Name</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="couponName" />
+                            <input type="text" class="form-control" id="couponName" name="couponName" />
+                            <small class="text-danger" id="nameError" style="display: none;">Name cannot be
+                              empty</small>
                           </div>
                         </div>
                       </div>
@@ -165,6 +167,7 @@
                               <button class="btn btn-sm btn-primary" type="button" onclick="generateCouponCode()">Search</button>
                             </div>
                           </div>
+                          <small id="codeError" class="text-danger " style="display: none;">Click for generating coupon code</small>
                         </div>
                       </div>
                     </div>
@@ -172,7 +175,8 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="exampleTextarea1">Description</label>
-                          <textarea class="form-control" name="description" id="exampleTextarea1" rows="4"></textarea>
+                          <textarea class="form-control" name="description" id="exampleTextarea" rows="4"></textarea>
+                          <small id="descriptionError" class="text-danger " style="display: none;">Description cannot be empty</small>
                         </div>
                       </div>
                     </div>
@@ -181,7 +185,8 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Discount Amount</label>
                           <div class="col-sm-9">
-                            <input type="text" name="discount" class="form-control" />
+                            <input type="text" name="discount" id="discount" class="form-control" />
+                            <small id="discountError" class="text-danger " style="display: none;">Discount amount must be positive intiger </small>
                           </div>
                         </div>
                       </div>
@@ -190,8 +195,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Expire Date</label>
                           <div class="col-sm-9">
-                            <input class="form-control" name="expireDate" type="date"  placeholder="dd/mm/yyyy" >
+                            <input class="form-control" name="expireDate" type="date" id="expireDate" placeholder="dd/mm/yyyy" >
                           </div>
+                          <small id="expireDateError" class="text-danger " style="display: none;">Enter date</small>
                         </div>
                       </div>
                     </div>
@@ -203,7 +209,7 @@
                     </label>                      
                    </div>  -->
                    <div class="col">
-                    <button type="submit" class="btn btn-info ">Submit</button>
+                    <button type="button" onclick="submitForm()" class="btn btn-info ">Submit</button>
                    </div>
                     
                   </form>
@@ -231,6 +237,85 @@
       const couponCodeInput=document.getElementById('couponCodeInput')
       couponCodeInput.value=couponCode
       console.log(couponCode,'in ejs page');
+    }
+
+
+
+
+    //validation going on 
+    function submitForm(){
+      
+      let isValid=true
+    
+
+    const name=document.getElementById('couponName').value.trim()
+    const code=document.getElementById('couponCodeInput').value.trim()
+    console.log(code,'code in coupon add ejs');
+    const description=document.getElementById('exampleTextarea').value.trim()
+    const discountAmount=document.getElementById('discount').value.trim()
+    const expireDate=document.getElementById('expireDate').value
+    console.log(expireDate,'expire date in coupon add ejs');
+
+    if(name===''){
+      document.getElementById('nameError').style.display='block'
+      isValid=false
+    }else{
+      document.getElementById('nameError').style.display='none'
+    }
+    
+    if(code===''){
+      document.getElementById('codeError').style.display='block'
+      isValid=false
+    }else{
+      document.getElementById('codeError').style.display='none'
+    }
+    if(description==''){
+      document.getElementById('descriptionError').style.display='block'
+      isValid=false
+    }else{
+      document.getElementById('descriptionError').style.display='none'
+    }
+    if(discountAmount<1 || isNaN(discountAmount)){
+      document.getElementById('discountError').style.display='block'
+      isValid=false
+    }else{
+      document.getElementById('discountError').style.display='none'
+    }
+    const today = new Date().toISOString().split('T')[0]
+
+    if(expireDate===''){
+      document.getElementById('expireDateError').style.display='block'
+      isValid=false
+    }else if (expireDate<today){
+      document.getElementById('expireDateError').innerText='enter valid expire date'
+      document.getElementById('expireDateError').style.display='block'
+      isValid=false
+    }else{
+      document.getElementById('expireDateError').style.display='none'
+    }
+    
+
+    if(isValid){
+      const data={
+        name,
+        code,
+        description,
+        discountAmount,
+        expireDate
+      }
+      fetch('/admin/coupon-add',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(data)
+      }).then(response=>{
+        console.log('got response to coupon add ejs');
+        window.location.href='/admin/coupon'
+      }).catch(error=>{
+        console.error('Error come in coupon add ejs ',error);
+      })
+    }
     }
   </script>
 

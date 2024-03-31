@@ -499,6 +499,11 @@ const newPassUpadate = async (req, res) => {
 
 const loadShop = async (req, res) => {
     try {
+        const page=(req.query.page)||1
+        const itemPerPage =10 
+        const skip=(page-1)*itemPerPage
+
+
         const categories = await Category.find({})
         // const products = await Product.find().populate('category')
         let products;
@@ -509,25 +514,30 @@ const loadShop = async (req, res) => {
         const sortBy = req.query.sortby || 'popularity'
         switch (sortBy) {
             case 'lowToHigh':
-                products = await Product.find().sort({ price: 1 }).populate('category')
+                products = await Product.find().sort({ price: 1 }).populate('category').skip(skip).limit(itemPerPage)
                 break;
             case 'highToLow':
-                products = await Product.find().sort({ price: -1 }).populate('category')
+                products = await Product.find().sort({ price: -1 }).populate('category').skip(skip).limit(itemPerPage)
                 break;
             case 'alphabetical':
-                products = await Product.find().sort({ name: 1 }).populate('category')
+                products = await Product.find().sort({ name: 1 }).populate('category').skip(skip).limit(itemPerPage)
                 break;
             case 'analphabetic':
-                products = await Product.find().sort({ name: -1 }).populate('category')
+                products = await Product.find().sort({ name: -1 }).populate('category').skip(skip).limit(itemPerPage)
                 break;
             case 'latest':
-                products = await Product.find().sort({ _id: -1 }).populate('category')
+                products = await Product.find().sort({ _id: -1 }).populate('category').skip(skip).limit(itemPerPage)
                 break;
             default:
-                products = await Product.find().populate('category')
+                products = await Product.find().populate('category').skip(skip).limit(itemPerPage)
                 break;
         }
-        res.render('shop', { products: products, categories: categories, selectedCategory })
+
+        
+        const totalProducts =await Product.countDocuments()
+        const totalPages=Math.ceil(totalProducts/itemPerPage)
+
+        res.render('shop', { products: products, categories: categories, selectedCategory,totalPages,currentPage:page })
     } catch (error) {
         console.log(error.message);
     }

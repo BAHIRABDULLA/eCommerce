@@ -231,13 +231,7 @@
                           </div>
                         </div>
                       </div>
-                      <!-- checked -->
-                      <div class="col-md-6">
-                        <!-- <div class="form-group">
-                          <label>Items to be offered</label>
-                          <select class="js-example-basic-multiple w-100" multiple="multiple" id="offerItemsSelect">
-                          </select>
-                        </div> -->
+                      <div class="col-md-6">   
                         <div class="form-group">
                           <label>Items to be offered</label>
                           <select class="w-100" multiple="multiple" id="offerItemsSelect">
@@ -271,73 +265,7 @@
 
 
   <script>
-    document.getElementById('offerForm').addEventListener('submit', (event) => {
-      const title = document.getElementById('offerTitle').value.trim()
-      const percentage = document.getElementById('offerPercentage').value.trim()
-      const description = document.getElementById('description').value.trim()
-      const startDate = new Date(document.getElementById('startDate').value)
-      const expireDate = new Date(document.getElementById('expireDate').value)
-
-      let isValid = true
-      if (title === "") {
-        document.getElementById('titleError').style.display = 'block'
-        isValid = false
-      } else {
-        document.getElementById('titleError').style.display = 'none'
-      }
-      if (isNaN(percentage) || percentage === '' || parseInt(percentage) < 1 || parseInt(percentage) > 100) {
-        document.getElementById('percentageError').style.display = 'block'
-        isValid = false;
-      } else {
-        document.getElementById('percentageError').style.display = 'none'
-      }
-      if (description === '') {
-        document.getElementById('descriptionError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('descriptionError').style.display = 'none';
-      }
-
-      if (isNaN(startDate.getTime()) || document.getElementById('startDate').value === '') {
-        document.getElementById('startDateError').style.display = 'block';
-        document.getElementById('startDateError').innerText = 'Start Date is required';
-        isValid = false;
-      } else {
-        document.getElementById('startDateError').style.display = 'none';
-      }
-
-      if (isNaN(expireDate.getTime()) || document.getElementById('expireDate').value === '') {
-        document.getElementById('expireDateError').style.display = 'block';
-        document.getElementById('expireDateError').innerText = 'Expire Date is required';
-        isValid = false;
-      } else {
-        document.getElementById('expireDateError').style.display = 'none';
-      }
-
-
-
-      const today = new Date().toISOString().split('T')[0]
-      if (startDate < today) {
-        document.getElementById('startDateError').style.display = 'block'
-        isValid = false
-      } else {
-        document.getElementById('startDateError').style.display = 'none'
-      }
-      if (expireDate <= startDate) {
-        document.getElementById('expireDateError').style.display = 'block'
-        isValid = false
-      } else {
-        document.getElementById('expireDateError').style.display = 'none'
-      }
-
-
-
-      if (!isValid) {
-        event.preventDefault()
-      }
-    })
-
-
+    
 
 
 
@@ -403,97 +331,95 @@ console.log('offeritems select changing');
 updateSelectedItems();
 
 function submitForm() {
+        const title = document.getElementById('offerTitle').value.trim();
+        const percentage = document.getElementById('offerPercentage').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const startDate = new Date(document.getElementById('startDate').value);
+        const expireDate = new Date(document.getElementById('expireDate').value);
+
+        let isValid = true;
+
+        if (title === "") {
+        document.getElementById('titleError').style.display = 'block'
+        isValid = false
+      } else {
+        document.getElementById('titleError').style.display = 'none'
+      }
+      if (isNaN(percentage) || percentage === '' || parseInt(percentage) < 1 || parseInt(percentage) > 100) {
+        document.getElementById('percentageError').style.display = 'block'
+        isValid = false;
+      } else {
+        document.getElementById('percentageError').style.display = 'none'
+      }
+      if (description === '') {
+        document.getElementById('descriptionError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('descriptionError').style.display = 'none';
+      }
+
+      if (isNaN(startDate.getTime()) || document.getElementById('startDate').value === '') {
+        document.getElementById('startDateError').style.display = 'block';
+        document.getElementById('startDateError').innerText = 'Start Date is required';
+        isValid = false;
+      } else {
+        document.getElementById('startDateError').style.display = 'none';
+      }
+
+      if (isNaN(expireDate.getTime()) || document.getElementById('expireDate').value === '') {
+        document.getElementById('expireDateError').style.display = 'block';
+        document.getElementById('expireDateError').innerText = 'Expire Date is required';
+        isValid = false;
+      } else {
+        document.getElementById('expireDateError').style.display = 'none';
+      }
+
+
+
+      const today = new Date().toISOString().split('T')[0]
+      const staart=startDate.toISOString().split('T')[0]
+      console.log(today,'today');
+      console.log(startDate.toISOString().split('T')[0],'startdate');
+      if (staart < today) {
+        document.getElementById('startDateError').style.display = 'block'
+        isValid = false
+      } else {
+        document.getElementById('startDateError').style.display = 'none'
+      }
+      if (expireDate <= startDate) {
+        document.getElementById('expireDateError').style.display = 'block'
+        isValid = false
+      } else {
+        document.getElementById('expireDateError').style.display = 'none'
+      }
+
+        
+        if (isValid) {
+            const data = {
+                offerTitle: title,
+                offerPercentage: percentage,
+                description: description,
+                startDate: startDate,
+                expireDate: expireDate,
+                selectedItems: selectedItems
+            };
+
+            fetch('/admin/offer-add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                console.log(response, 'response');
+                window.location.href = '/admin/offer';
+            }).catch(error => {
+                console.error('Error in fetch:', error);
+            });
+        }
+    }
+
     
-    const form = document.getElementById('offerForm');
-    const formData = new FormData(form);
-    // const selectedItemsString  = formData.get('selectedItems');
-    // console.log(selectedItemsString,'selectedItemsString');
-    // const selectedItemsArray = JSON.parse(selectedItemsString);
-    // formData.append('selectedItems', JSON.stringify(selectedItems));
-
-
-    const data  = {
-        offerTitle: formData.get('offerTitle'),
-        offerPercentage: formData.get('offerPercentage'),
-        description: formData.get('description'),
-        startDate: formData.get('startDate'),
-        expireDate: formData.get('expireDate'),
-        selectedItems: selectedItems
-    };
-   
-    fetch('/admin/offer-add', {
-        method: 'POST',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(response => {
-        console.log(response,'resoponose');
-        window.location.href='/admin/offer'
-    }).catch(error => {
-        console.error('Error founded in catch',error);
-    });
-}
-
-
-    // async function fetchProductItems() {
-    //   const response = await fetch('/admin/productOffer');
-    //   const data = await response.json();
-    //   console.log(data, 'data in fetchProductItems');
-    //   return data;
-    // }
-
-
-    // async function fetchCategoryItems() {
-    //   const response = await fetch('/admin/categoriesOffer');
-    //   const data = await response.json();
-    //   console.log(data, 'data in fetchCategoryItems');
-
-    //   return data;
-    // }
-
-    // let optionTexts;
-    // function abc() {
-    //   console.log("values2 : ", optionTexts);
-    // }
-
-    // async function updateOfferItems() {
-    //   const radioProducts = document.getElementById('productsRadio');
-    //   const offerItemsSelect = document.getElementById('offerItemsSelect');
-    //   const offerAppliedInput = document.getElementById('offerApplied');
-
-    //   if (radioProducts.checked) {
-    //     const productData = await fetchProductItems();
-    //     console.log(productData, 'productData');
-    //     offerItemsSelect.innerHTML = '';
-    //     productData.products.forEach(item => {
-    //       offerItemsSelect.innerHTML += `<option value="${item._id}">${item.name}</option>`;
-    //     });
-    //   } else {
-    //     const categoryData = await fetchCategoryItems();
-    //     console.log(categoryData, 'categoryData');
-    //     offerItemsSelect.innerHTML = '';
-    //     categoryData.categories.forEach(item => {
-    //       offerItemsSelect.innerHTML += `<option value="${item._id}">${item.name}</option>`;
-    //     });
-    //   }
-    //   console.log("offerItemsSelect : ", offerItemsSelect);
-
-    //   // Extract text content from each option element
-    //    optionTexts = Array.from(offerItemsSelect.options).map(option => option.textContent.trim());
-    //   console.log("Option Texts: ", optionTexts);
-
-    //   const selectedItems = Array.from(offerItemsSelect.selectedOptions).map(option => option.value);
-    //   console.log(selectedItems, 'selected items for array');
-    //   offerAppliedInput.value = selectedItems.join(',');
-    // }
-
-    // document.getElementById('productsRadio').addEventListener('change', updateOfferItems);
-    // document.getElementById('categoryRadio').addEventListener('change', updateOfferItems);
-
-    // updateOfferItems();
-
-
 
 
   </script>

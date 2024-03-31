@@ -20,8 +20,8 @@ const offerAddLoad=async(req,res)=>{
     try {
         const products = await Product.find({});
         const categories = await Category.find({});
-        console.log(categories,'categories in offerAddLoad');
-        console.log(products,'products in offerAddload');
+        // console.log(categories,'categories in offerAddLoad');
+        // console.log(products,'products in offerAddload');
         res.render('offerAdd',{products,categories})
     } catch (error) {
         console.log(error.message);
