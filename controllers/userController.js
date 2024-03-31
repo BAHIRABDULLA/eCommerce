@@ -497,7 +497,8 @@ const newPassUpadate = async (req, res) => {
 // }
 
 
-const loadShop = async (req, res) => {
+const 
+loadShop = async (req, res) => {
     try {
         const page=(req.query.page)||1
         const itemPerPage =10 
@@ -889,7 +890,9 @@ const verifyRazorpay = async (req, res) => {
 
 const couponGet=async(req,res)=>{
     try {
-        const coupons = await Coupon.find()
+        const today=new Date().toISOString().split('T')[0]
+        console.log(today,'today in coupon get ');
+        const coupons = await Coupon.find({expireDate:{$gt:today}})
         console.log(coupons,'coupons in coupon get ');
 
         res.json(coupons)

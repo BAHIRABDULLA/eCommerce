@@ -1124,8 +1124,10 @@
                     .then(coupons => {
 
                         couponListContent.innerHTML = '';
-
-                        coupons.forEach(coupon => {
+                        if(coupons.length<1){
+                            couponListContent.innerHTML='No coupon available now '
+                        }else{
+                            coupons.forEach(coupon => {
                             const couponItem = document.createElement('div');
                             couponItem.classList.add('coupon-item');
                             couponItem.innerHTML = `
@@ -1141,13 +1143,16 @@
 
                             couponListContent.appendChild(couponItem);
                         });
+                        }
+
+                        
 
                         $(modal).modal('show');
                         tippy('.copy-coupon-btn', {
-                            placement: 'top', // Adjust as needed
-                            theme: 'light', // Adjust as needed
-                            arrow: true, // Show arrow
-                            delay: [500, 0], // Delay before showing tooltip
+                            placement: 'top',
+                            theme: 'light', 
+                            arrow: true,
+                            delay: [500, 0],
                         });
                     })
                     .catch(error => {

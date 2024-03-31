@@ -201,13 +201,13 @@ const loadOrderEdit = async (req, res) =>{
         console.log(orderId,'orderId in loadOrder Edit page');
         const order = await Order.findById(orderId).populate('userId');
         console.log(order,'order in loadOrderEdit page');
-        const addressId = order.orderUserDetails;
-        console.log(addressId,'addressId in loadorder Edit page');
-        const address = await Address.findOne({ 'address._id': addressId });
-        console.log(address,'address in load order Edit page');
-        const matchedAddress = address.address.find(addr => addr._id.toString() === addressId.toString());
-        console.log(matchedAddress,'matched address in load order Edit page');
+        const address = order.orderUserDetails;
+        console.log(address,'addressId in loadorder Edit page');
+
+
         const products=[]
+
+
         let totalPrice=0;
         for(const item of order.products){
             const product=await Product.findById(item.productId);
@@ -216,15 +216,15 @@ const loadOrderEdit = async (req, res) =>{
                 products.push({
                     name:product.name,
                     quantity:item.quantity,
-                    price:product.price,
-                    totalPrice:item.quantity*product.price,
+                    price:item.price,
+                    totalPrice:item.quantity*item.price,
                     firstImage: firstImage
                 })
                 totalPrice += item.quantity * product.price;
             }
         }
         console.log('Products.totalprice',products);
-        res.render('orderEdit', { order: order, address: matchedAddress ,products:products ,totalPrice:totalPrice});
+        res.render('orderEdit', { order: order, address ,products:products ,totalPrice:totalPrice});
     } catch (error) {
         console.log(error.message);
         // Handle error
