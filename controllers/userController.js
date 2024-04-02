@@ -72,6 +72,9 @@ const securePassword = async (password) => {
 // this is for signUp page loading 
 const loadSignup = async (req, res) => {
     try {
+        req.session.referral=req.query.referral
+        
+        console.log(req.session.referral,'req.session.referral');
         const errorMessage = req.flash('error')
         // console.log('haai');
         res.render('signUp', { errorMessage })
@@ -199,7 +202,33 @@ const verifyOTP = async (req, res) => {
             req.session.user_id = userData._id
             var storeId = userData._id
             await req.session.save();
-
+            console.log(req.session.referral,'await req.sessionrefere');
+            if(req.session.referral){
+                let wallet=await Wallet.findOne({userId:req.session.referral})
+                if(!wallet){
+                    wallet=new Wallet({
+                        userId:req.session.referral,
+                        balance:1000,
+                        transactions:[{
+                            type:'credit',
+                            reason:'referral',
+                            date:Date.now(),
+                            transactionAmount:1000
+                        }]
+                    })
+                }else{
+                    wallet.balance+=1000
+                    wallet.transactions.push({
+                        type: 'credit',
+                        reason: 'referral',
+                        date: new Date(),
+                        transactionAmount: 1000
+                    })
+                }
+                await wallet.save()
+                // const aa=await Wallet.findOneAndUpdate({userId:req.session.referral},
+                //     {$inc:{balance:1000}} )
+            }
 
             res.redirect('/home');
             // console.log('its going');
@@ -1141,6 +1170,28 @@ const changeProfile=async (req,res)=>{
     }
 }
 
+const loadOrderDetails=async (req,res)=>{
+    try {
+        const orderId=req.params.orderId
+        console.log(orderId,'orderId in loadorderDetails');
+        const productId=req.params.id
+        console.log(productId,'productId in loadOrderDetails');
+        const order=await Order.findOne({_id:orderId}).populate('products.productId')
+        console.log(order,'order in loadorderdetails');
+        const orderDetails=order.products.find(product=>product.productId._id==productId)
+        console.log(orderDetails,'orderDetails');
+        const aa = await Order.findOne(
+            { _id: orderId, 'products.productId': productId }, 
+            { 'products.$': 1 } 
+        ).populate('products.productId'); 
+        console.log(aa,'aa');
+        res.render('orderDetails',{order,orderDetails,aa})
+    } catch (error) {
+        console.error('Error founded in loadOrder',error);
+    }
+}
+
+
 module.exports = {
     loadSignup,
     insertUser,
@@ -1183,7 +1234,9 @@ module.exports = {
     // getWishlist,
     addToWishlist,
     removeFromWishlist,
-    changeProfile
+    changeProfile,
+    loadOrderDetails
+
 
    
 }

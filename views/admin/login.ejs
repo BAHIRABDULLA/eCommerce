@@ -26,6 +26,21 @@
         <div class="row flex-grow">
           <div class="col-lg-6 d-flex align-items-center justify-content-center">
             <div class="auth-form-transparent text-left p-3">
+
+              <% if(error&&error.length>0) {%>
+                <div class="alert  alert-primary " id="alertError" role="alert">
+                  <% error.forEach(error=>{ %>
+                    <%= error %>
+                    <% }) %>
+                </div>
+                <script>
+                  setTimeout(() => {
+                    let alertError=document.getElementById('alertError')
+                    alertError.style.display='none'
+                  }, 3000);
+                </script>
+                <% } %>
+
               <div class="brand-logo">
                 <!-- <img src="images/logo-dark.svg" alt="logo"> -->
                 <img src="/users/assets/images/logo.png" alt="Molla Logo" width="105" height="25"> 

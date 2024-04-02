@@ -1,4 +1,6 @@
 const express=require('express')
+const session=require('express-session')
+const flash=require('connect-flash')
 const coupon_route=express()
 
 const adminAuth=require('../middleware/adminAuth')
@@ -6,6 +8,11 @@ const adminAuth=require('../middleware/adminAuth')
 coupon_route.use(express.json())
 coupon_route.use(express.urlencoded({extended:true}))
 
+coupon_route.use(session({
+    secret:'newScret',
+    resave:false,
+    saveUninitialized:false
+}))
 
 coupon_route.set('view engine','ejs')
 coupon_route.set('views','./views/admin')

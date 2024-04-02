@@ -17,7 +17,7 @@ const walletSchema=new mongoose.Schema({
         reason:{
             type:String,
             required:true,
-            enum:['added money to wallet' ,'purchased product','refund']
+            enum:['added money to wallet' ,'purchased product','refund','referral']
         },
         date:{
             type:Date,

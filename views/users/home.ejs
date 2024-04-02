@@ -147,8 +147,9 @@
 	                    <div class="wishlist">
 	                        <a href="/wishlist" title="Wishlist">
 	                            <i class="icon-heart-o"></i>
-	                            <span class="wishlist-count"><% if(isLoggedIn){ %>
-								<%= wishlist.products.length %><% }else{ %>
+	                            <span class="wishlist-count"><% if(isLoggedIn&&wishlist){ %>
+								<%= wishlist.products.length %>
+								 <% }else{ %>
 								0<% } %></span>
 	                        </a>
 	                    </div><!-- End .compare-dropdown -->
@@ -158,7 +159,7 @@
 	                        <!-- <a href="/cart" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> -->
 								<a href="/cart" class="dropdown-toggle" >
 	                            <i class="icon-shopping-cart"></i>
-	                            <span class="cart-count"><% if(isLoggedIn){ %>
+	                            <span class="cart-count"><% if(isLoggedIn&&cart){ %>
 									<%= cart.products.length %><% }else{ %>
 									0<% } %></span>
 	                        </a>

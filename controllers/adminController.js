@@ -24,7 +24,7 @@ console.log('hello');
 const adminLogin = async (req, res) => {
     try {
         console.log('is there any mistake');
-        res.render('login')
+        res.render('login',{error:req.flash('error')})
     } catch (error) {
         console.log(error.message);
     }
@@ -47,6 +47,7 @@ const adminVerify = async (req, res) => {
             req.session.dd = { email, password }
             res.redirect('/admin/dashboard')
         } else {
+            req.flash('error','Email or Password is incorrect , please try again')
             res.redirect('/admin')
         }
 

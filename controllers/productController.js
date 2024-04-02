@@ -5,9 +5,9 @@ const Address = require('../models/addressModel')
 
 const productLoad = async (req, res) => {
     try {
-        const errorMessages=req.flash('error')
+       
         const products = await Product.find().populate('category')
-        res.render('products', { products,errorMessages })
+        res.render('products', { products,error:req.flash('error') })
         console.log('product load is working ');
     } catch (error) {
         console.log(error.message);
@@ -30,7 +30,8 @@ const insertProduct = async (req, res) => {
     try {
         console.log('insertProduct page');
         const { name, category, quantity, size, price, description } = req.body
-        const existingProduct=await Product.findOne({name})
+        const existingProduct=await Product.findOne({name:{$regex:`${name}`,$options:'i'}})
+
         if(existingProduct){
             req.flash('error','A product with the same name already exists')
             return res.redirect("/admin/products")
@@ -61,7 +62,7 @@ const EditProductLoad = async (req, res) => {
         const product = await Product.findById(productId);
         const categories = await Category.find({ status: true })
         // const products=await Product.find()
-        res.render('productEdit', { categories, product })
+        res.render('productEdit', { categories, product,error:req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
@@ -88,8 +89,12 @@ const editProduct = async (req, res) => {
         const productId = req.params.productId;
         const { name, category, price, quantity, size, description } = req.body;
         const updateImages = req.files.map(file => file.filename);
-        
-        const product = await Product.findById(productId);
+        const existingProductName=await Product.findOne({name:{$regex:`${name}`,$options:'i'}})
+        if(existingProductName){
+            req.flash('error','Product already exist')
+            res.redirect('/admin/products')
+        }else{
+            const product = await Product.findById(productId);
         product.name = name;
         product.category = category;
         product.price = price;
@@ -103,6 +108,8 @@ const editProduct = async (req, res) => {
 
         console.log('Product updated successfully:', product);
         res.redirect('/admin/products');
+        }
+        
     } catch (error) {
         console.log('Error updating product:', error.message);
         res.status(500).send('Internal Server Error');

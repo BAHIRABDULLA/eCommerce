@@ -383,11 +383,11 @@
                                     </div>
                                     <button class="btn-primary rounded-pill" data-toggle="modal"
                                         data-target="#addressModal">Change</button>
-                                <% } else { %>
-                                        <p>No Shipping address found</p>
                                 <% } %>
                                 <br><br>
-                                        <% if(userAddress  && userAddress.adderss && userAddress.address.length < 3) { %>
+                                <% console.log(userAddress&&userAddress.address&&userAddress.address.length,'uuaual');  %>
+                                <% console.log(userAddress,'uas');  %>
+                                        <% if(userAddress  && userAddress.adderss && (userAddress.address.length < 3)) { %>
                                             <p>fdfd</p>
 
                                                 <div class="row ">
@@ -514,8 +514,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                        <% }else if(!userAddress) { %>
-                                            <p>jjjjj</p>
+                                        <% }else if(userAddress&&userAddress.address.length==0) { %>
+                                           
                                                 <% console.log('518'); %>
                                                 <div class="row ">
                                                     <div class="container">
@@ -641,7 +641,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <% } %>
+                                            <% }else{ %>
+                                                <p>gjdskfjdsfd</p>
+                                                <% } %>
 
 
 

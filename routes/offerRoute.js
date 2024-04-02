@@ -1,7 +1,15 @@
 const express=require('express')
+const session=require('express-session')
+const flash=require('connect-flash')
 const offer_route=express()
 
 const adminAuth=require('../middleware/adminAuth')
+
+offer_route.use(session({
+    secret:'newScret',
+    resave:false,
+    saveUninitialized:false
+}))
 
 offer_route.set('view engine','ejs')
 offer_route.set('views','./views/admin')

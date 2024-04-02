@@ -772,8 +772,8 @@
             const quantity = $('#quantity_' + productId).val();
             const maxQuantity = parseInt($('#quantity_' + productId).attr('max')) || 0;
             console.log(maxQuantity,'maxquantity')
-            // const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
-            // const totalPrice = pricePerUnit * quantity
+            const pricePerUnit = parseFloat($('#price_' + productId).text().replace('₹', ''))
+            const totalPrice = pricePerUnit * quantity
 
           
       
@@ -825,7 +825,10 @@
         }
 
         calculateTotal();
-
+        $('.quantity-input').on('change', function () {
+            // updateTotalPrice(this);
+            calculateTotal()
+        })
        
     </script>
 

@@ -6,7 +6,7 @@ const { find } = require('../models/userModel');
 const loadCoupon=async(req,res)=>{
     try {
         const coupons=await Coupon.find({})
-        res.render('coupon',{coupons})
+        res.render('coupon',{coupons,error:req.flash('error')})
     } catch (error) {
         console.log(error.message);
     }
@@ -23,20 +23,28 @@ const loadCouponAdd=async(req,res)=>{
 const couponAdding=async(req,res)=>{
     try {
         const {name,code,description,discountAmount,expireDate}=req.body
-    
+        
         console.log(expireDate,'expiredate');
         console.log(description,'description in coupon add');
-        const newCoupon=new Coupon({
-            name,
-            code,
-            description,
-            discountAmount,
-            expireDate
 
-            
-        })
-         await newCoupon.save()
-        res.redirect('/admin/coupon')
+        const existCouponName=await Coupon.findOne({name:{$regex:`${name}`,$options:'i'}})
+        if(existCouponName){
+            req.flash('error','This coupon already existed')
+            res.redirect('/admin/coupon')
+        }else{
+            const newCoupon=new Coupon({
+                name,
+                code,
+                description,
+                discountAmount,
+                expireDate
+    
+                
+            })
+             await newCoupon.save()
+            res.redirect('/admin/coupon')
+        }
+        
     } catch (error) {
         console.log(error.message);
     }

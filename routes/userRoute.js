@@ -91,6 +91,7 @@ user_route.delete('/wishlist/remove/:productId',userController.removeFromWishlis
 
 
 user_route.post('/changeProfile',userController.changeProfile)
+user_route.get('/orderDetails/:id,:orderId',auth.isLogin,userController.loadOrderDetails)
 
 
 
