@@ -526,11 +526,10 @@ const newPassUpadate = async (req, res) => {
 // }
 
 
-const 
-loadShop = async (req, res) => {
+const loadShop = async (req, res) => {
     try {
         const page=(req.query.page)||1
-        const itemPerPage =10 
+        const itemPerPage =12 
         const skip=(page-1)*itemPerPage
 
 
@@ -567,7 +566,7 @@ loadShop = async (req, res) => {
         const totalProducts =await Product.countDocuments()
         const totalPages=Math.ceil(totalProducts/itemPerPage)
 
-        res.render('shop', { products: products, categories: categories, selectedCategory,totalPages,currentPage:page })
+        res.render('shop', { products: products, categories: categories, selectedCategory,totalPages,currentPage:parseInt(page) })
     } catch (error) {
         console.log(error.message);
     }
@@ -584,14 +583,14 @@ const products = async (req, res) => {
         if (categoryId === 'allCateogry') {
             // console.log('ininin')
             const product = await Product.find({}).populate('category');
-            return res.render('shop', { products: product, categories: categories, selectedCategory })
+            return res.render('shop', { products: product, categories: categories, selectedCategory ,currentPage:0,totalPages:0})
         }
 
         // console.log(categoryId,'category Id in products paage');
         // const category =await Category.find({_id:categoryId})
         const product = await Product.find({ category: categoryId }).populate('category')
         // console.log('ihn');
-        res.render('shop', { products: product, categories: categories, selectedCategory })
+        res.render('shop', { products: product, categories: categories, selectedCategory ,currentPage:0,totalPages:0})
 
 
         // console.log(product,'fdjfdkf')
@@ -606,7 +605,7 @@ const searchProducts = async (req, res) => {
         const products = await Product.find({ name: { $regex: query, $options: 'i' } }).populate('category');
         const categories = await Category.find({});
         const selectedCategory = 'allCategory';
-        res.render('shop', { products, categories, selectedCategory });
+        res.render('shop', { products, categories, selectedCategory ,currentPage:0 ,totalPages:0});
     } catch (error) {
         console.error('Error searching products:', error);
         res.status(500).json({ error: 'Failed to search products' });

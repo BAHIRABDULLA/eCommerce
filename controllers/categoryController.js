@@ -73,7 +73,9 @@ const editCategory=async(req,res)=>{
     console.log(editedDescription);
 
     try {
-        const existingCategoryName=await Category.findOne({name:{$regex:`${editedName}`,$options:'i'}})
+        
+        const existingCategoryName=await Category.findOne({name:{$regex:`${editedName}`,$options:'i'},_id:{$ne:categoryId}})
+
         if(existingCategoryName){
             console.log('kjfdjfdkjf');
             req.flash('error','Category with the same name already exists..')

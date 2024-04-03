@@ -1,4 +1,5 @@
-const Order=require('../models/orderModel')
+const Order=require('../models/orderModel');
+const Product = require('../models/productModel');
 
 console.log('its in order controller funciotn ');
 

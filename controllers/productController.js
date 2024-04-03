@@ -89,7 +89,7 @@ const editProduct = async (req, res) => {
         const productId = req.params.productId;
         const { name, category, price, quantity, size, description } = req.body;
         const updateImages = req.files.map(file => file.filename);
-        const existingProductName=await Product.findOne({name:{$regex:`${name}`,$options:'i'}})
+        const existingProductName=await Product.findOne({name:{$regex:`${name}`,$options:'i'},_id:{$ne:productId}})
         if(existingProductName){
             req.flash('error','Product already exist')
             res.redirect('/admin/products')
