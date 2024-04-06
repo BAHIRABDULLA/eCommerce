@@ -162,13 +162,7 @@
                                 </li>
 
                                 <li class="active ">
-                                    <a href="elements-list.html" class="sf-with-ul">Profile</a>
-
-                                    <ul>
-                                        <li><a href="/dashboard">My Account</a></li>
-                                        <li><a href="">Wishlist</a></li>
-                                        <li><a href="">Coupon</a></li>
-
+                                    <a href="/dashboard" class="sf-with-ul">Profile</a>
                                 </li>
                             </ul><!-- End .menu -->
                         </nav><!-- End .main-nav -->
@@ -372,8 +366,9 @@
                                                         your password and account details</a>.
                                                 </p>
 
-                                                <strong>Referral link:&nbsp;<a href="">localhost:4000/signUp?referral=<%= users._id %></a></strong>
-                                                
+                                                <strong>Referral link:&nbsp;<a href="">localhost:4000/signUp?referral=
+                                                        <%= users._id %></a></strong>
+
                                             </div><!-- .End .tab-pane -->
 
 
@@ -386,7 +381,8 @@
                                                             SHOP</span><i class="icon-long-arrow-right"></i></a>
                                                     <% } else { %>
                                                         <div class="card card-body">
-                                                            <% orders.sort((a,b)=>b.orderDate-a.orderDate).forEach((order, index)=> { %>
+                                                            <% orders.sort((a,b)=>
+                                                                b.orderDate-a.orderDate).forEach((order, index)=> { %>
                                                                 <div class="order-details">
                                                                     <% order.products.forEach(product=> { %>
                                                                         <div class="product">
@@ -407,19 +403,22 @@
                                                                                 </p>
                                                                             </div>
                                                                             <div class="product-details">
-                                                                                <a href="/orderDetails/<%= product.productId._id %>,<%= order._id %>" class="text-danger"
-                                                                                     >Details</a>
-                                                                                     <% console.log(order._id,'order._id'); %>
-                                                                                    <% console.log(product.productId._id,'order.product.productId'); %>
-                                                                                <p class="order-date">Order Date: <%=
-                                                                                        order.orderDate.toDateString()
+                                                                                <a href="/orderDetails/<%= product.productId._id %>,<%= order._id %>"
+                                                                                    class="text-danger">Details</a>
+                                                                                <% console.log(order._id,'order._id');
+                                                                                    %>
+                                                                                    <% console.log(product.productId._id,'order.product.productId');
                                                                                         %>
-                                                                                </p>
-                                                                                <p
-                                                                                    class="order-status  btn-dark text-center  ">
-                                                                                    Status: <%= order.status %>
-                                                                                </p>
-                                                                                <!-- <% if(order.status === 'Delivered') { %>
+                                                                                        <p class="order-date">Order
+                                                                                            Date: <%=
+                                                                                                order.orderDate.toDateString()
+                                                                                                %>
+                                                                                        </p>
+                                                                                        <p
+                                                                                            class="order-status  btn-dark text-center  ">
+                                                                                            Status: <%= order.status %>
+                                                                                        </p>
+                                                                                        <!-- <% if(order.status === 'Delivered') { %>
                                                                         <a href="#" class="btn btn-primary return-link" data-order-id="<%= order._id %>">Return Order</a>
                                                                     
                                                                         <% }else { %>
@@ -428,24 +427,26 @@
 
 
 
-                                                                                <% if(order.status==='Delivered' ) { %>
-                                                                                    <a href="#"
-                                                                                        class="btn btn-primary return-link"
-                                                                                        data-order-id="<%= order._id %>">Return
-                                                                                        Order</a>
-                                                                                    <% } else if
-                                                                                        (order.status==='Cancelled' ) {
-                                                                                        %>
-
-                                                                                        <% } else if
-                                                                                            (order.status==='Pending' ||
-                                                                                            order.status==='Shipping' )
-                                                                                            { %>
+                                                                                        <% if(order.status==='Delivered'
+                                                                                            ) { %>
                                                                                             <a href="#"
-                                                                                                class="btn btn-primary cancel-link"
-                                                                                                data-order-id="<%= order._id %>">Cancel
+                                                                                                class="btn btn-primary return-link"
+                                                                                                data-order-id="<%= order._id %>">Return
                                                                                                 Order</a>
-                                                                                            <% } %>
+                                                                                            <% } else if
+                                                                                                (order.status==='Cancelled'
+                                                                                                ) { %>
+
+                                                                                                <% } else if
+                                                                                                    (order.status==='Pending'
+                                                                                                    ||
+                                                                                                    order.status==='Shipping'
+                                                                                                    ) { %>
+                                                                                                    <a href="#"
+                                                                                                        class="btn btn-primary cancel-link"
+                                                                                                        data-order-id="<%= order._id %>">Cancel
+                                                                                                        Order</a>
+                                                                                                    <% } %>
                                                                             </div>
                                                                         </div>
                                                                         <% }) %>
@@ -1058,9 +1059,17 @@
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({ orderId }),
-                        });
+                        })
+                        if (refund.ok) {
+                            swal("Order cancelled!", "", "success");
+                            setTimeout(() => {
+                                window.location.href = '/dashboard'
+                            }, 1300);
 
-                        swal("Order cancelled!", "", "success");
+                        } else {
+                            swal("Error", "Failed to process refund", "error")
+                        }
+
                     } else {
                         swal("Error", "Failed to cancel order", "error");
                     }
@@ -1142,7 +1151,7 @@
         // }
 
 
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click',async function (event) {
             if (event.target.classList.contains('return-link')) {
                 event.preventDefault()
 
@@ -1163,38 +1172,58 @@
                         return { reason: reason.trim() }
                     }
 
-                }).then((result) => {
+                }).then(async(result) => {
                     if (result.isConfirmed) {
                         console.log('result.isConfirmed')
                         const orderId = event.target.getAttribute('data-order-id')
                         console.log(orderId, 'result.isConfirmed');
                         const reason = result.value.reason
                         console.log(reason, 'reason result.isConfirmed');
-                        return fetch(`/returnOrder/${orderId}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ reason })
-                        })
+                        try {
+                            const response = await fetch(`/returnOrder/${orderId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ reason })
+                            })
+                            if (response.ok) {
+                                console.log(response,'response in return order in dashboard page');
+                                const refund = await fetch('/processRefund', {
+                                    method: "POST",
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ orderId }),
+                                })
+                                if (refund.ok) {
+                                    Swal.fire('Order returned', 'Your return request has been submitted.', 'success')
+                                    setTimeout(() => {
+                                        window.location.href = '/dashboard'
+                                    }, 1300);
+                                } else {
+                                    Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
+                                }
+                            }else{
+                                throw new Error('Failed to submit return request');
+                            }
+                        } catch {
+                            console.error('Error submitting return request', error);
+                            Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
+                        }
                     }
-                }).then((response) => {
-                    console.log(response, 'response');
-                    if (response.ok) {
-                        Swal.fire('Order returned', 'Your return request has been submitted.', 'success')
-                    } else {
-                        Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
-                    }
-                }).catch((error) => {
-                    console.error('Error submitting return request', error);
-                    Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
                 })
+                    .catch((error) => {
+                        console.error('Error submitting return request', error);
+                        Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
+                    })
             }
         })
 
 
 
-        /////////////////
+        // adding money to wallet  
+
         const amountInput = document.getElementById('amountInput');
 
         amountInput.addEventListener('input', function (event) {
@@ -1222,11 +1251,12 @@
                         body: JSON.stringify({ amount })
                     }).then((response) => {
                         if (response.ok) {
+
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: "top-end",
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 2000,
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
                                     toast.onmouseenter = Swal.stopTimer;
@@ -1237,7 +1267,12 @@
                                 icon: "success",
                                 title: "Signed in successfully"
                             });
+                            setTimeout(() => {
+                                window.location.href = '/dashboard'
+                            }, 2000);
                         }
+
+
                     })
                 } catch (error) {
 

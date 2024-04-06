@@ -184,14 +184,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="" class="sf-with-ul">Profile</a>
-
-                                    <ul>
-                                        <li><a href="/dashboard">My Account</a></li>
-                                        <li><a href="">Typography</a></li>
-                                        <li><a href="">Titles</a></li>
-
-                                    </ul>
+                                    <a href="/dashboard" class="sf-with-ul">Profile</a>
                                 </li>
                             </ul><!-- End .menu -->
                         </nav><!-- End .main-nav -->
@@ -1104,6 +1097,9 @@
                         title: 'Order Placed Successfully',
                         icon: 'success'
                     });
+                    setTimeout(() => {
+                        window.location.href='/dashboard'
+                    }, 1000);
                 } else {
                     throw new Error('Failed to save order to database');
                 }

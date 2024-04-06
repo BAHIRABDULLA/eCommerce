@@ -244,7 +244,22 @@ const updateOrderStatus=async (req,res)=>{
         const {orderId}=req.params
         const {status}=req.body
 
-        const updateOrder=await Order.findByIdAndUpdate(orderId,{status},{new:true})
+        let updateOrder
+        let invoiceCode
+
+        if(status==='Delivered'){
+            const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            const randomLetters=letters[Math.floor(Math.random()* letters.length)]+letters[Math.floor(Math.random()* letters.length)]
+            const randomDigits=('0000'+Math.floor(Math.random()*1000)).slice(-4)
+            invoiceCode=randomLetters+randomDigits
+            // console.log(invoiceCode,'invoice code in updateorderstatus');
+            updateOrder=await Order.findByIdAndUpdate(orderId,{status,invoiceCode},{new:true})
+            // console.log(updateOrder,'updateOrder in updateOrderSates');
+        }else{
+         updateOrder=await Order.findByIdAndUpdate(orderId,{status},{new:true})
+
+        }
+
         if(!updateOrder){
             return res.json({message:'order not found'})
         }

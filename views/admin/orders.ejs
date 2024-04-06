@@ -189,7 +189,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <% orders.forEach( (order,index)=> { %>
+                        <% orders.sort((a,b)=>b.orderDate - a.orderDate).forEach( (order,index)=> { %>
                         <tr>
                           <td>
                             <%= index+1 %>

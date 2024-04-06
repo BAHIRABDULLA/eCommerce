@@ -64,6 +64,9 @@ const orderSchema=new mongoose.Schema({
     offerApplied:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Offer'
+    },
+    invoiceCode:{
+        type:String
     }
 
 })

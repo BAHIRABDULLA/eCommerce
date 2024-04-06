@@ -1011,12 +1011,17 @@ const processWalletPayment=async(req,res)=>{
     }
 }
 
-
+// if the user cancelled order ,that time working function
 const processRefund=async(req,res)=>{
     try {
         const {orderId,totalAmount }=req.body
+
         const order= await Order.findOne({_id:orderId})
-        console.log(order,'aa');
+        // console.log(order,'aa');
+        if(order.paymentMethod=='Cash on Delivery'){
+            return res.json({success:true})
+        }
+        
         let refundAmount=order.totalAmount
         
         console.log(orderId,'order id in process refund ');
@@ -1035,6 +1040,7 @@ const processRefund=async(req,res)=>{
             transactionAmount:refundAmount
         })
         await wallet.save()
+        res.json({succuss:true})
     } catch (error) {
         console.log(error.message);
     }
@@ -1184,9 +1190,30 @@ const loadOrderDetails=async (req,res)=>{
             { 'products.$': 1 } 
         ).populate('products.productId'); 
         console.log(aa,'aa');
-        res.render('orderDetails',{order,orderDetails,aa})
+        res.render('orderDetails',{order,orderDetails,aa2})
     } catch (error) {
         console.error('Error founded in loadOrder',error);
+    }
+}
+
+const loadInvoice=async (req,res)=>{
+    try {
+        const orderId=req.params.orderId
+        const productId=req.params.productId
+
+        const order=await Order.findOne({_id:orderId}).populate('products.productId')
+        console.log(order,'order in loadInvoice');
+        const orderDetails=order.products.find(product=>product.productId._id==productId)
+        console.log(orderDetails,'loadInvoice');
+        const aa = await Order.findOne(
+            { _id: orderId, 'products.productId': productId }, 
+            { 'products.$': 1 } 
+        ).populate('products.productId'); 
+
+        console.log(orderId,'orderId',productId,'produxctId in loadinvoice');
+        res.render('invoice',{order})
+    } catch (error) {
+        console.error('Error founded in loadInvoice',error);
     }
 }
 
@@ -1234,8 +1261,8 @@ module.exports = {
     addToWishlist,
     removeFromWishlist,
     changeProfile,
-    loadOrderDetails
-
+    loadOrderDetails,
+    loadInvoice
 
    
 }

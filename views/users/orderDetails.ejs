@@ -372,7 +372,8 @@
                                                         
                                                             <div class="col-md-4">
                                                                 <h6>Order Date</h6>
-                                                                <p><%= order.orderDate %></p>
+                                                                <p><%= order.orderDate.toLocaleDateString('en-US',{year:'numeric',month:'long',date:'2-digit',hour:'numeric'}) %></p>
+
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -399,13 +400,20 @@
                                                             
                                                             
                                                         </div>
+                                                        <div>
+                                                        <div class="row mt-3">
+                                                            <h6>Status</h6>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <button class="btn btn-primary  rounded "><%= order.status %></button>
+                                                        </div>
                                                     
                                                         <div class="row mt-3">
                                                             <div class="col-md-12  text-center">
-                                                                <p>Status</p>
-                                                                
-                                                                <button class="btn btn-primary"><%= order.status %></button>
+                                                               
+                                                            <a class="btn btn-outline-primary rounded " href="/invoice/<%= order._id %>,<%= aa.products[0].productId._id %>">Invoice</a>
+
                                                             </div>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
