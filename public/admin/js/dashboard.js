@@ -2,7 +2,7 @@
   'use strict';
   $(function() {
     var dataBar = {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sep","Oct","Nov","Dec"],
       datasets: [{
         label: 'Customers',
         data: [5, 10, 15, 12, 10, 8, 6, 4],

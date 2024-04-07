@@ -62,7 +62,7 @@ const orderSchema=new mongoose.Schema({
         ref:'Coupon'
     },
     offerApplied:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:Number,
         ref:'Offer'
     },
     invoiceCode:{

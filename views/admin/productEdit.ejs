@@ -166,20 +166,20 @@
             
             <div class="card">
               <div class="card-body">
-               <form action="/admin/productEdit/<%= product._id %>" method="post" enctype="multipart/form-data">
+               <form action="/admin/productEdit/<%= product._id %>" method="post" enctype="multipart/form-data"  onsubmit="return validateForm()">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputName1">Product Name</label>
-                      <input type="text" class="form-control" id="exampleInputName1" name="name" value="<%= product.name %>" placeholder="Name">
-                      <small class="text-danger" id="nameError"></small>
+                      <input type="text" class="form-control" id="name" name="name" value="<%= product.name %>" placeholder="Name">
                     </div>
+                    <small class="text-danger" id="nameError"></small>
 
                   </div>
 
                 </div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
 
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Category</label>
@@ -193,6 +193,16 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-6">
+                    <div  class="form-group row">
+                      <label class="col-sm-3 col-form-label">Brand</label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" name="brand" id="brand">
+                      </div>
+                      <small class="text-danger" id="brandError"></small>
+                    </div>
+                    
+                  </div>
                 </div>
 
 
@@ -201,16 +211,19 @@
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Price</label>
                       <div class="col-sm-4  col-lg-4">
-                        <input type="text" class="form-control" name="price" value="<%= product.price %>">
+                        <input type="text" class="form-control" id="price" name="price" value="<%= product.price %>">
                       </div>
+                      <small class="text-danger" id="priceError"></small>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Quantity</label>
                       <div class="col-sm-4  col-lg-4">
-                        <input type="text" class="form-control" name="quantity" value="<%= product.quantity %>" />
+                        <input type="text" class="form-control" id="quantity" name="quantity" value="<%= product.quantity %>" />
                       </div>
+                      <small class="text-danger" id="quantityError"></small>
+
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -228,6 +241,7 @@
                       <label for="exampleTextarea1">Description</label>
                       <textarea class="form-control" id="exampleTextarea1" name="description"  rows="4"><%= product.description %></textarea>
                     </div>
+                    <small class="text-danger" id="descriptionError"></small>
 
                   </div>
                 </div>
@@ -318,21 +332,51 @@
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
 
-          <!-- partial -->
+
         </div>
-        <!-- main-panel ends -->
       </div>
-      <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
+
 
     <script>
+      function validateForm(){
+        let name=document.getElementById('name').value.trim()
+        let brand=document.getElementById('brand').value.trim()
+        let price=document.getElementById('price').value.trim()
+        let quantity=document.getElementById('quantity').value.trim()
+        let description= document.getElementById('exampleTextarea1').value.trim()
+         
+        if(name==''){
+          document.getElementById('nameError').innerText='Please enter a name'
+          return false
+        }
+        if(brand==''){
+          document.getElementById('brandeError').innerText='Please enter brand'
+          return false
+        }
+        if(price<1 || price==''){
+          document.getElementById('priceError').innerText='Enter a positive price'
+          return false
+        }
+        if(quantity<1||quantity==''){
+          document.getElementById('quantityError').innerText='Enter a positive quantity'
+          return false
+        }
+        if(description==''){
+          document.getElementById('descriptionError').innerText='Please enter  description'
+        }
+        return  true
+      }
+
+
       // function viewImage(event){
       //   document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
       // }
+
+
     </script>
 
-    <!-- base:js -->
+
     <script src="/admin/vendors/base/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- inject:js -->

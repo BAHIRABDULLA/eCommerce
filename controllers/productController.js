@@ -29,7 +29,7 @@ const addProductLoad = async (req, res) => {
 const insertProduct = async (req, res) => {
     try {
         console.log('insertProduct page');
-        const { name, category, quantity, size, price, description } = req.body
+        const { name, category, quantity,brand, size, price, description } = req.body
         const existingProduct=await Product.findOne({name:{$regex:`${name}`,$options:'i'}})
 
         if(existingProduct){
@@ -42,6 +42,7 @@ const insertProduct = async (req, res) => {
         const product = new Product({
             name,
             category,
+            brand,
             quantity,
             size,
             price,
@@ -87,7 +88,7 @@ const EditProductLoad = async (req, res) => {
 const editProduct = async (req, res) => {
     try {
         const productId = req.params.productId;
-        const { name, category, price, quantity, size, description } = req.body;
+        const { name, category, price, quantity,brand, size, description } = req.body;
         const updateImages = req.files.map(file => file.filename);
         const existingProductName=await Product.findOne({name:{$regex:`${name}`,$options:'i'},_id:{$ne:productId}})
         if(existingProductName){
@@ -97,6 +98,7 @@ const editProduct = async (req, res) => {
             const product = await Product.findById(productId);
         product.name = name;
         product.category = category;
+        product.brand=brand;
         product.price = price;
         product.quantity = quantity;
         product.size = size;

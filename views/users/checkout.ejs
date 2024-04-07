@@ -946,6 +946,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         let selectedAddressId
+        let couponApplied=0
         function selectAddress(addressId, userAddress) {
             console.log('Selected address:', addressId);
 
@@ -1076,7 +1077,7 @@
         });
 
         async function saveOrderToDatabase(paymentMethod) {
-            try {
+            try {                                                   
                 const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
                 const response = await fetch('/placeOrder', {
                     method: 'POST',
@@ -1088,11 +1089,14 @@
                         totalAmount,
                         orderUserDetails: selectedAddressId,
                         paymentMethod,
+                        couponApplied
                     })
                 });
                 console.log(selectedAddressId,'after async function');
 
                 if (response.ok) {
+                    const data=await response.json()
+                    if(data.status){
                     Swal.fire({
                         title: 'Order Placed Successfully',
                         icon: 'success'
@@ -1100,6 +1104,13 @@
                     setTimeout(() => {
                         window.location.href='/dashboard'
                     }, 1000);
+                    }else{
+                        Swal.fire({
+                            title: 'Coupon Error',
+                            text: 'Negative amount will not accept to order',
+                            icon: 'error'
+                        });
+                    }
                 } else {
                     throw new Error('Failed to save order to database');
                 }
@@ -1221,6 +1232,7 @@
                     console.log(data,'data in daat');
                     if(data.success){
                         console.log(data,'data in applu coupon in checkoute pagea')
+                        couponApplied=data.discountAmount
                         Swal.fire({
                             title:'Coupon Applied',
                             text:`Discount applied: ₹${data.discountAmount}`,

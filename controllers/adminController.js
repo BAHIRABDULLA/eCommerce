@@ -58,12 +58,89 @@ const adminVerify = async (req, res) => {
 
 const dashboardLoad = async (req, res) => {
     try {
-        res.render('dashboard')
+        const order= await Order.find()
+        res.render('dashboard',{order})
     } catch (error) {
         console.log(error.message);
     }
 }
 
+// const graph = async (req, res) => {
+//     try {
+//         let data;
+//         const { intervalData } = req.params;
+
+//         switch (intervalData) {
+//             case 'yearly':
+//                 data = await Order.aggregate([
+//                     {
+//                         $group: {
+//                             _id: { $year: "$orderDate" },
+//                             totalRevenue: { $sum: "$revenue" },
+//                             totalSalesCount: { $sum: "$salesCount" }
+//                         }
+//                     },
+//                     {
+//                         $sort: { "_id": 1 } 
+//                     }
+//                 ]);
+//                 break;
+//             case 'monthly':
+//                 data = await Order.aggregate([
+//                     {
+//                         $group: {
+//                             _id: { $month: "$orderDate" },
+//                             totalRevenue: { $sum: "$revenue" },
+//                             totalSalesCount: { $sum: "$salesCount" }
+//                         }
+//                     },
+//                     {
+//                         $sort: { "_id": 1 } 
+//                     }
+//                 ]);
+//                 break;
+//             case 'weekly':
+//                 const today = new Date();
+//                 const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+//                 data = await Order.aggregate([
+//                     {
+//                         $match: {
+//                             orderDate: { $gte: oneWeekAgo, $lte: today }
+//                         }
+//                     },
+//                     {
+//                         $group: {
+//                             _id: { $dayOfWeek: "$orderDate" },
+//                             totalRevenue: { $sum: "$revenue" },
+//                             totalSalesCount: { $sum: "$salesCount" }
+//                         }
+//                     },
+//                     {
+//                         $sort: { "_id": 1 }
+//                     }
+//                 ]);
+//                 break;
+//             default:
+//                 data = {};
+//         }
+//         const labels=data.map(item=>intervalData==='weekly'?getDayOfWeek(item._id):item._id.tostring())
+//         const revenueData= data.map(item=>item.totalRevenue)
+//         const salesCountData=data.map(item=>item.totalSalesCount)
+
+
+
+//         res.json({labels,revenueData,salesCountData});
+//     } catch (error) {
+//         console.error("Error fetching data:", error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// };
+
+// function getDayOfWeek(day){
+//     const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+//     return days[day]
+// }
 
 const loadSalesReport=async (req,res)=>{
     try {
@@ -229,6 +306,7 @@ module.exports = {
     adminLogin,
     adminVerify,
     dashboardLoad,
+    // graph,
     loadSalesReport,
     showReport,
     customerLoad,

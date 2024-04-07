@@ -782,10 +782,10 @@ const loadCheckout = async (req, res) => {
 const placeOrder = async (req, res) => {                                               
 
     try {
-        const { userId, products, totalAmount, orderUserDetails, paymentMethod } = req.body
+        const { userId, products, totalAmount, orderUserDetails, paymentMethod,couponApplied } = req.body
         // const address=await Address.findById({orderUserDetails})
-        console.log(userId, 'userId in placeholder page');
-        console.log(orderUserDetails, 'ordreUserDetails in my placeorder page')
+        // console.log(userId, 'userId in placeholder page');
+        // console.log(orderUserDetails, 'ordreUserDetails in my placeorder page')
         let check=await Address.findOne({'address._id':orderUserDetails})
         let matched=check.address.find(address=>address._id.toString()===orderUserDetails)
         // console.log(matched,'matched');
@@ -801,7 +801,7 @@ const placeOrder = async (req, res) => {
             landmark:matched.landmark,
             phone2:matched.phone2
         }
-        console.log(address,'address');
+        // console.log(address,'address');
 
         const cart = await Cart.findOne({ userId }).populate('products.productId')
         // const address = await Address.findOne({"address._id":orderUserDetails});
@@ -817,7 +817,12 @@ const placeOrder = async (req, res) => {
             price:product.productId.offerApplied?product.productId.price-(product.productId.price*product.productId.offerApplied/100)
                   : product.productId.price
         }))
+        console.log(productData,'productData in place order');
 
+        if(couponApplied>totalAmount){
+            return res.json({status:false})
+        }
+        
 
         // console.log(address,'orderuser details in place holder page');
         const order = new Order({
@@ -827,7 +832,8 @@ const placeOrder = async (req, res) => {
             orderUserDetails:address,
             paymentMethod,
             status: 'Pending',
-            orderDate: new Date()
+            orderDate: new Date(),
+            couponApplied
         })
         await order.save()
         for (const product of productData) {
@@ -934,7 +940,8 @@ const applyCoupon=async (req,res)=>{
         console.log('its here also in apply coupon ');
         const { couponCode } = req.body;
          console.log(couponCode,'coupon code in apply code');
-        const coupon = await Coupon.findOne({ code: couponCode });
+         let date=new Date()
+        const coupon = await Coupon.findOne({ code: couponCode ,expireDate:{$gte:date}});
         console.log(coupon,'coupon in apply code apply coupon ')
         if (!coupon) {
             return res.json({ success: false, message: 'Coupon not found' });

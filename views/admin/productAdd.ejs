@@ -182,11 +182,11 @@
 
               </div>
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
 
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Category</label>
-                    <div class="col-sm-12">
+                    <label class="col-md-4 col-form-label">Category</label>
+                    <div class="col-md-12">
                       <select class="form-control" id="category-select">
                         <option value="" disabled selected>Select a category</option>
                         <% categories.forEach(category =>{ %>
@@ -195,8 +195,16 @@
                       </select>
                     </div>
                     <small class="text-danger" id="categoryError"></small>
+                    
 
                   </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="" class="col-md-4 col-form-label ">Brand</label>
+                    <div class="col-md-12">
+                      <input type="text" name="brand" id="brand" class="form-control" />
+                    </div>
+                    <small class="text-danger" id="brandError"></small>
                 </div>
               </div>
 
@@ -333,6 +341,7 @@
       event.preventDefault()
       const productName=document.getElementById('exampleInputName1').value.trim()
       const price=document.querySelector('input[name="price"]').value.trim()
+      const brand=document.getElementById('brand').value.trim()
       const quantity = document.querySelector('input[name="quantity"]').value.trim();
       const description = document.getElementById('exampleTextarea1').value.trim();
       const categorySelect=document.getElementById('category-select')
@@ -340,6 +349,7 @@
 
       const productNameError=document.getElementById('productNameError')
       const priceError=document.getElementById('priceError')
+      const brandError=document.getElementById('brandError')
       const quantityError=document.getElementById('quantityError')
       const descriptionError = document.getElementById('descriptionError');
       const categoryError=document.getElementById('categoryError')
@@ -365,6 +375,12 @@
         isValid = false;
       } else {
         quantityError.innerText = '';
+      }
+      if(!brand){
+        brandError.innerText='Brand name cannot be empty'
+        isValid=false
+      }else{
+        brandError.innerText=''
       }
 
       if (!description) {

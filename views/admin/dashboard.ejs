@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags --> 
+  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Admin Panel</title>
@@ -12,22 +12,50 @@
   <link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
-  <link rel="stylesheet" href="vendors/flag-icon-css/css/flag-icon.min.css"/>
+  <link rel="stylesheet" href="vendors/flag-icon-css/css/flag-icon.min.css" />
   <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="vendors/jquery-bar-rating/fontawesome-stars-o.css">
   <link rel="stylesheet" href="vendors/jquery-bar-rating/fontawesome-stars.css">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+
+  <style>
+   .icon-with-title {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.circle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: lightgreen;
+  border-radius: 50%;
+  margin-right: 20px; /* Add margin between icon and title */
+}
+
+.circle-icon i {
+  font-size: 30px;
+  color: green;
+}
+
+  </style>
 </head>
+
 <body>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href=""> <img src="/users/assets/images/logo.png" alt="Molla Logo" width="105" height="25"> </a>
+        <a class="navbar-brand brand-logo" href=""> <img src="/users/assets/images/logo.png" alt="Molla Logo"
+            width="105" height="25"> </a>
         <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a> -->
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
@@ -42,26 +70,29 @@
                   <i class="icon-search"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" placeholder="Search" aria-label="search" aria-describedby="search">
+              <input type="text" class="form-control" placeholder="Search" aria-label="search"
+                aria-describedby="search">
             </div>
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item dropdown d-lg-flex d-none">
-                <button type="button" class="btn btn-info font-weight-bold">+ Create New</button>
-            </li>
-          
+          <li class="nav-item dropdown d-lg-flex d-none">
+            <button type="button" class="btn btn-info font-weight-bold">+ Create New</button>
+          </li>
+
           <li class="nav-item dropdown d-flex mr-4 ">
-            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+              id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="icon-cog"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+              aria-labelledby="notificationDropdown">
               <p class="mb-0 font-weight-normal float-left dropdown-header">Settings</p>
-              <a class="dropdown-item preview-item">               
-                  <i class="icon-head"></i> Profile
+              <a class="dropdown-item preview-item">
+                <i class="icon-head"></i> Profile
               </a>
               <a class="dropdown-item preview-item">
-                  <i class="icon-inbox"></i> Logout
+                <i class="icon-inbox"></i> Logout
               </a>
             </div>
           </li>
@@ -71,7 +102,8 @@
             </a>
           </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
           <span class="icon-menu"></span>
         </button>
       </div>
@@ -85,10 +117,10 @@
             <img src="images/faces/admin.webp">
           </div>
           <div class="user-name">
-              Bahir Abdulla
+            Bahir Abdulla
           </div>
           <div class="user-designation">
-              Manager
+            Manager
           </div>
         </div>
         <ul class="nav">
@@ -105,9 +137,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  href="/admin/category">
+            <a class="nav-link" href="/admin/category">
               <i class="icon-disc menu-icon"></i>
-              <span class="menu-title">Category</span>  
+              <span class="menu-title">Category</span>
             </a>
           </li>
           <li class="nav-item">
@@ -122,7 +154,7 @@
               <span class="menu-title">Orders</span>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link" href="/admin/offer">
               <i class="icon-help menu-icon"></i>
@@ -142,7 +174,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  href="/admin/logout" >
+            <a class="nav-link" href="/admin/logout">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Logout</span>
               <!-- <i class="menu-arrow"></i> -->
@@ -154,201 +186,288 @@
               </ul>
             </div> -->
           </li>
-         
+
         </ul>
       </nav>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+
+
           <div class="row">
             <div class="col-sm-12 mb-4 mb-xl-0">
               <h4 class="font-weight-bold text-dark">Hi, welcome back!</h4>
-              <p class="font-weight-normal mb-2 text-muted">APRIL 1, 2024</p>
+              <p class="font-weight-normal mb-2 text-muted">
+                <%= new Date().toLocaleDateString('en-Us',{year:'numeric',month:'long',day:'2-digit'}) %>
+              </p>
             </div>
           </div>
-          <div class="row mt-3">
-            <div class="col-xl-3 flex-column d-flex grid-margin stretch-card">
-              <div class="row flex-grow">
-                <div class="col-sm-12 grid-margin stretch-card">
-                    <div class="card">
-                      <div class="card-body">
-                          <h4 class="card-title">Customers</h4>
-                          <p>23% increase in conversion</p>
-                          <h4 class="text-dark font-weight-bold mb-2">43,981</h4>
-                          <canvas id="customers"></canvas>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 stretch-card">
-                    <div class="card">
-                      <div class="card-body">
-                          <h4 class="card-title">Orders</h4>
-                          <p>6% decrease in earnings</p>
-                          <h4 class="text-dark font-weight-bold mb-2">55,543</h4>
-                          <canvas id="orders"></canvas>
-                      </div>
-                    </div>
-               </div>
-              </div>
-            </div>
-            <div class="col-xl-9 d-flex grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                      <h4 class="card-title">Website Audience Metrics</h4>
-                      <div class="row">
-                        <div class="col-lg-5">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit amet cumque cupiditate</p>
-                        </div>
-                        <div class="col-lg-7">
-                          <div class="chart-legends d-lg-block d-none" id="chart-legends"></div>
-                        </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-sm-12">
-                              <canvas id="web-audience-metrics-satacked" class="mt-3"></canvas>
-                          </div>
-                      </div>
-                        
-                    </div>
-                  </div>
-            </div>
-          </div>
+
+
+
           <div class="row">
-              <div class="col-xl-4 grid-margin stretch-card">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between mb-3">
-                          <h4 class="card-title">Market Trends</h4>
-                          <div class="dropdown">
-                              <button class="btn btn-sm dropdown-toggle text-dark pt-0 pr-0" type="button" id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  This week
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
-                                <h6 class="dropdown-header">This week</h6>
-                                <h6 class="dropdown-header">This month</h6>
-                              </div>
-                            </div>
-                      </div>
-                      <div id="chart-legends-market-trend" class="chart-legends mt-1">
-                      </div>
-                      <div class="row mt-2 mb-2">
-                        <div class="col-6">
-                          <div class="text-small"><span class="text-success">18.2%</span> higher </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="text-small"><span class="text-danger">0.7%</span> higher </div>
-                        </div>
-                      </div>
-                      <div class="marketTrends mt-4">
-                        <canvas id="marketTrendssatacked"></canvas>
-                      </div>
-                        
+            <div class="col-xl-3 col-sm-3 grid-margin stretch-card">
+              <div class="card"  style="border-radius: 10px;">
+                <div class="card-body">
+                  <div class="icon-with-title">
+                    <div class="circle-icon">
+                      <i class="bi bi-coin" style="color: green; font-size: 28px;"></i>
+                    </div>
+                    <h4 class="card-title">Revenue</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-3 grid-margin stretch-card">
+              <div class="card" style="border-radius: 10px;">
+                <div class="card-body">
+                  
+                  <div class="icon-with-title">
+                  <div class="circle-icon">
+                  <i class="bi bi-truck"  style="color: green; font-size: 28px;"></i>
+                </div>
+                  <h4 class="card-title">Orders</h4>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-3 grid-margin stretch-card">
+              <div class="card" style="border-radius: 10px;">
+                <div class="card-body">
+                  <div class="icon-with-title">
+                  <div class="circle-icon">
+                  <i class="bi bi-qr-code" style="color: green; font-size: 28px;"></i>
+                </div>
+                  <h4 class="card-title mb-3">Products</h4>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-3 grid-margin stretch-card ">
+              <div class="card" style="border-radius: 10px;">
+                <div class="card-body">
+                  <div class="icon-with-title">
+                  <div class="circle-icon">
+                    <i class="bi bi-basket2-fill" style="color: green; font-size: 28px;"></i>
+                  </div>
+                  <h4 class="card-title mb-3">Monthly earning</h4>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="col-xl-12 d-flex grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body ">
+                
+                <div class="dropdown">
+                  <button class="btn btn-sm dropdown-toggle text-dark" type="button"
+                      id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Select Interval
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
+                      <a class="dropdown-item" type="button" href="#">Yearly</a>
+                      <a class="dropdown-item" type="button" href="#">Monthly</a>
+                      <a class="dropdown-item" type="button" href="#">Weekly</a>
+                  </div>
+              </div>
+              
+              
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row mt-3">
+            <div class="col-xl-12 d-flex grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Website Audience Metrics</h4>
+                  <div class="row">
+                    <div class="col-lg-5">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit amet cumque cupiditate</p>
+                    </div>
+                    <div class="col-lg-7">
+                      <div class="chart-legends d-lg-block d-none" id="chart-legends"></div>
                     </div>
                   </div>
-              </div>
-              <div class="col-xl-4 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Traffic Sources</h4>
-                    <div class="row">
-                      <div class="col-sm-12">
-                          <div class="d-flex justify-content-between mt-2 text-dark mb-2">
-                              <div><span class="font-weight-bold">4453</span> Leads</div>
-                              <div>Goal: 2000</div>
-                            </div>
-                        <div class="progress progress-md grouped mb-2">
-                          <div class="progress-bar  bg-danger" role="progressbar" style="width: 30%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          <div class="progress-bar  bg-primary" role="progressbar" style="width: 10%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          <div class="progress-bar bg-warning" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          <div class="progress-bar bg-light" role="progressbar" style="width: 25%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12">
-                        <div class="traffic-source-legend">
-                          <div class="d-flex justify-content-between mb-1 mt-2">
-                            <div class="font-weight-bold">SOURCE</div>
-                            <div class="font-weight-bold">TOTAL</div>
-                          </div>
-                          <div class="d-flex justify-content-between legend-label">
-                            <div><span class="bg-danger"></span>Google Search</div>
-                            <div>30%</div>
-                          </div>
-                          <div class="d-flex justify-content-between legend-label">
-                            <div><span class="bg-info"></span>Social Media</div>
-                            <div>20%</div>
-                          </div>
-                          <div class="d-flex justify-content-between legend-label">
-                            <div><span class="bg-primary"></span>Referrals</div>
-                            <div>10%</div>
-                          </div>
-                          <div class="d-flex justify-content-between legend-label">
-                            <div><span class="bg-warning"></span>Organic Traffic</div>
-                            <div>10%</div>
-                          </div>
-                          <div class="d-flex justify-content-between legend-label">
-                            <div><span class="bg-success"></span>Google Search</div>
-                            <div>5%</div>
-                          </div>
-                          <div class="d-flex justify-content-between legend-label">
-                            <div><span class="bg-light"></span>Email Marketing</div>
-                            <div>25%</div>
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>  
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <canvas id="web-audience-metrics-satacked" class="mt-3"></canvas>
+                    </div>
                   </div>
+
                 </div>
               </div>
-              <div class="col-xl-4 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title mb-3">Recent Activity</h4>
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="text-dark">
-                          <div class="d-flex pb-3 border-bottom justify-content-between">
-                            <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
-                            <div class="font-weight-bold mr-sm-4">
-                              <div>Deposit has updated to Paid</div>
-                              <div class="text-muted font-weight-normal mt-1">32 Minutes Ago</div>
-                            </div>
-                            <div><h6 class="font-weight-bold text-info ml-sm-2">$325</h6></div>
-                          </div>
-                          <div class="d-flex pb-3 pt-3 border-bottom justify-content-between">
-                            <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
-                            <div class="font-weight-bold mr-sm-4">
-                              <div>Your Withdrawal Proceeded</div>
-                              <div class="text-muted font-weight-normal mt-1">45 Minutes Ago</div>
-                            </div>
-                            <div><h6 class="font-weight-bold text-info ml-sm-2">$4987</h6></div>
-                          </div>
-                          <div class="d-flex pb-3 pt-3 border-bottom justify-content-between">
-                            <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
-                            <div class="font-weight-bold mr-sm-4">
-                              <div>Deposit has updated to Paid                              </div>
-                              <div class="text-muted font-weight-normal mt-1">1 Days Ago</div>
-                            </div>
-                            <div><h6 class="font-weight-bold text-info ml-sm-2">$5391</h6></div>
-                          </div>
-                          <div class="d-flex pt-3 justify-content-between">
-                            <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
-                            <div class="font-weight-bold mr-sm-4">
-                              <div>Deposit has updated to Paid</div>
-                              <div class="text-muted font-weight-normal mt-1">3 weeks Ago</div>
-                            </div>
-                            <div><h6 class="font-weight-bold text-info ml-sm-2">$264</h6></div>
-                          </div> 
-                        </div>
-                      </div>
-                    </div>  
-                  </div>
-                </div>
-              </div>
+            </div>
           </div>
-      
+
+          
+          
+
+
+
+
+          <div class="row">
+            <div class="col-xl-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between mb-3">
+                    <h4 class="card-title">Market Trends</h4>
+                    <div class="dropdown">
+                      <button class="btn btn-sm dropdown-toggle text-dark pt-0 pr-0" type="button"
+                        id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        This week
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
+                        <h6 class="dropdown-header">This week</h6>
+                        <h6 class="dropdown-header">This month</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="chart-legends-market-trend" class="chart-legends mt-1">
+                  </div>
+                  <div class="row mt-2 mb-2">
+                    <div class="col-6">
+                      <div class="text-small"><span class="text-success">18.2%</span> higher </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="text-small"><span class="text-danger">0.7%</span> higher </div>
+                    </div>
+                  </div>
+                  <div class="marketTrends mt-4">
+                    <canvas id="marketTrendssatacked"></canvas>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Traffic Sources</h4>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="d-flex justify-content-between mt-2 text-dark mb-2">
+                        <div><span class="font-weight-bold">4453</span> Leads</div>
+                        <div>Goal: 2000</div>
+                      </div>
+                      <div class="progress progress-md grouped mb-2">
+                        <div class="progress-bar  bg-danger" role="progressbar" style="width: 30%" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="50"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar  bg-primary" role="progressbar" style="width: 10%" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 10%" aria-valuenow="50"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="50"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-light" role="progressbar" style="width: 25%" aria-valuenow="50"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="traffic-source-legend">
+                        <div class="d-flex justify-content-between mb-1 mt-2">
+                          <div class="font-weight-bold">SOURCE</div>
+                          <div class="font-weight-bold">TOTAL</div>
+                        </div>
+                        <div class="d-flex justify-content-between legend-label">
+                          <div><span class="bg-danger"></span>Google Search</div>
+                          <div>30%</div>
+                        </div>
+                        <div class="d-flex justify-content-between legend-label">
+                          <div><span class="bg-info"></span>Social Media</div>
+                          <div>20%</div>
+                        </div>
+                        <div class="d-flex justify-content-between legend-label">
+                          <div><span class="bg-primary"></span>Referrals</div>
+                          <div>10%</div>
+                        </div>
+                        <div class="d-flex justify-content-between legend-label">
+                          <div><span class="bg-warning"></span>Organic Traffic</div>
+                          <div>10%</div>
+                        </div>
+                        <div class="d-flex justify-content-between legend-label">
+                          <div><span class="bg-success"></span>Google Search</div>
+                          <div>5%</div>
+                        </div>
+                        <div class="d-flex justify-content-between legend-label">
+                          <div><span class="bg-light"></span>Email Marketing</div>
+                          <div>25%</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-3">Recent Activity</h4>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="text-dark">
+                        <div class="d-flex pb-3 border-bottom justify-content-between">
+                          <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
+                          <div class="font-weight-bold mr-sm-4">
+                            <div>Deposit has updated to Paid</div>
+                            <div class="text-muted font-weight-normal mt-1">32 Minutes Ago</div>
+                          </div>
+                          <div>
+                            <h6 class="font-weight-bold text-info ml-sm-2">$325</h6>
+                          </div>
+                        </div>
+                        <div class="d-flex pb-3 pt-3 border-bottom justify-content-between">
+                          <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
+                          <div class="font-weight-bold mr-sm-4">
+                            <div>Your Withdrawal Proceeded</div>
+                            <div class="text-muted font-weight-normal mt-1">45 Minutes Ago</div>
+                          </div>
+                          <div>
+                            <h6 class="font-weight-bold text-info ml-sm-2">$4987</h6>
+                          </div>
+                        </div>
+                        <div class="d-flex pb-3 pt-3 border-bottom justify-content-between">
+                          <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
+                          <div class="font-weight-bold mr-sm-4">
+                            <div>Deposit has updated to Paid </div>
+                            <div class="text-muted font-weight-normal mt-1">1 Days Ago</div>
+                          </div>
+                          <div>
+                            <h6 class="font-weight-bold text-info ml-sm-2">$5391</h6>
+                          </div>
+                        </div>
+                        <div class="d-flex pt-3 justify-content-between">
+                          <div class="mr-3"><i class="mdi mdi-signal-cellular-outline icon-md"></i></div>
+                          <div class="font-weight-bold mr-sm-4">
+                            <div>Deposit has updated to Paid</div>
+                            <div class="text-muted font-weight-normal mt-1">3 weeks Ago</div>
+                          </div>
+                          <div>
+                            <h6 class="font-weight-bold text-info ml-sm-2">$264</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
@@ -358,9 +477,9 @@
             <a href="/admin/dashboard/salesReport" class="btn text-white  btn-primary ">Sales Report</a>
             <!-- <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span> -->
           </div>
-          
+
         </footer>
-        
+
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -368,7 +487,113 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.querySelectorAll('.dropdown-item').forEach(item=>{
+      item.addEventListener('click',async()=>{
+        event.preventDefault()
+        const interval=item.textContent.toLowerCase()
+        await updateChart(interval)
+      })
+    })
+    async function fetchData(interval){
+      const response=await fetch (`/dashboard/${interval}`)
+      const data=await response.json()
+      return data
+    }
+    async function updateChart(interval){
+      const chartData=await fetchData(interval)
+      const ctx=document.getElementById('myChart').getContext('2d')
+
+      if(window.myChart){
+        window.myChart.destroy()
+      }
+      window.myChart=new Chart(ctx,{
+        type:'bar',
+        data:{
+          labels:chartData.labels,
+          datasets:[
+                {
+                    label: 'Revenue',
+                    data: chartData.revenueData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Example color
+                    borderColor: 'rgba(54, 162, 235, 1)', // Example border color
+                    borderWidth: 1
+                },
+                {
+                    label: 'Sales Count',
+                    data: chartData.salesCountData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Example color
+                    borderColor: 'rgba(255, 99, 132, 1)', // Example border color
+                    borderWidth: 1
+                }
+          ]
+        },
+        options:{
+          scales:{
+            y:{
+              beginAtZero:true
+            }
+          }
+        }
+      })
+    }
+  </script>
+
+  <script>
+    const ctx = document.getElementById('myChart');
   
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+          label: 'Revenue',
+          data: [1000, 1500, 2000, 2500, 1800, 2200, 1700, 1900, 2100, 1600, 2400, 2300],
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }, {
+          label: 'Sales Count',
+          data: [10, 15, 20, 25, 18, 22, 17, 19, 21, 16, 24, 23],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  
+  <!-- <script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'July','Aug','Sep','Oct','Nov','Dec'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3,7,3,9,2,6,10],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script> -->
 
   <!-- base:js -->
   <script src="vendors/base/vendor.bundle.base.js"></script>
@@ -390,4 +615,3 @@
 </body>
 
 </html>
-
