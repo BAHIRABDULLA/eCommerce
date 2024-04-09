@@ -398,17 +398,14 @@
                                                                                 <p class="product-quantity">Quantity:
                                                                                     <%= product.quantity %>
                                                                                 </p>
-                                                                                <p class="product-price">Price: <%=
-                                                                                        product.price %>
+                                                                                <p class="product-price">Price: <%= product.price*product.quantity %>
                                                                                 </p>
                                                                             </div>
                                                                             <div class="product-details">
                                                                                 <a href="/orderDetails/<%= product.productId._id %>,<%= order._id %>"
                                                                                     class="text-danger">Details</a>
-                                                                                <% console.log(order._id,'order._id');
-                                                                                    %>
-                                                                                    <% console.log(product.productId._id,'order.product.productId');
-                                                                                        %>
+                                                                                <% console.log(order._id,'order._id');%>
+                                                                                
                                                                                         <p class="order-date">Order
                                                                                             Date: <%=
                                                                                                 order.orderDate.toDateString()

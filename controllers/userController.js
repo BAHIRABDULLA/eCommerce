@@ -808,8 +808,19 @@ const placeOrder = async (req, res) => {
 
         // console.log(address,'address in placeorder page');
 
+        const quantityCheck = await Promise.all(cart.products.map(async (product) => {
+            let productId = product.productId._id;
+            let quantity = product.quantity;
 
+            let check = await Product.findOne({ _id: productId, quantity: { $gte: quantity } });
+            console.log(!!check,'value');
+            return !!check; 
+        }));
 
+        if (quantityCheck.includes(false)) {
+            return res.json({ mm: false });
+        }
+        
         const productData = cart.products.map((product) => ({
             productId: product.productId._id,
             quantity: product.quantity,
@@ -820,6 +831,8 @@ const placeOrder = async (req, res) => {
         console.log(productData,'productData in place order');
 
         if(couponApplied>totalAmount){
+            console.log(couponApplied,'coupon applied ', totalAmount,'totalamount');
+            
             return res.json({status:false})
         }
         
@@ -1197,7 +1210,7 @@ const loadOrderDetails=async (req,res)=>{
             { 'products.$': 1 } 
         ).populate('products.productId'); 
         console.log(aa,'aa');
-        res.render('orderDetails',{order,orderDetails,aa2})
+        res.render('orderDetails',{order,orderDetails,aa})
     } catch (error) {
         console.error('Error founded in loadOrder',error);
     }
@@ -1215,10 +1228,10 @@ const loadInvoice=async (req,res)=>{
         const aa = await Order.findOne(
             { _id: orderId, 'products.productId': productId }, 
             { 'products.$': 1 } 
-        ).populate('products.productId'); 
-
+        ).populate('products.productId products.productId.category')
+        console.log(aa,'aa in load invoice');
         console.log(orderId,'orderId',productId,'produxctId in loadinvoice');
-        res.render('invoice',{order})
+        res.render('invoice',{order,aa})
     } catch (error) {
         console.error('Error founded in loadInvoice',error);
     }

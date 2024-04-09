@@ -146,7 +146,21 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Coupon Add</h4>
-                  <form action="/admin/coupon-add" method="post"  class="form-sample">
+
+                  <% if(error&&error.length>0){ %>
+                    <div id="alertError" class="alert alert-danger  ">
+                      <% error.forEach((error)=>{ %>
+                        <%= error %>
+                        <% }) %>
+                    </div>
+                    <% } %>
+                    <script>
+                      setTimeout(() => {
+                        var alertError=document.getElementById('alertError')
+                        alertError.style.display='none'
+                      }, 3000);
+                    </script>
+                  <form id="addCouponForm" action="/admin/couponAdd" method="post"  >
                     
                     <div class="row">
                       <div class="col-md-6">
@@ -175,7 +189,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="exampleTextarea1">Description</label>
-                          <textarea class="form-control" name="description" id="exampleTextarea" rows="4"></textarea>
+                          <textarea class="form-control" name="description" id="description" rows="4"></textarea>
                           <small id="descriptionError" class="text-danger " style="display: none;">Description cannot be empty</small>
                         </div>
                       </div>
@@ -209,7 +223,7 @@
                     </label>                      
                    </div>  -->
                    <div class="col">
-                    <button type="button" onclick="submitForm()" class="btn btn-info ">Submit</button>
+                    <button type="submit"  class="btn btn-info ">Submit</button>
                    </div>
                     
                   </form>
@@ -243,15 +257,15 @@
 
 
     //validation going on 
-    function submitForm(){
-      
-      let isValid=true
+    // function submitForm(){
+      document.getElementById('addCouponForm').addEventListener('submit',function(event){
+        let isValid=true
     
 
     const name=document.getElementById('couponName').value.trim()
     const code=document.getElementById('couponCodeInput').value.trim()
     console.log(code,'code in coupon add ejs');
-    const description=document.getElementById('exampleTextarea').value.trim()
+    const description=document.getElementById('description').value.trim()
     const discountAmount=document.getElementById('discount').value.trim()
     const expireDate=document.getElementById('expireDate').value
     console.log(expireDate,'expire date in coupon add ejs');
@@ -293,30 +307,36 @@
     }else{
       document.getElementById('expireDateError').style.display='none'
     }
+
+    if(!isValid){
+      event.preventDefault()
+    }
+      })
+      
     
 
-    if(isValid){
-      const data={
-        name,
-        code,
-        description,
-        discountAmount,
-        expireDate
-      }
-      fetch('/admin/coupon-add',{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify(data)
-      }).then(response=>{
-        console.log('got response to coupon add ejs');
-        window.location.href='/admin/coupon'
-      }).catch(error=>{
-        console.error('Error come in coupon add ejs ',error);
-      })
-    }
-    }
+    // if(isValid){
+    //   const data={
+    //     name,
+    //     code,
+    //     description,
+    //     discountAmount,
+    //     expireDate
+    //   }
+    //   fetch('/admin/couponAdd',{
+    //     method:'POST',
+    //     headers:{
+    //       'Content-Type':'application/json'
+    //     },
+    //     body:JSON.stringify(data)
+    //   }).then(response=>{
+    //     console.log('got response to coupon add ejs');
+    //     window.location.href='/admin/coupon'
+    //   }).catch(error=>{
+    //     console.error('Error come in coupon add ejs ',error);
+    //   })
+    // }
+    // }
   </script>
 
   <script src="vendors/base/vendor.bundle.base.js"></script>

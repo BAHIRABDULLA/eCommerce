@@ -197,23 +197,24 @@
         <div class="content-wrapper">
           <div class="row">
             
-            <% if(error&&error.length){ %>
-              <div id="alertError" class="alert alert-primary " role="alert">
-                <% error.forEach(error=>{ %>
-                  <%= error %>
-                  <% }) %>
-              </div>
-              <script>
-                setTimeout(() => {
-                  let alertError=document.getElementById('alertError')
-                  alertError.style.display='none'
-                }, 3000);
-              </script>
-              <% } %>
+            
+              
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  
+                  <% if(error&&error.length>0){ %>
+                    <div id="alertError" class="alert alert-danger  ">
+                      <% error.forEach((error)=>{ %>
+                        <%= error %>
+                        <% }) %>
+                    </div>
+                    <% } %>
+                    <script>
+                      setTimeout(() => {
+                        var alertError=document.getElementById('alertError')
+                        alertError.style.display='none'
+                      }, 3000);
+                    </script>
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>

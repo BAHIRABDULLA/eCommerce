@@ -1096,15 +1096,30 @@
 
                 if (response.ok) {
                     const data=await response.json()
-                    if(data.status){
+                    if(data.mm===true){
+                        Swal.fire({
+                        title: 'Order Placed Successfully',
+                        icon: 'success'
+                        });
+                        setTimeout(() => {
+                            window.location.href='/dashboard'
+                        }, 1000);
+                    }else if(data.mm===false){
+                        Swal.fire({
+                            title: 'Order Error',
+                            text: 'Failed order',
+                            icon: 'error'
+                        });
+                    }
+                    if(data.status===true){
                     Swal.fire({
                         title: 'Order Placed Successfully',
                         icon: 'success'
                     });
-                    setTimeout(() => {
-                        window.location.href='/dashboard'
-                    }, 1000);
-                    }else{
+                        setTimeout(() => {
+                            window.location.href='/dashboard'
+                        }, 1000);
+                    }else if(data.status===false){
                         Swal.fire({
                             title: 'Coupon Error',
                             text: 'Negative amount will not accept to order',

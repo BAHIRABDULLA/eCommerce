@@ -146,15 +146,16 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Coupon Edit</h4>
-                  <form action="/admin/coupon-edit/<%= coupon._id %>" method="post"  class="form-sample">
+                  <form action="/admin/coupon-edit/<%= coupon._id %>" method="post"  onsubmit="return validateForm()" class="form-sample">
                     
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Coupon Name</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" value="<%= coupon.name %>" name="couponName" />
+                            <input type="text" class="form-control" value="<%= coupon.name %>" name="couponName" id="couponName"/>
                           </div>
+                          <small class="text-danger " id="nameError"></small>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -164,6 +165,7 @@
                             <div class="input-group-append">
                               <button class="btn btn-sm btn-primary" type="button" onclick="generateCouponCode()">Search</button>
                             </div>
+                          <small class="text-danger " id="codeError"></small>
                           </div>
                         </div>
                       </div>
@@ -172,8 +174,9 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="exampleTextarea1">Description</label>
-                          <textarea class="form-control"  name="description"  id="exampleTextarea1" rows="4"><%= coupon.description %></textarea>
+                          <textarea class="form-control"  name="description"  id="description" rows="4"><%= coupon.description %></textarea>
                         </div>
+                        <small class="text-danger " id="descriptionError"></small>
                       </div>
                     </div>
                     <div class="row">
@@ -181,8 +184,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Discount Amount</label>
                           <div class="col-sm-9">
-                            <input type="text" name="discount" value="<%= coupon.discountAmount %>" class="form-control" />
+                            <input type="text" name="discount" id="discount" value="<%= coupon.discountAmount %>" class="form-control" />
                           </div>
+                          <small class="text-danger " id="discountError"></small>
                         </div>
                       </div>
                       
@@ -192,6 +196,7 @@
                           <div class="col-sm-9">
                             <input class="form-control"   id="couponExpire" name="expireDate" type="date"  placeholder="">
                           </div>
+                          <small class="text-danger" id="expireDateError"></small>
                         </div>
                       </div>
                     </div>
@@ -232,6 +237,35 @@
     const couponExpire = document.getElementById('couponExpire');
     couponExpire.value = '<%= coupon.expireDate %>';
 });
+
+  function validateForm(){
+    let name=document.getElementById('couponName').value.trim()
+    let code=document.getElementById('couponCodeInput').value.trim()
+    let description=document.getElementById('description').value.trim()
+    let discount=document.getElementById('discount').value.trim()
+    let expireDate=new Date(document.getElementById('couponExpire').value)
+    
+
+    if(name==''||!name){
+      document.getElementById('nameError').innerText='Please enter valid coupon name'
+      return false
+    }
+    if(description==''||!description){
+      document.getElementById('descriptionError').innerText='Please enter description'
+      return false
+    }
+    if(expireDate==''||!expireDate){
+      document.getElementById('expireDateError').innerText='Please enter expire date'
+      return false
+    }
+    const currentDate=new Date()
+    console.log(expireDate,'expire date',currentDate,'current date');
+    if(expireDate<currentDate){
+      document.getElementById('expireDateError').innerText='Expire date cannot be previous dates'
+      return false
+    }
+    return true
+  }
 
   </script>
 

@@ -266,17 +266,13 @@
             <div class="card">
               <div class="card-body ">
                 
-                <div class="dropdown">
-                  <button class="btn btn-sm dropdown-toggle text-dark" type="button"
-                      id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Select Interval
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
-                      <a class="dropdown-item" type="button" href="#">Yearly</a>
-                      <a class="dropdown-item" type="button" href="#">Monthly</a>
-                      <a class="dropdown-item" type="button" href="#">Weekly</a>
-                  </div>
-              </div>
+                <select class="form-select  btn btn-outline-danger" onchange="this.value()" aria-label="Default select example">
+                  <!-- <option selected>Open this select menu</option> -->
+                 
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
               
               
                 <div>
@@ -489,7 +485,7 @@
   <!-- container-scroller -->
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
+  <!-- <script>
     document.querySelectorAll('.dropdown-item').forEach(item=>{
       item.addEventListener('click',async()=>{
         event.preventDefault()
@@ -539,7 +535,7 @@
         }
       })
     }
-  </script>
+  </script> -->
 
   <script>
     const ctx = document.getElementById('myChart');

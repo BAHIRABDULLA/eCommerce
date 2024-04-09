@@ -14,7 +14,7 @@ const loadCoupon=async(req,res)=>{
 
 const loadCouponAdd=async(req,res)=>{
     try {
-        res.render('couponAdd')
+        res.render('couponAdd',{error:req.flash('error')})
     } catch (error) {
         console.log(error.message);
     }
@@ -22,21 +22,24 @@ const loadCouponAdd=async(req,res)=>{
 
 const couponAdding=async(req,res)=>{
     try {
-        const {name,code,description,discountAmount,expireDate}=req.body
-        
+        const {couponName,couponCode,description,discount,expireDate}=req.body
+        // const {name,code,description,discountAmount,expireDate}=req.body
+        console.log(couponCode,'couponCode');
         console.log(expireDate,'expiredate');
         console.log(description,'description in coupon add');
 
-        const existCouponName=await Coupon.findOne({name:{$regex:`${name}`,$options:'i'}})
+        const existCouponName=await Coupon.findOne({name:{$regex:`${couponName}`,$options:'i'}})
         if(existCouponName){
+            console.log('coupn add ddint play..#####');
             req.flash('error','This coupon already existed')
-            res.redirect('/admin/coupon')
+            return res.redirect('/admin/coupon')
         }else{
+            console.log('coupoon addin gworking .............');
             const newCoupon=new Coupon({
-                name,
-                code,
+                name:couponName,
+                code:couponCode,
                 description,
-                discountAmount,
+                discountAmount:discount,
                 expireDate
     
                 
@@ -77,14 +80,23 @@ const couponEditPost=async(req,res)=>{
         const {couponId}=req.params
         const { couponName, couponCode, description, discount, expireDate } = req.body;
         console.log(couponId,'coupon id in coupond edit post');
-        const editCoupon=await Coupon.findByIdAndUpdate(couponId,{
-            name:couponName,
-            code:couponCode,
-            description,
-            discountAmount:discount,
-            expireDate
-        },{new:true})
-        res.redirect('/admin/coupon')
+
+        const existCouponName=await Coupon.findOne({name:{$regex:`${couponName}`,$options:'i'},_id:{$ne:couponId}})
+        if(existCouponName){
+            console.log('coupn add ddint play..#####');
+            req.flash('error','This coupon already existed')
+            return res.redirect('/admin/coupon')
+        }else{
+            const editCoupon=await Coupon.findByIdAndUpdate(couponId,{
+                name:couponName,
+                code:couponCode,
+                description,
+                discountAmount:discount,
+                expireDate
+            },{new:true})
+            res.redirect('/admin/coupon')
+        }
+        
 
     } catch (error) {
         console.log(error.message);
