@@ -65,81 +65,128 @@ const dashboardLoad = async (req, res) => {
     }
 }
 
-const graph = async (req, res) => {
+// const graphhg = async (req, res) => {
+//     try {
+//         let data;
+//         const { intervalData } = req.params;
+
+//         switch (intervalData) {
+//             case 'yearly':
+//                 data = await Order.aggregate([
+//                     {
+//                         $group: {
+//                             _id: { $year: "$orderDate" },
+//                             totalRevenue: { $sum: "$revenue" },
+//                             totalSalesCount: { $sum: "$salesCount" }
+//                         }
+//                     },
+//                     {
+//                         $sort: { "_id": 1 } 
+//                     }
+//                 ]);
+//                 break;
+//             case 'monthly':
+//                 data = await Order.aggregate([
+//                     {
+//                         $group: {
+//                             _id: { $month: "$orderDate" },
+//                             totalRevenue: { $sum: "$revenue" },
+//                             totalSalesCount: { $sum: "$salesCount" }
+//                         }
+//                     },
+//                     {
+//                         $sort: { "_id": 1 } 
+//                     }
+//                 ]);
+//                 break;
+//             case 'weekly':
+//                 const today = new Date();
+//                 const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+//                 data = await Order.aggregate([
+//                     {
+//                         $match: {
+//                             orderDate: { $gte: oneWeekAgo, $lte: today }
+//                         }
+//                     },
+//                     {
+//                         $group: {
+//                             _id: { $dayOfWeek: "$orderDate" },
+//                             totalRevenue: { $sum: "$revenue" },
+//                             totalSalesCount: { $sum: "$salesCount" }
+//                         }
+//                     },
+//                     {
+//                         $sort: { "_id": 1 }
+//                     }
+//                 ]);
+//                 break;
+//             default:
+//                 data = {};
+//         }
+//         const labels=data.map(item=>intervalData==='weekly'?getDayOfWeek(item._id):item._id.tostring())
+//         const revenueData= data.map(item=>item.totalRevenue)
+//         const salesCountData=data.map(item=>item.totalSalesCount)
+
+
+
+//         res.json({labels,revenueData,salesCountData});
+//     } catch (error) {
+//         console.error("Error fetching data:", error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// };
+
+// function getDayOfWeek(day){
+//     const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+//     return days[day]
+// }
+
+
+
+const graph=async (req,res)=>{
     try {
-        let data;
-        const { intervalData } = req.params;
+       
+        let {value}=req.query
+        console.log(value,'value in graph');
+        
+        let startDate,endDate
+        
 
-        switch (intervalData) {
-            case 'yearly':
-                data = await Order.aggregate([
-                    {
-                        $group: {
-                            _id: { $year: "$orderDate" },
-                            totalRevenue: { $sum: "$revenue" },
-                            totalSalesCount: { $sum: "$salesCount" }
-                        }
-                    },
-                    {
-                        $sort: { "_id": 1 } 
-                    }
-                ]);
-                break;
-            case 'monthly':
-                data = await Order.aggregate([
-                    {
-                        $group: {
-                            _id: { $month: "$orderDate" },
-                            totalRevenue: { $sum: "$revenue" },
-                            totalSalesCount: { $sum: "$salesCount" }
-                        }
-                    },
-                    {
-                        $sort: { "_id": 1 } 
-                    }
-                ]);
-                break;
-            case 'weekly':
-                const today = new Date();
-                const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+        if(value==='weekly'){
+            startDate = new Date(new Date().setDate(new Date().getDate() - 7));
+            endDate = new Date();
+            console.log(startDate,'startDate ',endDate,'endDate in weekly');
+        }else if(value ==='monthly'){
+            startDate=new Date(new Date().getFullYear(),new Date().getMonth()-1,1)
+            endDate=new Date(new Date().getFullYear(),new Date().getMonth(),0)
+            console.log(startDate,'startDate ',endDate,'endDate in monthly');
 
-                data = await Order.aggregate([
-                    {
-                        $match: {
-                            orderDate: { $gte: oneWeekAgo, $lte: today }
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: { $dayOfWeek: "$orderDate" },
-                            totalRevenue: { $sum: "$revenue" },
-                            totalSalesCount: { $sum: "$salesCount" }
-                        }
-                    },
-                    {
-                        $sort: { "_id": 1 }
-                    }
-                ]);
-                break;
-            default:
-                data = {};
+        }else if(value==='yearly'){
+            startDate=new Date(new Date().getFullYear()-1,0,1)
+            endDate=new Date(new Date().getFullYear()-1,11,31)
+            console.log(startDate,'startDate ',endDate,'endDate in yearly');
+
         }
-        const labels=data.map(item=>intervalData==='weekly'?getDayOfWeek(item._id):item._id.tostring())
-        const revenueData= data.map(item=>item.totalRevenue)
-        const salesCountData=data.map(item=>item.totalSalesCount)
+        const orders= await Order.find({
+            orderDate:{$gte:startDate,$lte:endDate}
+        })
+        console.log(orders,'orders in graph');
+        let revenueData=0
+        let salesCount=0
+        orders.forEach(order=>{
+            revenueData+=order.totalAmount
+            salesCount+=order.products.length
+        })
+        console.log(revenueData,'revenued date in graph');
+        console.log(salesCount,'salesCount in graph');
+        res.json({revenueData,salesCount})
+       
 
-
-
-        res.json({labels,revenueData,salesCountData});
     } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Erroru founder in graph',error);
         res.status(500).json({ error: "Internal server error" });
     }
-};
-
-function getDayOfWeek(day){
-    const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-    return days[day]
 }
 
 const loadSalesReport=async (req,res)=>{

@@ -266,7 +266,7 @@
             <div class="card">
               <div class="card-body ">
                 
-                <select class="form-select  btn btn-outline-danger" onchange="this.value()" aria-label="Default select example">
+                <select id="graphSelector" class="form-select  btn btn-outline-danger" onchange="loadGraph()" aria-label="Default select example">
                   <!-- <option selected>Open this select menu</option> -->
                  
                   <option value="weekly">Weekly</option>
@@ -485,87 +485,123 @@
   <!-- container-scroller -->
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- <script>
-    document.querySelectorAll('.dropdown-item').forEach(item=>{
-      item.addEventListener('click',async()=>{
-        event.preventDefault()
-        const interval=item.textContent.toLowerCase()
-        await updateChart(interval)
-      })
-    })
-    async function fetchData(interval){
-      const response=await fetch (`/dashboard/${interval}`)
-      const data=await response.json()
-      return data
-    }
-    async function updateChart(interval){
-      const chartData=await fetchData(interval)
-      const ctx=document.getElementById('myChart').getContext('2d')
-
-      if(window.myChart){
-        window.myChart.destroy()
-      }
-      window.myChart=new Chart(ctx,{
-        type:'bar',
-        data:{
-          labels:chartData.labels,
-          datasets:[
-                {
-                    label: 'Revenue',
-                    data: chartData.revenueData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Example color
-                    borderColor: 'rgba(54, 162, 235, 1)', // Example border color
-                    borderWidth: 1
-                },
-                {
-                    label: 'Sales Count',
-                    data: chartData.salesCountData,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Example color
-                    borderColor: 'rgba(255, 99, 132, 1)', // Example border color
-                    borderWidth: 1
-                }
-          ]
-        },
-        options:{
-          scales:{
-            y:{
-              beginAtZero:true
-            }
-          }
-        }
-      })
-    }
-  </script> -->
+  
 
   <script>
-    const ctx = document.getElementById('myChart');
-  
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-          label: 'Revenue',
-          data: [1000, 1500, 2000, 2500, 1800, 2200, 1700, 1900, 2100, 1600, 2400, 2300],
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }, {
-          label: 'Sales Count',
-          data: [10, 15, 20, 25, 18, 22, 17, 19, 21, 16, 24, 23],
-          backgroundColor: 'rgba(54, 162, 235, 0.5)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+
+    document.addEventListener('DOMContentLoaded',function(){
+      loadGraph()
+    })
+
+    async function loadGraph(){
+      const selector=document.getElementById('graphSelector')
+
+      const selectedValue=selector.value
+      console.log(selectedValue,'selected value in admin dashboard apge====');
+      try {
+        const response=await fetch(`/admin/dashboard/graph/value?value=${selectedValue}`)
+        const data=await response.json()
+        console.log(data,'data in dashbaord admin side');
+
+        const labels=[]
+        const datasetData=[]
+        if(selectedValue==='weekly'){
+          labels= ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          datasetData=data.dailyData
+        }else if (selectedValue==='monthly'){
+          labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+          datasetData = data.weeklyData
+        }else if(selectedValue==='yearly'){
+          const currentYear=new Date().getFullYear()
+          labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          datasetData=data.monthlyData
         }
+        console.log('dfdffdfdfedfdfdfdd&*&*^&%&%&%$^#');
+        console.log(datasetData,'daatsetdata in admin dashboard page');
+        const ctx = document.getElementById('myChart');
+  
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels:labels,
+            datasets: [{
+              label: 'Revenue',
+              data: datasetData,
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            },{
+              label:'Sales Count',
+              data:data.salesCount,
+              backgroundColor:'rgba(54, 162, 235, 0.5)',
+              borderColor:'rgba(54, 162, 235, 1)',
+              borderWidth:1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      } catch (error) {
+        
       }
-    });
+    }
+
+    // async function loadGraph(){
+    //   const selector=document.getElementById('graphSelector')
+
+    //   const selectedValue=selector.value
+    //   console.log(selectedValue,'selected value in admin dashboard apge====');
+    //   try {
+    //     const response=await fetch(`/admin/dashboard/graph/value?value=${selectedValue}`)
+    //     const data=await response.json()
+    //     console.log(data,'data in dashbaord admin side');
+
+
+    //     const ctx = document.getElementById('myChart');
+  
+    //     new Chart(ctx, {
+    //       type: 'bar',
+    //       data: {
+    //         labels: ['Revenue','Sales Count'],
+    //         datasets: [{
+    //           label: 'Graph Data',
+    //           data: [data.revenueData,data.salesCount],
+    //           backgroundColor: ['rgba(255, 99, 132, 0.5)','rgba(54, 162, 235, 0.5)'],
+    //           borderColor: ['rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)'],
+    //           borderWidth: 1
+    //         }]
+    //       },
+    //       options: {
+    //         scales: {
+    //           y: {
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       }
+    //     });
+    //   } catch (error) {
+        
+    //   }
+    // }
+
+    // async function graphChange(value){
+    //   fetch(`/dashboard/graph/${value}`,{
+    //     method:POST,
+    //     headers:{
+    //       'Content-Type':'application/json'
+    //     }
+    //   })
+    // }
+    
+
+
+    
   </script>
   
   <!-- <script>

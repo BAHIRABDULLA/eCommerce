@@ -29,7 +29,7 @@ admin_route.post('/verify', adminController.adminVerify)
 
 admin_route.get('/dashboard', adminAuth.isLogin, adminController.dashboardLoad)
 
-admin_route.get('/dashboard/:intervalData',adminController.graph)
+admin_route.get('/dashboard/graph/value',adminController.graph)
 
 admin_route.get('/dashboard/salesReport', adminAuth.isLogin, adminController.loadSalesReport)
 admin_route.post('/dashboard/sales-report', adminController.showReport)
