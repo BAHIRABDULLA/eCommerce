@@ -803,11 +803,18 @@ const placeOrder = async (req, res) => {
         }
         // console.log(address,'address');
 
+        // COD not allowed above 1000
+        if(paymentMethod==='Cash on Delivery'){
+            if(totalAmount>1000){
+                return res.json({mm:false})
+            }
+        }
+
         const cart = await Cart.findOne({ userId }).populate('products.productId')
         // const address = await Address.findOne({"address._id":orderUserDetails});
 
         // console.log(address,'address in placeorder page');
-
+        //we are using here checking quantity for admin fixed quanitty
         const quantityCheck = await Promise.all(cart.products.map(async (product) => {
             let productId = product.productId._id;
             let quantity = product.quantity;
