@@ -11,7 +11,7 @@ const Wishlist= require('../models/wishlistModel')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const { ObjectId } = require('mongodb');
-const userModel = require('../models/userModel');
+// const userModel = require('../models/userModel');
 const { isLoggedIn } = require('../middleware/auth');
 const { response } = require('../routes/userRoute')
 
@@ -782,7 +782,7 @@ const loadCheckout = async (req, res) => {
 const placeOrder = async (req, res) => {                                               
 
     try {
-        const { userId, products, totalAmount, orderUserDetails, paymentMethod,couponApplied } = req.body
+        const { userId, products, totalAmount,status, orderUserDetails, paymentMethod,couponApplied } = req.body
         // const address=await Address.findById({orderUserDetails})
         // console.log(userId, 'userId in placeholder page');
         // console.log(orderUserDetails, 'ordreUserDetails in my placeorder page')
@@ -851,7 +851,7 @@ const placeOrder = async (req, res) => {
             totalAmount,
             orderUserDetails:address,
             paymentMethod,
-            status: 'Pending',
+            status,
             orderDate: new Date(),
             couponApplied
         })

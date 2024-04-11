@@ -1005,10 +1005,13 @@
                             description: 'Payment for Order',
                             order_id: orderId,
                             handler: function (response) {
-                                // Handle successful payment
+                               
                                 console.log(response);
-                                // Save order to the database here
-                                saveOrderToDatabase('Online Payment');
+                                
+                                let orderStatus = response.error ? 'Payment Failed' : 'Pending';
+        
+                             saveOrderToDatabase('Online Payment', orderStatus);
+                                
                             },
                             prefill: {
                                 name: 'Customer Name',
@@ -1042,7 +1045,7 @@
                             })
                             if(response.ok){
                                 console.log(response,'response in wallet payment');
-                               saveOrderToDatabase('Wallet')
+                               saveOrderToDatabase('Wallet','Pending')
                             }
                         } catch (error) {
                             console.error('Error processing wallet payment:', error);
@@ -1063,7 +1066,7 @@
                  
                     paymentMethod: 'Cash on Delivery',
                 
-                    saveOrderToDatabase('Cash on Delivery');
+                    saveOrderToDatabase('Cash on Delivery','Pending');
                     
                 }
             } catch (error) {
@@ -1076,7 +1079,7 @@
             }
         });
 
-        async function saveOrderToDatabase(paymentMethod) {
+        async function saveOrderToDatabase(paymentMethod,status) {
             try {                                                   
                 const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
                 const response = await fetch('/placeOrder', {
@@ -1089,7 +1092,8 @@
                         totalAmount,
                         orderUserDetails: selectedAddressId,
                         paymentMethod,
-                        couponApplied
+                        couponApplied,
+                        status
                     })
                 });
                 console.log(selectedAddressId,'after async function');

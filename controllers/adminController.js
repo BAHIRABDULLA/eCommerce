@@ -1,7 +1,7 @@
 // const Admin=require('../models/adminModel')
 const User = require('../models/userModel')
-const Order= require('../models/orderModel')
-const Coupon=require('../models/couponModel')
+const Order = require('../models/orderModel')
+const Coupon = require('../models/couponModel')
 // const Category=require('../models/categoryModel')
 const bcrypt = require('bcrypt')
 require('dotenv').config()
@@ -24,7 +24,7 @@ console.log('hello');
 const adminLogin = async (req, res) => {
     try {
         console.log('is there any mistake');
-        res.render('login',{error:req.flash('error')})
+        res.render('login', { error: req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
@@ -47,7 +47,7 @@ const adminVerify = async (req, res) => {
             req.session.dd = { email, password }
             res.redirect('/admin/dashboard')
         } else {
-            req.flash('error','Email or Password is incorrect , please try again')
+            req.flash('error', 'Email or Password is incorrect , please try again')
             res.redirect('/admin')
         }
 
@@ -56,127 +56,127 @@ const adminVerify = async (req, res) => {
     }
 }
 
-const top10ProductsCategories=async(req,res)=>{
+const top10ProductsCategories = async (req, res) => {
     try {
         const top10Products = await Order.aggregate([
             {
-               $match: {
-                 'status': 'Delivered'
-               }
-            },
-            {
-               $unwind: '$products' 
-            },
-            {
-               $lookup: {
-                 'from': 'products', 
-                 'localField': 'products.productId',
-                 'foreignField': '_id',
-                 'as': 'productDetails'
-               }
-            },
-            {
-               $unwind: '$productDetails' 
-            },
-            {
-               $group: {
-                 '_id': '$productDetails._id', 
-                 'name': { '$first': '$productDetails.name' }, 
-                 'image':{'$first':'$productDetails.image'},
-                 'count': { '$sum': '$products.quantity' } 
-               }
-            },
-            {
-               $sort: { 'count': -1 } 
-            },
-            {
-               $limit: 10 
-            }
-           ]);
-
-           const top10Categories = await Order.aggregate([
-            {
-               $match: {
-                 'status': 'Delivered'
-               }
-            },
-            {
-               $unwind: '$products' 
-            },
-            {
-               $lookup: {
-                 'from': 'products', 
-                 'localField': 'products.productId',
-                 'foreignField': '_id',
-                 'as': 'productDetails'
-               }
-            },
-            {
-               $unwind: '$productDetails' 
-            },
-            {
-               $group: {
-                 '_id': '$productDetails.category', 
-
-                 'count': { '$sum': 1 } 
-               }
-            },
-            {
-                $lookup:{
-                    'from':'categories',
-                    'localField':'_id',
-                    'foreignField':'_id',
-                    'as':'categoryDetails'
+                $match: {
+                    'status': 'Delivered'
                 }
             },
             {
-                $unwind:'$categoryDetails'
+                $unwind: '$products'
             },
             {
-                $project:{
-                    _id:0,
-                    categoryName:'$categoryDetails.name',
-                    count:1
+                $lookup: {
+                    'from': 'products',
+                    'localField': 'products.productId',
+                    'foreignField': '_id',
+                    'as': 'productDetails'
                 }
             },
             {
-               $sort: { 'count': -1 } 
+                $unwind: '$productDetails'
             },
             {
-               $limit: 10 
+                $group: {
+                    '_id': '$productDetails._id',
+                    'name': { '$first': '$productDetails.name' },
+                    'image': { '$first': '$productDetails.image' },
+                    'count': { '$sum': '$products.quantity' }
+                }
+            },
+            {
+                $sort: { 'count': -1 }
+            },
+            {
+                $limit: 10
             }
-           ]);
-           console.log(top10Products,'top10 products ');
-           console.log(top10Categories,'top 10 categories ');
-          
+        ]);
 
-           return {top10Products,top10Categories}
+        const top10Categories = await Order.aggregate([
+            {
+                $match: {
+                    'status': 'Delivered'
+                }
+            },
+            {
+                $unwind: '$products'
+            },
+            {
+                $lookup: {
+                    'from': 'products',
+                    'localField': 'products.productId',
+                    'foreignField': '_id',
+                    'as': 'productDetails'
+                }
+            },
+            {
+                $unwind: '$productDetails'
+            },
+            {
+                $group: {
+                    '_id': '$productDetails.category',
+
+                    'count': { '$sum': 1 }
+                }
+            },
+            {
+                $lookup: {
+                    'from': 'categories',
+                    'localField': '_id',
+                    'foreignField': '_id',
+                    'as': 'categoryDetails'
+                }
+            },
+            {
+                $unwind: '$categoryDetails'
+            },
+            {
+                $project: {
+                    _id: 0,
+                    categoryName: '$categoryDetails.name',
+                    count: 1
+                }
+            },
+            {
+                $sort: { 'count': -1 }
+            },
+            {
+                $limit: 10
+            }
+        ]);
+        console.log(top10Products, 'top10 products ');
+        console.log(top10Categories, 'top 10 categories ');
+
+
+        return { top10Products, top10Categories }
 
     } catch (error) {
-        console.error('Error founded in top10Products and categories',error);
+        console.error('Error founded in top10Products and categories', error);
     }
 }
 
 const dashboardLoad = async (req, res) => {
     try {
 
-        const {top10Products,top10Categories}=await top10ProductsCategories(req,res)
-    
-        const order= await Order.find()
+        const { top10Products, top10Categories } = await top10ProductsCategories(req, res)
+
+        const order = await Order.find()
         let revenue = order.reduce((total, order) => total + order.totalAmount, 0);
-        let salesCount=order.length
-        let currentDate=new Date()
-        currentDate.setHours(0,0,0,0)
-        let nextDay=new Date(currentDate)
-        nextDay.setDate(currentDate.getDate()+1)
-        let dailyOrder=await Order.find({
-            orderDate:{
-                $gte:currentDate,
-                $lte:nextDay
+        let salesCount = order.length
+        let currentDate = new Date()
+        currentDate.setHours(0, 0, 0, 0)
+        let nextDay = new Date(currentDate)
+        nextDay.setDate(currentDate.getDate() + 1)
+        let dailyOrder = await Order.find({
+            orderDate: {
+                $gte: currentDate,
+                $lte: nextDay
             }
         })
-        let dailyRevenue=dailyOrder.reduce((total,order)=>total+order.totalAmount,0)
-        res.render('dashboard',{order,revenue,salesCount,dailyRevenue,top10Products,top10Categories})
+        let dailyRevenue = dailyOrder.reduce((total, order) => total + order.totalAmount, 0)
+        res.render('dashboard', { order, revenue, salesCount, dailyRevenue, top10Products, top10Categories })
     } catch (error) {
         console.log(error.message);
     }
@@ -187,21 +187,21 @@ const dashboardLoad = async (req, res) => {
 
 // const graph=async (req,res)=>{
 //     try {
-       
+
 //         let {value}=req.query
 //         console.log(value,'value in graph');
-        
+
 //         let pipeline = [];
 //         if (value === 'weekly') {
 //             let oneMonthAgo=new Date()
 //             oneMonthAgo.setMonth(oneMonthAgo.getMonth()-1)
 //             pipeline = [
-                
+
 //             ];
 //         } else if (value === 'monthly') {
 //             const twelveMonthsAgo=new Date()
 //             twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth()-12)
-            
+
 //             pipeline = [
 //                 {
 //                     $match:{
@@ -219,12 +219,12 @@ const dashboardLoad = async (req, res) => {
 //                             monthlyTotalAmount:{
 //                                 $sum:'$totalAmount'
 //                             }
-                        
+
 //                     }
 //                 }
 //             ];
 //         } else if (value === 'yearly') {
-            
+
 //             const tenYearsAgo= new Date()
 //             tenYearsAgo.setFullYear(tenYearsAgo.getFullYear()-10)
 
@@ -261,7 +261,7 @@ const dashboardLoad = async (req, res) => {
 //         console.log(data, 'data in graph');
 
 //         res.json(data);
-       
+
 
 //     } catch (error) {
 //         console.error('Erroru founder in graph',error);
@@ -275,24 +275,24 @@ const graph = async (req, res) => {
     try {
         let { value } = req.query;
         console.log(value, 'value in graph');
-        
+
         let pipeline = [];
-        
-         if (value === 'monthly') {
-            
+
+        if (value === 'monthly') {
+
             const startOfYear = new Date(new Date().getFullYear(), 0, 1);
             const endOfYear = new Date(new Date().getFullYear(), 11, 31);
-            
+
             pipeline = [
                 {
                     $match: {
-                        orderDate: { $gte: startOfYear,$lte:endOfYear}
+                        orderDate: { $gte: startOfYear, $lte: endOfYear }
                     }
                 },
                 {
                     $group: {
                         _id: { $month: '$orderDate' },
-                        month:{$first:{$month:'$orderDate'}},
+                        month: { $first: { $month: '$orderDate' } },
                         monthlyTotalAmount: { $sum: '$totalAmount' },
                         monthlyOrderCount: { $sum: 1 }
                     }
@@ -304,10 +304,10 @@ const graph = async (req, res) => {
                 }
             ];
         } else if (value === 'yearly') {
-          
+
             const tenYearsAgo = new Date();
             tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 9);
-            
+
             pipeline = [
                 {
                     $match: {
@@ -330,7 +330,7 @@ const graph = async (req, res) => {
         }
 
         const data = await Order.aggregate(pipeline);
-     
+
 
         console.log(data, 'data in graph');
 
@@ -342,9 +342,9 @@ const graph = async (req, res) => {
 };
 
 
-const loadSalesReport=async (req,res)=>{
+const loadSalesReport = async (req, res) => {
     try {
-        const order=await Order.find()
+        
 
         res.render('salesReport')
     } catch (error) {
@@ -353,24 +353,24 @@ const loadSalesReport=async (req,res)=>{
 }
 
 
-const showReport=async(req,res)=>{
+const showReport = async (req, res) => {
     try {
         console.log('its here in show report');
         const { reportType, startDate, endDate } = req.body;
-       console.log(reportType,'rT',startDate,'sD',endDate,'eD');
+        console.log(reportType, 'rT', startDate, 'sD', endDate, 'eD');
         let query = {};
 
-        
+
         switch (reportType) {
             case 'daily':
                 query = {
-                    orderDate: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) } 
+                    orderDate: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) }
                 };
                 break;
             case 'weekly':
                 query = {
                     orderDate: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000), 
+                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000),
                         $lt: new Date()
                     }
                 };
@@ -378,7 +378,7 @@ const showReport=async(req,res)=>{
             case 'monthly':
                 query = {
                     orderDate: {
-                        $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1), 
+                        $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                         $lt: new Date()
                     }
                 };
@@ -386,7 +386,7 @@ const showReport=async(req,res)=>{
             case 'yearly':
                 query = {
                     orderDate: {
-                        $gte: new Date(new Date().getFullYear(), 0, 1), 
+                        $gte: new Date(new Date().getFullYear(), 0, 1),
                         $lt: new Date()
                     }
                 };
@@ -403,7 +403,7 @@ const showReport=async(req,res)=>{
                 break;
         }
         const orders = await Order.find(query);
-        console.log(orders,'orders in sales report ');
+        console.log(orders, 'orders in sales report ');
         // const reportData = orders.map(order => ({
         //     date: order.orderDate ? order.orderDate.toISOString().split('T')[0] : 'N/A',
         //     salesCount: orders.length,
@@ -411,31 +411,31 @@ const showReport=async(req,res)=>{
         //     // coupon: order.couponApplied 
         // }));
 
-        const reportData=await Order.aggregate([
-            {$match:query},
+        const reportData = await Order.aggregate([
+            { $match: query },
             {
-                $group:{
-                    _id:{$dateToString:{format:"%Y-%m-%d" ,date:'$orderDate'}},
-                    salesCount:{$sum:1},
-                    revenue:{$sum:'$totalAmount'}
+                $group: {
+                    _id: { $dateToString: { format: "%Y-%m-%d", date: '$orderDate' } },
+                    salesCount: { $sum: 1 },
+                    revenue: { $sum: '$totalAmount' }
 
                 }
             },
-            {$sort:{_id:1}}
+            { $sort: { _id: 1 } }
         ])
-        const formattedReportData=reportData.map(item=>({
-            date:item._id,
-            salesCount:item.salesCount,
-            revenue:item.revenue
+        const formattedReportData = reportData.map(item => ({
+            date: item._id,
+            salesCount: item.salesCount,
+            revenue: item.revenue
         }))
-        orders.forEach(order=>{
-            console.log(order._id,order.orderDate,'ordre.orderDate');
+        orders.forEach(order => {
+            console.log(order._id, order.orderDate, 'ordre.orderDate');
         })
-        console.log(reportData,'reportdatea====');
-        console.log(formattedReportData,'formattedReportData#####');
+        console.log(reportData, 'reportdatea====');
+        console.log(formattedReportData, 'formattedReportData#####');
         res.json(formattedReportData);
     } catch (error) {
-        console.error('Error founded in showReport',error);
+        console.error('Error founded in showReport', error);
     }
 }
 
@@ -455,7 +455,7 @@ const customerLoad = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        let userId = req.params.id
+        const userId = req.params.id
         await User.findByIdAndDelete(userId)
         console.log(userId);
         res.redirect('/admin/customer')
@@ -489,7 +489,7 @@ const updateUserStatus = async (req, res) => {
 
 
 
-const logout=async (req,res)=>{
+const logout = async (req, res) => {
     try {
         req.session.destroy(err => {
             if (err) {
