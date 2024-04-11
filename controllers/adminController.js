@@ -82,6 +82,7 @@ const top10ProductsCategories=async(req,res)=>{
                $group: {
                  '_id': '$productDetails._id', 
                  'name': { '$first': '$productDetails.name' }, 
+                 'image':{'$first':'$productDetails.image'},
                  'count': { '$sum': '$products.quantity' } 
                }
             },
@@ -116,8 +117,27 @@ const top10ProductsCategories=async(req,res)=>{
             {
                $group: {
                  '_id': '$productDetails.category', 
+
                  'count': { '$sum': 1 } 
                }
+            },
+            {
+                $lookup:{
+                    'from':'categories',
+                    'localField':'_id',
+                    'foreignField':'_id',
+                    'as':'categoryDetails'
+                }
+            },
+            {
+                $unwind:'$categoryDetails'
+            },
+            {
+                $project:{
+                    _id:0,
+                    categoryName:'$categoryDetails.name',
+                    count:1
+                }
             },
             {
                $sort: { 'count': -1 } 
@@ -126,8 +146,12 @@ const top10ProductsCategories=async(req,res)=>{
                $limit: 10 
             }
            ]);
+           console.log(top10Products,'top10 products ');
+           console.log(top10Categories,'top 10 categories ');
+          
 
            return {top10Products,top10Categories}
+
     } catch (error) {
         console.error('Error founded in top10Products and categories',error);
     }
@@ -246,51 +270,29 @@ const dashboardLoad = async (req, res) => {
 // }
 
 
+
 const graph = async (req, res) => {
     try {
         let { value } = req.query;
         console.log(value, 'value in graph');
         
         let pipeline = [];
-        if (value === 'weekly') {
-            // Get the start and end dates for the current week
-            const currentDate = new Date();
-            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - currentDate.getDay());
-            const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), startDate.getDate() + 6);
+        
+         if (value === 'monthly') {
+            
+            const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+            const endOfYear = new Date(new Date().getFullYear(), 11, 31);
             
             pipeline = [
                 {
                     $match: {
-                        orderDate: { $gte: startDate, $lte: endDate }
-                    }
-                },
-                {
-                    $group: {
-                        _id: { $dayOfWeek: '$orderDate' },
-                        dailyTotalAmount: { $sum: '$totalAmount' },
-                        dailyOrderCount: { $sum: 1 }
-                    }
-                },
-                {
-                    $sort: {
-                        '_id': 1
-                    }
-                }
-            ];
-        } else if (value === 'monthly') {
-            // Get the start and end dates for the last 12 months
-            const twelveMonthsAgo = new Date();
-            twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 11);
-            
-            pipeline = [
-                {
-                    $match: {
-                        orderDate: { $gte: twelveMonthsAgo }
+                        orderDate: { $gte: startOfYear,$lte:endOfYear}
                     }
                 },
                 {
                     $group: {
                         _id: { $month: '$orderDate' },
+                        month:{$first:{$month:'$orderDate'}},
                         monthlyTotalAmount: { $sum: '$totalAmount' },
                         monthlyOrderCount: { $sum: 1 }
                     }
@@ -302,7 +304,7 @@ const graph = async (req, res) => {
                 }
             ];
         } else if (value === 'yearly') {
-            // Get the start and end dates for the last 10 years
+          
             const tenYearsAgo = new Date();
             tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 9);
             
@@ -328,6 +330,8 @@ const graph = async (req, res) => {
         }
 
         const data = await Order.aggregate(pipeline);
+     
+
         console.log(data, 'data in graph');
 
         res.json(data);

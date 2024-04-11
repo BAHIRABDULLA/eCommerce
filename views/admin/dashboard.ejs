@@ -54,6 +54,11 @@
   transform: translateY(-10px);
 }
 
+.table td img {
+  border-radius: 0%;
+  width: 6rem;
+  height: 6rem;
+}
   </style>
 </head>
 
@@ -264,7 +269,7 @@
                   </div>
                   <h4 class="card-title mb-3">Monthly earning</h4>
                 </div><br>
-                <h4 class="align-content-end ">₹<%= revenue %></h4>
+                <h4 class="align-content-end ">₹0</h4>
                 </div>
               </div>
             </div>
@@ -282,7 +287,7 @@
                 <select id="graphSelector" class="form-select  btn btn-outline-danger" onchange="loadGraph()" aria-label="Default select example">
                   <!-- <option selected>Open this select menu</option> -->
                  
-                  <option value="weekly">Weekly</option>
+                  
                   <option value="monthly">Monthly</option>
                   <option value="yearly">Yearly</option>
                 </select>
@@ -317,6 +322,7 @@
                         <th>
                           Image
                         </th>
+                        
                         <th>
                           Sold
                         </th>
@@ -324,7 +330,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% top10products.forEach((product,index)=>{ %>
+                      <% top10Products.forEach((product,index)=>{ %>
                       <tr>
                         <td>
                           <%= index+1 %>
@@ -332,9 +338,10 @@
                         <td>
                           <%= product.name %>
                         </td>
-                        <td class="py-1">
-                          <img src="/uploads/<%= product.image %>" alt="image"/>
+                        <td >
+                          <img src="/uploads/<%= product.image[0] %>" alt="image"/>
                         </td>
+                       
                         <td>
                           <%= product.count %>
                         </td>
@@ -377,7 +384,7 @@
                           <%= index + 1 %>
                         </td>
                         <td>
-                          <%= category._id %>
+                          <%= category.categoryName %>
                         </td>
                         <td>
                           <%= category.count %>
@@ -435,18 +442,20 @@
             let revenueData = [];
             let salesCountData = [];
 
-            if (selectedValue === 'weekly') {
-                labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                revenueData = data.map(item => item.dailyTotalAmount);
-                salesCountData = data.map(item => item.dailyOrderCount);
-            } else if (selectedValue === 'monthly') {
-                labels = Array.from({ length: 12 }, (_, i) => new Date(0, i).toLocaleString('default', { month: 'short' }));
+            
+             if (selectedValue === 'monthly') {
+                // labels = Array.from({ length: 12 }, (_, i) => new Date(0, i).toLocaleString('default', { month: 'short' }));
+                labels = data.map(item => new Date(2000, item.month - 1).toLocaleString('default', { month: 'short' }));
                 revenueData = data.map(item => item.monthlyTotalAmount);
+                console.log(revenueData,'renvenue data in monthly ');
                 salesCountData = data.map(item => item.monthlyOrderCount);
+                console.log(salesCountData,'salescount data in monthly');
             } else if (selectedValue === 'yearly') {
                 labels = data.map(item => item._id);
                 revenueData = data.map(item => item.yearlyTotalAmount);
+                console.log(revenueData,'renvenue data in yearly ');
                 salesCountData = data.map(item => item.yearlyOrderCount);
+                console.log(salesCountData,'salescount data in yearly');
             }
 
             const ctx = document.getElementById('myChart');
@@ -460,21 +469,57 @@
                         data: revenueData,
                         backgroundColor: 'rgba(255, 99, 132, 0.5)',
                         borderColor: 'rgba(255, 99, 132, 1)',
+                        yAxisID:'revenue-y-axis',
                         borderWidth: 1
                     }, {
                         label: 'Sales Count',
                         data: salesCountData,
                         backgroundColor: 'rgba(54, 162, 235, 0.5)',
                         borderColor: 'rgba(54, 162, 235, 1)',
+                        yAxisID:'sales-y-axis',
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+                  scales: {
+                    yAxes: [{
+                      id: 'revenue-y-axis',
+                      type: 'linear',
+                      position: 'left',
+                      ticks: {
+                          beginAtZero: true,
+                          callback: function (value, index, values) {
+                              return value.toLocaleString();
+                          }
+                      },
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Revenue'
+                      }
+                    }, {
+                      id: 'sales-y-axis',
+                      type: 'linear',
+                      position: 'right',
+                      ticks: {
+                          beginAtZero: true,
+                          stepSize: 1 
+                      },
+                      gridLines: {
+                          display: false
+                      },
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Sales Count'
+                      }
+                    }],
+                    xAxes: [{
+                      scaleLabel: {
+                          display: true,
+                          // labelString: 'Months/Years'
+                          labelString: selectedValue === 'monthly' ? 'Months' : 'Years'
+                      }
+                    }]
+                  }
                 }
             });
         } catch (error) {

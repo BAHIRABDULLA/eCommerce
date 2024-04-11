@@ -276,28 +276,53 @@
 
                         <h2 class="text-danger ">Product Details</h2>
                         <div class="row">
-                          <h4 class="col-md-3">Product Image</h4>
-                          <h4 class="col-md-3">Product Name</h4>
-                          <h4 class="col-md-3">Product Quantity</h4>
-                          <h4 class="col-md-3">Product Price</h4>
+                          <h4 class="col-md-2">Product Image</h4>
+                          <h4 class="col-md-4">Product Name</h4>
+                          <h4 class="col-md-2">Product Quantity</h4>
+                          <h4 class="col-md-2">Product Price</h4>
+                          <h4 class="col-md-2">Product Offer</h4>
+
+                          
+                          
                         </div>
 
                         <% products.forEach(product=> { %>
+                          
                           <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <img src="/uploads/<%= product.firstImage %>" alt="product image" class="img-fluid" style="width: 50px; height: 50px;">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                               <input type="text" class="form-control" value="<%= product.name %>" disabled >
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <input type="text" class="form-control" value="<%= product.quantity %>" disabled >
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <input type="text" class="form-control" value="<%= product.totalPrice %>" disabled >
                             </div>
+                            <% let offer=(product.originalPrice*product.quantity)-product.totalPrice %>
+                            <div class="col-md-2">
+                              <input type="text" class="form-control" value="<%= offer %>" disabled >
+                            </div>
                           </div>
+                          
                           <% }) %>
+
+                          <div class="row">
+                            <% if(order.couponApplied&&order.couponApplied>0){ %>
+                              <div class="col-md-6">
+                                <h6>Coupon Applied</h6>
+                              <input type="text" class="form-control" value="<%= order.couponApplied  %>" disabled >
+                              
+                              </div>
+                              <% } %>
+                              
+                              <div class="col-md-6">
+
+                              </div>
+                            </div>
+                            
                       </div>
                     </form>
                 </div>

@@ -213,7 +213,19 @@ const loadOrderEdit = async (req, res) =>{
         const address = order.orderUserDetails;
         console.log(address,'addressId in loadorder Edit page');
 
-
+        let originalPrice=await Order.findById(orderId).populate('products.productId')
+        console.log(originalPrice,'original price  in loadOrder Edit');
+        let original=[]
+        for (const item of order.products) {
+            const product = await Product.findById(item.productId);
+            original.push({
+                 originalPrice : product.price
+            })
+            
+            
+            console.log(originalPrice, 'original price for product:', product._id);
+        }
+        console.log(original,'original in load order Edit ');
         const products=[]
 
 
@@ -226,6 +238,7 @@ const loadOrderEdit = async (req, res) =>{
                     name:product.name,
                     quantity:item.quantity,
                     price:item.price,
+                    originalPrice:product.price,
                     totalPrice:item.quantity*item.price,
                     firstImage: firstImage
                 })
@@ -233,7 +246,7 @@ const loadOrderEdit = async (req, res) =>{
             }
         }
         console.log('Products.totalprice',products);
-        res.render('orderEdit', { order: order, address ,products:products ,totalPrice:totalPrice});
+        res.render('orderEdit', { order: order, address ,products:products ,totalPrice:totalPrice,original});
     } catch (error) {
         console.log(error.message);
         // Handle error
