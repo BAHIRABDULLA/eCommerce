@@ -35,4 +35,6 @@ app.use('/',walletRoute)
 app.use('/admin',couponRoute)
 app.use('/admin',offerRoute)
 
-app.listen(4000,()=>console.log('its running http://localhost:4000'))  
+const port=process.env.port || 3000
+
+app.listen(port,()=>console.log(`its running http://localhost:${port}`))  
