@@ -528,6 +528,12 @@ const newPassUpadate = async (req, res) => {
 
 const loadShop = async (req, res) => {
     try {
+
+
+        const cart=await Cart.findOne({userId:req.session.user_id}).populate('products')
+        const wishlist = await Wishlist.findOne({userId:req.session.user_id}).populate('products')
+
+
         const page=(req.query.page)||1
         const itemPerPage =12 
         const skip=(page-1)*itemPerPage
@@ -566,7 +572,7 @@ const loadShop = async (req, res) => {
         const totalProducts =await Product.countDocuments()
         const totalPages=Math.ceil(totalProducts/itemPerPage)
 
-        res.render('shop', { products: products, categories: categories, selectedCategory,totalPages,currentPage:parseInt(page) })
+        res.render('shop', {isLoggedIn: res.locals.loggedIn,cart,wishlist, products: products, categories: categories, selectedCategory,totalPages,currentPage:parseInt(page) })
     } catch (error) {
         console.log(error.message);
     }
@@ -574,6 +580,10 @@ const loadShop = async (req, res) => {
 
 const products = async (req, res) => {
     try {
+        const cart=await Cart.findOne({userId:req.session.user_id}).populate('products')
+        const wishlist = await Wishlist.findOne({userId:req.session.user_id}).populate('products')
+
+
         const selectedCategory = req.query.category || 'allCategory'
 
         const categoryId = req.query.category;
@@ -590,7 +600,7 @@ const products = async (req, res) => {
         // const category =await Category.find({_id:categoryId})
         const product = await Product.find({ category: categoryId }).populate('category')
         // console.log('ihn');
-        res.render('shop', { products: product, categories: categories, selectedCategory ,currentPage:0,totalPages:0})
+        res.render('shop', {isLoggedIn: res.locals.loggedIn,cart,wishlist, products: product, categories: categories, selectedCategory ,currentPage:0,totalPages:0})
 
 
         // console.log(product,'fdjfdkf')
@@ -600,12 +610,15 @@ const products = async (req, res) => {
 }
 const searchProducts = async (req, res) => {
     try {
+        const cart=await Cart.findOne({userId:req.session.user_id}).populate('products')
+        const wishlist = await Wishlist.findOne({userId:req.session.user_id}).populate('products')
+        
         const query = req.query.q;
         console.log(query,'query in search products');
         const products = await Product.find({ name: { $regex: query, $options: 'i' } }).populate('category');
         const categories = await Category.find({});
         const selectedCategory = 'allCategory';
-        res.render('shop', { products, categories, selectedCategory ,currentPage:0 ,totalPages:0});
+        res.render('shop', { isLoggedIn: res.locals.loggedIn,cart,wishlist,products, categories, selectedCategory ,currentPage:0 ,totalPages:0});
     } catch (error) {
         console.error('Error searching products:', error);
         res.status(500).json({ error: 'Failed to search products' });
@@ -1244,7 +1257,20 @@ const loadInvoice=async (req,res)=>{
     }
 }
 
-
+const loadContact=async(req,res)=>{
+    try {
+        res.render('contact')
+    } catch (error) {
+        console.error('Error founded in load contact',error);
+    }
+}
+const loadAbout=async(req,res)=>{
+    try {
+        res.render('about')
+    } catch (error) {
+        console.error('Error founded in load abount',error);
+    }
+}
 module.exports = {
     loadSignup,
     insertUser,
@@ -1267,12 +1293,9 @@ module.exports = {
     newPassUpadate,
     loadHome,
     loadSingleProduct,
-    // loadDashboard,
     loadCart,
     addToCart,
     updateCartQuantity,
-    // cartAdd,
-    // updateCart,
     removeFromCart,
     loadCheckout,
     placeOrder,
@@ -1284,12 +1307,13 @@ module.exports = {
     processWalletPayment,
     processRefund,
     loadWishlist,
-    // getWishlist,
     addToWishlist,
     removeFromWishlist,
     changeProfile,
     loadOrderDetails,
-    loadInvoice
+    loadInvoice,
+    loadContact,
+    loadAbout
 
    
 }
