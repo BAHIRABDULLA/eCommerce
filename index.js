@@ -4,21 +4,15 @@ const nocache=require('nocache')
 const path=require('path')
 const dotenv=require('dotenv')
 const config=require('./config/config')
-mongoose.connect('mongodb://localhost:27017/firstProject')
+
 dotenv.config()
+
+mongoose.connect(process.env.MONGOURL)
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('Error connecting to MongoDB:', err));
+console.log(process.env.MONGOURL,'process.env.MONGOURL');
 const app=express()
 
-
-
-// console.log(process.env)
-// console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
-
-// app.set('view engine','ejs')
-// app.set('views','./views/users')
-
-// app.use('/home',(req,res)=>{
-//     res.render('home')
-// })
 app.use(nocache())
 app.use( express.static(path.join(__dirname,'public')));
 const userRoute=require('./routes/userRoute')
