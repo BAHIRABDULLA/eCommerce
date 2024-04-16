@@ -49,10 +49,31 @@ const isLogout = async (req, res, next) => {
 }
 
 
+const isActive=async(req,res,next)=>{
+    try {
+
+        if(req.session.user_id){
+        const user=await User.findById(req.session.user_id)
+            if(user.is_active===false){
+                console.log(user.is_active,'isActive in currenct user');
+                delete req.session.user_id
+                res.redirect('/home')
+            }else{
+                next()
+            }
+        }else{
+            res.redirect('/home')
+        }
+    } catch (error) {
+        console.error('Error founded isActive ',error);
+    }
+}
+
 module.exports={
     isLoggedIn,
     isLogin,
-    isLogout
+    isLogout,
+    isActive
     
    
 }

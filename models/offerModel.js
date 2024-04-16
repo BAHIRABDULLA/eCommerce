@@ -1,34 +1,34 @@
-const mongoose=require('mongoose')
-const offerSchema=new mongoose.Schema({
-    title:{
-        type:String,
-        reqiured:true
+const mongoose = require('mongoose')
+const offerSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        reqiured: true
     },
-    description:{
-        type:String
+    description: {
+        type: String
     },
-    discountPercentage:{
-        type:Number,
-        required:true,
-        min:0,
-        max:100
+    discountPercentage: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 100
     },
-    startDate:{
-        type:Date,
-        required:true
+    startDate: {
+        type: Date,
+        required: true
     },
-    expireDate:{
-        type:Date,
-        required:true
+    expireDate: {
+        type: Date,
+        required: true
     },
-    status:{
-        type:Boolean,
-        default:true
+    status: {
+        type: Boolean,
+        default: true
     },
-    selectedItems:{
-        type:Array
+    selectedItems: {
+        type: Array
     }
-    
+
 })
 
-module.exports=mongoose.model('Offer',offerSchema)
+module.exports = mongoose.model('Offer', offerSchema)

@@ -1,39 +1,40 @@
 const Product = require('../models/productModel')
 const Order = require('../models/orderModel')
 const Category = require('../models/categoryModel')
-const Address = require('../models/addressModel')
 
+
+//     product page rendering 
 const productLoad = async (req, res) => {
     try {
-       
+
         const products = await Product.find().populate('category')
-        res.render('products', { products,error:req.flash('error') })
-        console.log('product load is working ');
+        res.render('products', { products, error: req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-
+//     add product page rendering
 const addProductLoad = async (req, res) => {
     try {
         const products = await Product.find()
         const categories = await Category.find({ status: true })
-        console.log(products);
         res.render('productAdd', { products, categories })
     } catch (error) {
         console.log(error.message);
     }
 }
 
+
+//     insert product to database
 const insertProduct = async (req, res) => {
     try {
-        console.log('insertProduct page');
-        const { name, category, quantity,brand, size, price, description } = req.body
-        const existingProduct=await Product.findOne({name:{$regex:`${name}`,$options:'i'}})
 
-        if(existingProduct){
-            req.flash('error','A product with the same name already exists')
+        const { name, category, quantity, brand, size, price, description } = req.body
+        const existingProduct = await Product.findOne({ name: { $regex: `${name}`, $options: 'i' } })
+
+        if (existingProduct) {
+            req.flash('error', 'A product with the same name already exists')
             return res.redirect("/admin/products")
         }
         const imagePath = req.files.map(file => file.filename)
@@ -57,73 +58,59 @@ const insertProduct = async (req, res) => {
     }
 }
 
+
+//     edit product page rendering 
 const EditProductLoad = async (req, res) => {
     try {
         const productId = req.params.productId
         const product = await Product.findById(productId);
         const categories = await Category.find({ status: true })
-        // const products=await Product.find()
-        res.render('productEdit', { categories, product,error:req.flash('error') })
+
+        res.render('productEdit', { categories, product, error: req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-// const editProduct = async (req, res) => {
-//     try {
-//         const productId = req.params.productId;
-//         const { name, category, price, quantity, size, description } = req.body
-//         const updateImages=req.files.map(file=>file.filename)
-//         console.log(req.body.description, 'body description');
-//         const update = await Product.findByIdAndUpdate(productId, { name, category, price, quantity, size, description })
-//         console.log(update);
-//         res.redirect('/admin/products')
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
-
-
+//     edit product working
 const editProduct = async (req, res) => {
     try {
         const productId = req.params.productId;
-        const { name, category, price, quantity,brand, size, description } = req.body;
+        const { name, category, price, quantity, brand, size, description } = req.body;
         const updateImages = req.files.map(file => file.filename);
-        const existingProductName=await Product.findOne({name:{$regex:`${name}`,$options:'i'},_id:{$ne:productId}})
-        if(existingProductName){
-            req.flash('error','Product already exist')
+        const existingProductName = await Product.findOne({ name: { $regex: `${name}`, $options: 'i' }, _id: { $ne: productId } })
+        if (existingProductName) {
+            req.flash('error', 'Product already exist')
             res.redirect('/admin/products')
-        }else{
+        } else {
             const product = await Product.findById(productId);
-        product.name = name;
-        product.category = category;
-        product.brand=brand;
-        product.price = price;
-        product.quantity = quantity;
-        product.size = size;
-        product.description = description;
-        if (updateImages.length > 0) {
-            product.image = updateImages;
+            product.name = name;
+            product.category = category;
+            product.brand = brand;
+            product.price = price;
+            product.quantity = quantity;
+            product.size = size;
+            product.description = description;
+            if (updateImages.length > 0) {
+                product.image = updateImages;
+            }
+            await product.save();
+            res.redirect('/admin/products');
         }
-        await product.save();
 
-        console.log('Product updated successfully:', product);
-        res.redirect('/admin/products');
-        }
-        
     } catch (error) {
         console.log('Error updating product:', error.message);
         res.status(500).send('Internal Server Error');
     }
 };
 
+
+//     delete product working
 const deleteProduct = async (req, res) => {
     try {
-        console.log('deleteProduct page is here');
         const productId = req.params.id
-        await Product.findByIdAndDelete({_id:productId})
-        console.log(productId);
+        await Product.findByIdAndDelete({ _id: productId })
         res.redirect('/admin/products')
     } catch (error) {
 
@@ -132,6 +119,7 @@ const deleteProduct = async (req, res) => {
 }
 
 
+//     product status changing activity 
 const updateProductStatus = async (req, res) => {
     try {
         const productId = req.params.id
@@ -139,7 +127,6 @@ const updateProductStatus = async (req, res) => {
         product.status = !product.status
 
         res.json({ status: product.status })
-
         await product.save()
     } catch (error) {
         console.log(error.message);
@@ -147,55 +134,10 @@ const updateProductStatus = async (req, res) => {
 }
 
 
-// const loadOrder = async (req, res) => {
-//     try {
-//         console.log('Starting here...');
-//         const orders = await Order.find({}).populate('userId');
-//         console.log('orders in load order page',orders);
-//         const orderId = orders[0]._id; 
-//         console.log(orderId,'order Id in load order page');
-//         const order = await Order.findById(orderId);
-//         console.log(order,'order in loadorder page');
-
-//         if (!order) {
-//             console.log('Order not found');
-//             res.render('orders', { order: [] })
-//             return;
-//         }
-
-//         const addressId = order.orderUserDetails
-//         console.log(addressId,'addressId in load order page');
-//         const address = await Address.findOne({ 'address._id': addressId })
-//         console.log(address,'');
-//         if (!address) {
-//             console.log('Address not found');
-//             res.render('orders', { order: [] }); 
-//             return;
-//         }
-
-//         const matchedAddress = address.address.find(addr => addr._id.toString() === addressId.toString());
-
-//         if (!matchedAddress) {
-//             console.log('Address with the specified ID not found in the address array');
-//             res.render('orders', { order: [] })
-//             return;
-//         }
-
-//         console.log('Address found:', matchedAddress);
-//         console.log(orders,'orders in admins side page');
-//         res.render('orders', { order: orders, address: matchedAddress });
-//     } catch (error) {
-//         console.log(error.message);
-//         res.render('orders', { order: [] })
-//     }
-// }
-
-
+//    order page renddering
 const loadOrderAdmin = async (req, res) => {
     try {
         const orders = await Order.find({}).populate('userId').populate('orderUserDetails');
-        // console.log(orders,'orders in load order amdin page');
-       
         res.render('orders', { orders: orders });
     } catch (error) {
         console.log(error.message);
@@ -204,93 +146,82 @@ const loadOrderAdmin = async (req, res) => {
 }
 
 
-const loadOrderEdit = async (req, res) =>{
+//    order details page rendering 
+const loadOrderEdit = async (req, res) => {
     try {
         const orderId = req.params.orderId;
-        console.log(orderId,'orderId in loadOrder Edit page');
         const order = await Order.findById(orderId).populate('userId');
-        console.log(order,'order in loadOrderEdit page');
         const address = order.orderUserDetails;
-        console.log(address,'addressId in loadorder Edit page');
 
-        let originalPrice=await Order.findById(orderId).populate('products.productId')
-        console.log(originalPrice,'original price  in loadOrder Edit');
-        let original=[]
+        let originalPrice = await Order.findById(orderId).populate('products.productId')
+        let original = []
         for (const item of order.products) {
             const product = await Product.findById(item.productId);
             original.push({
-                 originalPrice : product.price
+                originalPrice: product.price
             })
-            
-            
             console.log(originalPrice, 'original price for product:', product._id);
         }
-        console.log(original,'original in load order Edit ');
-        const products=[]
+        const products = []
 
 
-        let totalPrice=0;
-        for(const item of order.products){
-            const product=await Product.findById(item.productId);
-            if(product){
-                const firstImage=product.image[0]
+        let totalPrice = 0;
+        for (const item of order.products) {
+            const product = await Product.findById(item.productId);
+            if (product) {
+                const firstImage = product.image[0]
                 products.push({
-                    name:product.name,
-                    quantity:item.quantity,
-                    price:item.price,
-                    originalPrice:product.price,
-                    totalPrice:item.quantity*item.price,
+                    name: product.name,
+                    quantity: item.quantity,
+                    price: item.price,
+                    originalPrice: product.price,
+                    totalPrice: item.quantity * item.price,
                     firstImage: firstImage
                 })
                 totalPrice += item.quantity * product.price;
             }
         }
-        console.log('Products.totalprice',products);
-        res.render('orderEdit', { order: order, address ,products:products ,totalPrice:totalPrice,original});
+        res.render('orderEdit', { order: order, address, products: products, totalPrice: totalPrice, original });
     } catch (error) {
         console.log(error.message);
-        // Handle error
     }
 }
 
 
-const updateOrderStatus=async (req,res)=>{
+//     order status changing 
+const updateOrderStatus = async (req, res) => {
     try {
-        const {orderId}=req.params
-        const {status}=req.body
+        const { orderId } = req.params
+        const { status } = req.body
 
         let updateOrder
         let invoiceCode
 
-        if(status==='Delivered'){
-            const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            const randomLetters=letters[Math.floor(Math.random()* letters.length)]+letters[Math.floor(Math.random()* letters.length)]
-            const randomDigits=('0000'+Math.floor(Math.random()*1000)).slice(-4)
-            invoiceCode=randomLetters+randomDigits
-            // console.log(invoiceCode,'invoice code in updateorderstatus');
-            updateOrder=await Order.findByIdAndUpdate(orderId,{status,invoiceCode},{new:true})
-            // console.log(updateOrder,'updateOrder in updateOrderSates');
-        }else{
-         updateOrder=await Order.findByIdAndUpdate(orderId,{status},{new:true})
-
+        if (status === 'Delivered') {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            const randomLetters = letters[Math.floor(Math.random() * letters.length)] + letters[Math.floor(Math.random() * letters.length)]
+            const randomDigits = ('0000' + Math.floor(Math.random() * 1000)).slice(-4)
+            invoiceCode = randomLetters + randomDigits
+            updateOrder = await Order.findByIdAndUpdate(orderId, { status, invoiceCode }, { new: true })
+        } else {
+            updateOrder = await Order.findByIdAndUpdate(orderId, { status }, { new: true })
         }
 
-        if(!updateOrder){
-            return res.json({message:'order not found'})
+        if (!updateOrder) {
+            return res.json({ message: 'order not found' })
         }
-        res.json({message:'order status updated successfully',order:updateOrder})
+        res.json({ message: 'order status updated successfully', order: updateOrder })
     } catch (error) {
         console.error(error.message)
     }
 }
 
 
-const cancelOrder=async (req,res)=>{
+//     order cancelling
+const cancelOrder = async (req, res) => {
     try {
-        const orderId=req.params.orderId
-        console.log('orderId in cancelorder page    ',orderId);
+        const orderId = req.params.orderId
         const order = await Order.findById(orderId)
-        console.log('order in cancel order  ::',order);
         order.status = 'Cancelled'
         await order.save()
     } catch (error) {

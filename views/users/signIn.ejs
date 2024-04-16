@@ -49,9 +49,9 @@
   </div>
  
 
-      <% if (message && message.length > 0) { %>
+      <% if (error && error.length > 0) { %>
       <div id="alertMessage" class="alert alert-primary " style="width: 50%; margin: auto;" role="alert">
-        <%= message %>
+        <%= error %>
     </div>
     <script>
       setTimeout(() => {

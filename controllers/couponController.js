@@ -1,109 +1,102 @@
-const Coupon=require('../models/couponModel');
-const { find } = require('../models/userModel');
+const Coupon = require('../models/couponModel');
 
-
-
-const loadCoupon=async(req,res)=>{
+//     coupon page rendering
+const loadCoupon = async (req, res) => {
     try {
-        const coupons=await Coupon.find({})
-        res.render('coupon',{coupons,error:req.flash('error')})
+        const coupons = await Coupon.find({})
+        res.render('coupon', { coupons, error: req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const loadCouponAdd=async(req,res)=>{
+
+//    coupon add page rendering 
+const loadCouponAdd = async (req, res) => {
     try {
-        res.render('couponAdd',{error:req.flash('error')})
+        res.render('couponAdd', { error: req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const couponAdding=async(req,res)=>{
-    try {
-        const {couponName,couponCode,description,discount,expireDate}=req.body
-        // const {name,code,description,discountAmount,expireDate}=req.body
-        console.log(couponCode,'couponCode');
-        console.log(expireDate,'expiredate');
-        console.log(description,'description in coupon add');
 
-        const existCouponName=await Coupon.findOne({name:{$regex:`${couponName}`,$options:'i'}})
-        if(existCouponName){
-            console.log('coupn add ddint play..#####');
-            req.flash('error','This coupon already existed')
+//    coupon adding from coupon add page
+const couponAdding = async (req, res) => {
+    try {
+        const { couponName, couponCode, description, discount, expireDate } = req.body
+        const existCouponName = await Coupon.findOne({ name: { $regex: `${couponName}`, $options: 'i' } })
+        if (existCouponName) {
+            req.flash('error', 'This coupon already existed')
             return res.redirect('/admin/coupon')
-        }else{
-            console.log('coupoon addin gworking .............');
-            const newCoupon=new Coupon({
-                name:couponName,
-                code:couponCode,
+        } else {
+            const newCoupon = new Coupon({
+                name: couponName,
+                code: couponCode,
                 description,
-                discountAmount:discount,
+                discountAmount: discount,
                 expireDate
-    
-                
             })
-             await newCoupon.save()
+            await newCoupon.save()
             res.redirect('/admin/coupon')
         }
-        
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const deleteCoupon=async(req,res)=>{
+
+//    coupon deleting
+const deleteCoupon = async (req, res) => {
     try {
-        const {couponId}=req.params
-        console.log(couponId,'coupon id in deletecoupon');
+        const { couponId } = req.params
         await Coupon.findByIdAndDelete(couponId)
-        res.json({success:true})
+        res.json({ success: true })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const couponEdit=async(req,res)=>{
+
+//    coupon edit page rendering
+const couponEdit = async (req, res) => {
     try {
-        const {couponId}=req.params
-        console.log(couponId,'coupon id in coupon edit page');
-        const coupon=await Coupon.findById(couponId)
-        res.render("couponEdit",{coupon})
+        const { couponId } = req.params
+        const coupon = await Coupon.findById(couponId)
+        res.render("couponEdit", { coupon })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const couponEditPost=async(req,res)=>{
+
+//   coupon edit working 
+const couponEditPost = async (req, res) => {
     try {
-        const {couponId}=req.params
+        const { couponId } = req.params
         const { couponName, couponCode, description, discount, expireDate } = req.body;
-        console.log(couponId,'coupon id in coupond edit post');
-
-        const existCouponName=await Coupon.findOne({name:{$regex:`${couponName}`,$options:'i'},_id:{$ne:couponId}})
-        if(existCouponName){
-            console.log('coupn add ddint play..#####');
-            req.flash('error','This coupon already existed')
+        const existCouponName = await Coupon.findOne({ name: { $regex: `${couponName}`, $options: 'i' }, _id: { $ne: couponId } })
+        if (existCouponName) {
+            req.flash('error', 'This coupon already existed')
             return res.redirect('/admin/coupon')
-        }else{
-            const editCoupon=await Coupon.findByIdAndUpdate(couponId,{
-                name:couponName,
-                code:couponCode,
+        } else {
+            const editCoupon = await Coupon.findByIdAndUpdate(couponId, {
+                name: couponName,
+                code: couponCode,
                 description,
-                discountAmount:discount,
+                discountAmount: discount,
                 expireDate
-            },{new:true})
+            }, { new: true })
             res.redirect('/admin/coupon')
         }
-        
-
     } catch (error) {
         console.log(error.message);
     }
 }
 
-module.exports={
+
+
+module.exports = {
     loadCoupon,
     loadCouponAdd,
     couponAdding,

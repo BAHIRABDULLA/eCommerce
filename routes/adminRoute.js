@@ -3,7 +3,7 @@ const session = require('express-session')
 const config = require('../config/config')
 const PDFDocument = require('pdfkit')
 const fs = require('fs')
-const ExcelJS =require('exceljs')
+const ExcelJS = require('exceljs')
 
 const admin_route = express()
 
@@ -29,7 +29,7 @@ admin_route.post('/verify', adminController.adminVerify)
 
 admin_route.get('/dashboard', adminAuth.isLogin, adminController.dashboardLoad)
 
-admin_route.get('/dashboard/graph/value',adminController.graph)
+admin_route.get('/dashboard/graph/value', adminController.graph)
 
 admin_route.get('/dashboard/salesReport', adminAuth.isLogin, adminController.loadSalesReport)
 admin_route.post('/dashboard/sales-report', adminController.showReport)

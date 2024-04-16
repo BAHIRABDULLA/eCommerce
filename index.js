@@ -21,20 +21,23 @@ const categoryRoute=require('./routes/categoryRoute')
 const productRoute=require('./routes/productRoute')
 const addressRoute=require('./routes/addressRoute')
 const orderRoute=require('./routes/orderRoute')
-const walletRoute=require('./routes/walletRoute')
 const couponRoute=require('./routes/couponRoute')
 const offerRoute=require('./routes/offerRoute')
-
+app.use('/',addressRoute)
+app.use('/',orderRoute)
 app.use('/',userRoute)
 app.use('/admin',adminRoute)
 app.use('/admin',categoryRoute)
 app.use('/admin',productRoute)
-app.use('/',addressRoute)
-app.use('/',orderRoute)
-app.use('/',walletRoute)
 app.use('/admin',couponRoute)
 app.use('/admin',offerRoute)
 
+
+app.set('view engine', 'ejs')
+app.set('views', './views/users')
+app.get('*',(req,res)=>{
+    res.render('404')
+})
 const port=process.env.port || 3000
 
 app.listen(port,()=>console.log(`its running http://localhost:${port}`))  
