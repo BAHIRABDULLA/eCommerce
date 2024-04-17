@@ -247,6 +247,7 @@
                               <h3 class="text-danger ">Order Status</h3>
 
                               <select id="orderStatusSelect" class="form-control" onchange="updateOrderStatus('<%= order._id %>',this.value)">
+                                <option <%= order.status==='Payment Failed' %> value="Payment Failed" >Payment Failed</option>
                                 <option <%=order.status==='Pending' ? 'selected' : '' %> value="Pending" >Pending</option>
                                 <option <%=order.status==='Shipped' ? 'selected' : '' %> value="Shipped">Shipped</option>
                                 <option <%=order.status==='Delivered' ? 'selected' : '' %> value="Delivered">Delivered</option>
@@ -346,7 +347,7 @@
   <script>
 
     const orderStatusSelect=document.getElementById('orderStatusSelect')
-    if(orderStatusSelect.value==='Delivered'){
+    if(orderStatusSelect.value==='Delivered' || orderStatusSelect.value==='Payment Failed'){
       console.log(orderStatusSelect,'order status select');
       orderStatusSelect.disabled=true
     }

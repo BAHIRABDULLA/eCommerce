@@ -157,7 +157,7 @@ const dashboardLoad = async (req, res) => {
         const dailyRevenue = dailyOrder.reduce((total, order) => total + order.totalAmount, 0)
         res.render('dashboard', { order, revenue, salesCount, dailyRevenue, top10Products, top10Categories })
     } catch (error) {
-        console.error('error found',error.message);
+        console.error('error found',error);
     }
 }
 

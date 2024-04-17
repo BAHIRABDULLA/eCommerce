@@ -7,6 +7,7 @@ const Order = require('../models/orderModel')
 const Coupon = require('../models/couponModel')
 const Wallet = require('../models/walletModel')
 const Wishlist = require('../models/wishlistModel')
+const Offer= require('../models/offerModel')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const { ObjectId } = require('mongodb');
@@ -259,12 +260,55 @@ const resendOTP = async (req, res) => {
 //   this is for loading home page
 const loadHome = async (req, res) => {
     try {
+        const product=await Product.find()
+        const category=await Category.find()
+        const top6Products = await Order.aggregate([
+            {
+                $match: {
+                    'status': 'Delivered'
+                }
+            },
+            {
+                $unwind: '$products'
+            },
+            {
+                $lookup: {
+                    'from': 'products',
+                    'localField': 'products.productId',
+                    'foreignField': '_id',
+                    'as': 'productDetails'
+                }
+            },
+            {
+                $unwind: '$productDetails'
+            },
+            {
+                $group: {
+                    '_id': '$productDetails._id',
+                    'price':{'$first':'$products.price'},
+                    'name': { '$first': '$productDetails.name' },
+                    'image': { '$first': '$productDetails.image' },
+                    'count': { '$sum': '$products.quantity' }
+                }
+            },
+            {
+                $sort: { 'count': -1 }
+            },
+            {
+                $limit: 6
+            }
+        ]);
+        const offer = await Offer.findOne({"selectedItems": {"$elemMatch": {"$exists": true}}});
+        const newId=new ObjectId(offer.selectedItems[0])
+        console.log(newId,'newId');
+        let offeredItem=await Product.findById(newId)
+        
         const active = await User.findOne({ is_active: true })
         const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
         const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
-        res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist })
+        res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist ,top6Products,offeredItem,offer})
     } catch (error) {
-        console.log(error.message);
+        console.log('Error founded on load home ',error);
     }
 }
 
@@ -1051,6 +1095,20 @@ const loadAbout = async (req, res) => {
 }
 
 
+const repayment=async(req,res)=>{
+    try {
+        const orderId=req.params.id
+        console.log(orderId,'orderId in reapyment')
+        const order = await Order.findById(orderId)
+        order.status='Pending'
+        await order.save()
+        res.json({status:true})
+        
+    } catch (error) {
+        console.error("Error founded in repayment",error);
+    }
+}
+
 
 
 module.exports = {
@@ -1094,7 +1152,8 @@ module.exports = {
     loadOrderDetails,
     loadInvoice,
     loadContact,
-    loadAbout
+    loadAbout,
+    repayment
 
 
 }

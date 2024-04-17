@@ -114,7 +114,7 @@ const deleteProduct = async (req, res) => {
         res.redirect('/admin/products')
     } catch (error) {
 
-        console.log(error.message);
+        console.error('Error founded in delete product',error);
     }
 }
 

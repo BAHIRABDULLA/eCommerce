@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="/users/assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    
+
 
     <style>
         .form-check-label {
@@ -911,9 +913,9 @@
                                
                                 console.log(response);
                                 
-                                let orderStatus = response.error ? 'Payment Failed' : 'Pending';
+                                
         
-                             saveOrderToDatabase('Online Payment', orderStatus);
+                             saveOrderToDatabase('Online Payment', 'pending');
                                 
                             },
                             prefill: {
@@ -929,8 +931,19 @@
                             }
                         };
 
-                        const rzp = new Razorpay(options);
-                        rzp.open();
+                        const rzp1 = new Razorpay(options);
+                        rzp1.on('payment.failed',async function (response){
+                            try {
+                                console.log('Payment failed for order:');
+                                saveOrderToDatabase('Online Payment', 'Payment Failed');
+                                res.redirect('/dashboard');
+                        } catch (error) {
+                            console.error('Error handling payment failure:', error);
+                            // Handle any errors that occur during the failure handling process
+                            res.status(500).send('Internal Server Error');
+                        }
+                        });
+                        rzp1.open();
                     } else {
                         throw new Error('Failed to create Razorpay order');
                     }
@@ -1205,6 +1218,9 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <!-- Plugins JS File -->
     <script src="/users/assets/js/jquery.min.js"></script>
     <script src="/users/assets/js/bootstrap.bundle.min.js"></script>

@@ -69,6 +69,7 @@ user_route.get('/orderDetails/:id,:orderId', auth.isLogin, userController.loadOr
 user_route.get('/invoice/:orderId,:productId', userController.loadInvoice)
 user_route.get('/contact', userController.loadContact)
 user_route.get('/about', userController.loadAbout)
+user_route.post('/orderDetails/repay/:id',userController.repayment)
 
 
 module.exports = user_route

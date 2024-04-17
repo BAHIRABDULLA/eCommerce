@@ -301,11 +301,14 @@
                             }
                         }
                     }'>
+
+					<!-- 6 products -->
+						<% top6Products.forEach((product)=>{ %>
 	                    <div class="product product-10 text-center">
                             <figure class="product-media">
                                 <a href="product.html">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-1-1.jpg" alt="Product image" class="product-image">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-1-2.jpg" alt="Product image" class="product-image-hover">
+                                    <img src="/uploads/<%= product.image[0] %>" alt="Product image" class="product-image">
+                                    <img src="/uploads/<%= product.image[1] %>" alt="Product image" class="product-image-hover">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -321,10 +324,10 @@
                                 </div><!-- End .product-action -->
                             	<div class="product-intro">
                                     <h3 class="product-title">
-                                    	<a href="product.html">Small Sleeping Bag</a>
+                                    	<a href="product.html"><%= product.name %></a>
                                     </h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        $299.99
+                                        ₹<%= product.price %>
                                     </div><!-- End .product-price -->
                             	</div>
                             	<div class="product-detail">
@@ -339,43 +342,7 @@
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
 
-                        <div class="product product-10 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-2-1.jpg" alt="Product image" class="product-image">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-2-2.jpg" alt="Product image" class="product-image-hover">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                </div><!-- End .product-action-vertical -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-cart"><span>add to cart</span></a>
-                                    <a href="#" class="btn-product-icon btn-wishlist"><span>Add to Wishlist</span></a>
-                                </div><!-- End .product-action -->
-                            	<div class="product-intro">
-                                    <h3 class="product-title">
-                                    	<a href="product.html">Watertight Jacket</a>
-                                    </h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $76.99
-                                    </div><!-- End .product-price -->
-                            	</div>
-                            	<div class="product-detail">
-                                    <div class="ratings-container">
-		                                <div class="ratings">
-		                                    <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-		                                </div><!-- End .ratings -->
-		                                <span class="ratings-text">( 1 Reviews )</span>
-		                            </div><!-- End .rating-container -->
-                                   
-                            	</div>
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                        <% }) %>
 
                         <div class="product product-10 text-center">
                             <figure class="product-media">
@@ -417,122 +384,11 @@
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
 
-                        <div class="product product-10 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-4-1.jpg" alt="Product image" class="product-image">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-4-2.jpg" alt="Product image" class="product-image-hover">
-                                </a>
+                        
 
-                                <div class="product-action-vertical">
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                </div><!-- End .product-action-vertical -->
-                            </figure><!-- End .product-media -->
+                        
 
-                            <div class="product-body">
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-cart"><span>add to cart</span></a>
-                                    <a href="#" class="btn-product-icon btn-wishlist"><span>Add to Wishlist</span></a>
-                                </div><!-- End .product-action -->
-                            	<div class="product-intro">
-                                    <h3 class="product-title">
-                                    	<a href="product.html">Marmot Empire Daypack</a>
-                                    </h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $59.99
-                                    </div><!-- End .product-price -->
-                            	</div>
-                            	<div class="product-detail">
-                                    <div class="ratings-container">
-		                                <div class="ratings">
-		                                    <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-		                                </div><!-- End .ratings -->
-		                                <span class="ratings-text">( 1 Reviews )</span>
-		                            </div><!-- End .rating-container -->
-                                    
-                            	</div>
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-10 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-5-1.jpg" alt="Product image" class="product-image">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-5-2.jpg" alt="Product image" class="product-image-hover">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                </div><!-- End .product-action-vertical -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-cart"><span>add to cart</span></a>
-                                    <a href="#" class="btn-product-icon btn-wishlist"><span>Add to Wishlist</span></a>
-                                </div><!-- End .product-action -->
-                            	<div class="product-intro">
-                                    <h3 class="product-title">
-                                    	<a href="product.html">On Cloudflyer</a>
-                                    </h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $127.99
-                                    </div><!-- End .product-price -->
-                            	</div>
-                            	<div class="product-detail">
-                                    <div class="ratings-container">
-		                                <div class="ratings">
-		                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-		                                </div><!-- End .ratings -->
-		                                <span class="ratings-text">( 6 Reviews )</span>
-		                            </div><!-- End .rating-container -->
-                                    
-                            	</div>
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-10 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-6-1.jpg" alt="Product image" class="product-image">
-                                    <img src="/users/assets/images/demos/demo-24/best-sellers/product-6-2.jpg" alt="Product image" class="product-image-hover">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                </div><!-- End .product-action-vertical -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-cart"><span>add to cart</span></a>
-                                    <a href="#" class="btn-product-icon btn-wishlist"><span>Add to Wishlist</span></a>
-                                </div><!-- End .product-action -->
-                            	<div class="product-intro">
-                                    <h3 class="product-title">
-                                    	<a href="product.html">Alphaskin Sport Bra</a>
-                                    </h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $34.99
-                                    </div><!-- End .product-price -->
-                            	</div>
-                            	<div class="product-detail">
-                                    <div class="ratings-container">
-		                                <div class="ratings">
-		                                    <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
-		                                </div><!-- End .ratings -->
-		                                <span class="ratings-text">( 3 Reviews )</span>
-		                            </div><!-- End .rating-container -->
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #d64042;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                            	</div>
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                        
 	                </div>
             	</div>
             </section>
@@ -803,7 +659,7 @@
 	                            <figure class="product-media">
 	                            	<span class="product-label label-deal">deal of the day</span>
 	                                <a href="product.html">
-	                                    <img src="/users/assets/images/demos/demo-24/featured-products/product-5.jpg" alt="Product image" class="product-image">
+	                                    <img src="/uploads/<%= offeredItem.image[0] %>" alt="Product image" class="product-image">
 	                                </a>
 
 	                                <div class="product-action-vertical">
@@ -818,10 +674,12 @@
 
 	                            	<div class="product-intro">
 	                                    <h3 class="product-title">
-	                                    	<a href="product.html">Troy Lee Designs A1 MIPS Bike Helmet</a>
+	                                    	<a href="product.html"><%= offeredItem.name %></a>
 	                                    </h3><!-- End .product-title -->
 	                                    <div class="product-price">
-	                                        $139.00
+
+	                                        <% let offerPrice=offeredItem.price-((offeredItem.price*offeredItem.offerApplied)/100) %>
+											$<%= offerPrice %>
 	                                    </div><!-- End .product-price -->
 	                            	</div>
 	                            	<div class="product-detail">
