@@ -140,7 +140,7 @@ const top10ProductsCategories = async (req, res) => {
 const dashboardLoad = async (req, res) => {
     try {
 
-        const { top10Products, top10Categories } = await top10ProductsCategories(req, res)
+        const { top10Products, top10Categories } = await top10ProductsCategories()
         const order = await Order.find()
         const revenue = order.reduce((total, order) => total + order.totalAmount, 0);
         const salesCount = order.length

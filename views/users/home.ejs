@@ -306,7 +306,7 @@
 						<% top6Products.forEach((product)=>{ %>
 	                    <div class="product product-10 text-center">
                             <figure class="product-media">
-                                <a href="product.html">
+                                <a href="/singleProduct/<%= product._id %>">
                                     <img src="/uploads/<%= product.image[0] %>" alt="Product image" class="product-image">
                                     <img src="/uploads/<%= product.image[1] %>" alt="Product image" class="product-image-hover">
                                 </a>
@@ -658,7 +658,7 @@
 	            			<div class="product product-10 product-lg text-center">
 	                            <figure class="product-media">
 	                            	<span class="product-label label-deal">deal of the day</span>
-	                                <a href="product.html">
+	                                <a href="/singleProduct/<%= offeredItem._id %>">
 	                                    <img src="/uploads/<%= offeredItem.image[0] %>" alt="Product image" class="product-image">
 	                                </a>
 

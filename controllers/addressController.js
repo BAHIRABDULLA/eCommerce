@@ -1,13 +1,17 @@
 const Address = require('../models/addressModel')
 const Order = require('../models/orderModel')
 const User = require('../models/userModel')
+const Wishlist=require('../models/wishlistModel')
+const Cart=require('../models/cartModel')
 const Wallet = require('../models/walletModel')
 
 //     address page rendering
 const getDashboard = async (req, res) => {
     try {
         const userId = req.session.user_id;
-        console.log(userId, 'userId in getdashbaord page');
+        const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
+        const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
+        
         const userAddress = await Address.findOne({ userId });
 
         const orders = await Order.find({ userId }).populate('products.productId');
@@ -23,7 +27,7 @@ const getDashboard = async (req, res) => {
             transactions = wallets[0].transactions
         }
 
-        res.render('dashboard', { userAddress, orders, users, walletBalance, transactions, error: req.flash('error') });
+        res.render('dashboard', {isLoggedIn:res.locals.loggedIn,cart, userAddress, orders, users, walletBalance,wishlist, transactions, error: req.flash('error') });
     } catch (error) {
         console.log(error.message);
     }

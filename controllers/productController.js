@@ -21,7 +21,7 @@ const addProductLoad = async (req, res) => {
         const categories = await Category.find({ status: true })
         res.render('productAdd', { products, categories })
     } catch (error) {
-        console.log(error.message);
+        console.error('Error found in add product load',error);
     }
 }
 

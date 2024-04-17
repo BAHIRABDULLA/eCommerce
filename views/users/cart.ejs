@@ -49,10 +49,17 @@
                                 <a href="#">Links</a>
                                 <ul>
 
-                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist
-                                            <span>(3)</span></a></li>
-                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a>
-                                    </li>
+                                    <li><a href="/wishlist"><i class="icon-heart-o"></i>Wishlist
+                                        <% if(wishlist) {%>
+                                            <span>(<%= wishlist.products.length %>)</span></a></li>
+                                    <% } %>
+
+                                    <% if(isLoggedIn){ %>
+                                        <li><a href="/logout"><i class="icon-user"></i>Logout</a></li>
+                                            <% }else{ %>
+                                        <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
+                                    <% } %>
+                                    
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->
@@ -135,14 +142,15 @@
                         </div><!-- End .compare-dropdown -->
 
                         <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="icon-shopping-cart"></i>
-                                <span class="cart-count">2</span>
-                            </a>
+	                        <!-- <a href="/cart" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> -->
+								<a href="/cart" class="dropdown-toggle" >
+	                            <i class="icon-shopping-cart"></i>
+	                            <span class="cart-count"><% if(isLoggedIn&&cart){ %>
+									<%= cart.products.length %><% }else{ %>
+									0<% } %></span>
+	                        </a>
+	                    </div>
 
-                            
-                        </div><!-- End .cart-dropdown -->
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
@@ -171,6 +179,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-9">
+                                <% if(cart.length>0){ %>
                                 <table class="table table-cart table-mobile">
                                     <thead>
                                         <tr>
@@ -237,18 +246,16 @@
                                             <% }) %>
                                     </tbody>
                                 </table>
+                                <% }else{ %>
+                                    
+                                    <h3 class="text-danger  align-items-center  " >Cart is empty</h3>
+                                    
+                                    <% } %>
 
                                 <div class="cart-bottom">
                                     <div class="cart-discount">
                                         <form action="#">
-                                            <!-- <div class="input-group">
-                                                <input type="text" class="form-control" required
-                                                    placeholder="coupon code">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-outline-primary-2" type="submit"><i
-                                                            class="icon-long-arrow-right"></i></button>
-                                                </div>
-                                            </div> -->
+                                            
                                         </form>
                                     </div><!-- End .cart-discount -->
 
@@ -256,6 +263,7 @@
                                             class="icon-refresh"></i></a>
                                 </div><!-- End .cart-bottom -->
                             </div><!-- End .col-lg-9 -->
+                            <% if(cart.length>0){ %>
                             <aside class="col-lg-3">
                                 <div class="summary summary-cart">
                                     <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
@@ -293,6 +301,7 @@
                                 <a href="/shop" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
                                         SHOPPING</span><i class="icon-refresh"></i></a>
                             </aside><!-- End .col-lg-3 -->
+                            <% } %>
                         </div><!-- End .row -->
                     </div><!-- End .container -->
                 </div><!-- End .cart -->

@@ -48,11 +48,16 @@
                             <li>
                                 <a href="#">Links</a>
                                 <ul>
-                                  
-                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact Us</a></li>
-                                    <!-- <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>     -->
+                                    <li><a href="/wishlist"><i class="icon-heart-o"></i>Wishlist
+                                        <% if(wishlist) {%>
+                                            <span>(<%= wishlist.products.length %>)</span></a></li>
+                                    <% } %>
+
+                                    <% if(isLoggedIn){ %>
+                                        <li><a href="/logout"><i class="icon-user"></i>Logogut</a></li>
+                                            <% }else{ %>
+                                        <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
+                                        <% } %>
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->
@@ -115,42 +120,18 @@
                                 <i class="icon-random"></i>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <ul class="compare-products">
-                                    <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a></h4>
-                                    </li>
-                                    <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
-                                    </li>
-                                </ul>
-
-                                <div class="compare-actions">
-                                    <a href="#" class="action-link">Clear All</a>
-                                    <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
-                                </div>
-                            </div><!-- End .dropdown-menu -->
+                            
                         </div><!-- End .compare-dropdown -->
 
-                        <!-- <div class="dropdown cart-dropdown">
-                            <a href="" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="icon-shopping-cart "></i>
-                                <span class="cart-count">2</span>
-                            </a>
-
-                            
-                        </div> -->
+                    
                         <div style="margin-left: 15px;">
                         <!-- <button type="button" class="btn btn-primary position-relative"> -->
                             <a href="/cart"><i class="icon-shopping-cart  position-relative "  style="font-size: 30px;"></i></a>
                             
                            
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning  ">
-                              9
-                              <!-- <span class="visually-hidden">unread messages</span> -->
-                            </span>
+                            <span class="cart-count"><% if(isLoggedIn&&cart){ %>
+                                <%= cart.products.length %><% }else{ %>
+                                0<% } %></span>
                           
                         </div>
 

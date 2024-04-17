@@ -300,8 +300,7 @@ const loadHome = async (req, res) => {
         ]);
         const offer = await Offer.findOne({"selectedItems": {"$elemMatch": {"$exists": true}}});
         const newId=new ObjectId(offer.selectedItems[0])
-        console.log(newId,'newId');
-        let offeredItem=await Product.findById(newId)
+        const offeredItem=await Product.findById(newId)
         
         const active = await User.findOne({ is_active: true })
         const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
@@ -539,10 +538,13 @@ const searchProducts = async (req, res) => {
 //  this is single product showing 
 const loadSingleProduct = async (req, res) => {
     try {
+        const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
+        const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
+
         const productId = req.params.productId
         const product = await Product.findById(productId)
         const products = await Product.find()
-        res.render('singleProduct', { product, products })
+        res.render('singleProduct', {isLoggedIn: res.locals.loggedIn, product, products,wishlist,cart })
     } catch (error) {
         console.log(error.message);
     }
@@ -552,6 +554,8 @@ const loadSingleProduct = async (req, res) => {
 //   cart page rendering
 const loadCart = async (req, res) => {
     try {
+        const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
+
         const userId = req.session.user_id
         if (!userId) {
             return res.render('signIn')
@@ -560,7 +564,7 @@ const loadCart = async (req, res) => {
             if (!cart || !cart.products) {
                 return res.render('cart', { cart: { products: [] } })
             }
-            res.render('cart', { cart: cart })
+            res.render('cart', {isLoggedIn: res.locals.loggedIn, cart: cart ,wishlist})
         }
     } catch (error) {
         console.log(error.message);
@@ -647,7 +651,7 @@ const loadCheckout = async (req, res) => {
         const wallet = await Wallet.findOne({ userId: req.session.user_id })
         const walletBalance = wallet ? wallet.balance : 0
         console.log(walletBalance, 'walletbalance');
-        res.render('checkout', { user_id: userId, userAddress, cart, walletBalance })
+        res.render('checkout', { isLoggedIn: res.locals.loggedIn,user_id: userId, userAddress, cart, walletBalance })
 
     } catch (error) {
         console.log(error.message);
@@ -940,7 +944,7 @@ const loadWishlist = async (req, res) => {
         if (!wishlist) {
             return res.render('wishlist', { wishlist: [] })
         }
-        res.render('wishlist', { wishlist })
+        res.render('wishlist', {isLoggedIn: res.locals.loggedIn, wishlist })
     } catch (error) {
         console.log(error.message);
     }
@@ -1048,7 +1052,7 @@ const loadOrderDetails = async (req, res) => {
             { _id: orderId, 'products.productId': productId },
             { 'products.$': 1 }
         ).populate('products.productId');
-        res.render('orderDetails', { order, orderDetails, aa })
+        res.render('orderDetails', {isLoggedIn: res.locals.loggedIn, order, orderDetails, aa })
     } catch (error) {
         console.error('Error founded in loadOrder', error);
     }

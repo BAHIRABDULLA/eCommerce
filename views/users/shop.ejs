@@ -53,8 +53,8 @@
                                         <% if(wishlist) {%>
                                             <span>(<%= wishlist.products.length %>)</span></a></li>
                                     <% } %>
-                                    <% if(cart){ %>
-                                    <li><a href="/logout"><i class="icon-user"></i>Logogut</a></li>
+                                    <% if(isLoggedIn){ %>
+                                    <li><a href="/logout"><i class="icon-user"></i>Logout</a></li>
                                         <% }else{ %>
                                     <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
                                     <% } %>
