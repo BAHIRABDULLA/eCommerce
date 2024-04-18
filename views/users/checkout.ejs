@@ -560,6 +560,131 @@
                                                 </div>
                                             <% }else{ %>
                                                 <p>gjdskfjdsfd</p>
+                                                <p>fdf</p>
+                                                <div class="row ">
+                                                    <div class="container">
+                                                        <button class="btn btn-primary" type="button"
+                                                            data-toggle="collapse"
+                                                            data-target="#shippingAddressCollapse" aria-expanded="false"
+                                                            aria-controls="shippingAddressCollapse">
+                                                            Add a New Address
+                                                        </button>
+                                                        <div class="collapse" id="shippingAddressCollapse">
+                                                            <div class="card card-body">
+                                                                <form action="/address" method="post">
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label for="inputName">Name</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputName" name="name"
+                                                                                placeholder="Enter your name">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6  col-lg-5 ">
+                                                                            <label for="inputPhone">Phone</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputPhone" name="phone"
+                                                                                placeholder="Enter your phone">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label for="inputPincode">Pincode</label>
+                                                                            <input type="number" class="form-control"
+                                                                                id="inputPincode" name="pincode"
+                                                                                placeholder="Enter your pincode">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label for="inputEmail">Email</label>
+                                                                            <input type="email" class="form-control"
+                                                                                id="inputEmail" name="email"
+                                                                                placeholder="Enter your email">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group  col-lg-10">
+                                                                        <label for="inputAddress">Address (Area and
+                                                                            Street)</label>
+                                                                        <textarea class="form-control" id="inputAddress"
+                                                                            rows="2" name="streetAddress"
+                                                                            placeholder="Enter your address"></textarea>
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6     col-lg-5">
+                                                                            <label
+                                                                                for="inputLocalityDistrict">City/District/Town</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputLocalityDistrict" name="city"
+                                                                                placeholder="Enter your city/district/town">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6   col-lg-5">
+                                                                            <label for="inputState">State</label>
+                                                                            <select id="inputState" name="state"
+                                                                                class="form-control">
+                                                                                <option selected>Select your state
+                                                                                </option>
+                                                                                <!-- Add options for all 28 states of India -->
+                                                                                <option>Andhra Pradesh</option>
+                                                                                <option>Arunachal Pradesh</option>
+                                                                                <option>Assam</option>
+                                                                                <option>Bihar</option>
+                                                                                <option>Chhattisgarh</option>
+                                                                                <option>Goa</option>
+                                                                                <option>Gujarat</option>
+                                                                                <option>Haryana</option>
+                                                                                <option>Himachal Pradesh</option>
+                                                                                <option>Jharkhand </option>
+                                                                                <option>Karnataka</option>
+                                                                                <option>Kerala</option>
+                                                                                <option>Madhya Pradesh</option>
+                                                                                <option>Maharashtra</option>
+                                                                                <option>Manipur</option>
+                                                                                <option>Meghalaya</option>
+                                                                                <option>Mizoram</option>
+                                                                                <option>Nagaland</option>
+                                                                                <option>Odisha</option>
+                                                                                <option>Punjab</option>
+                                                                                <option>Rajasthan</option>
+                                                                                <option>Sikkim</option>
+                                                                                <option>Tamil Nadu</option>
+                                                                                <option>Telangana</option>
+                                                                                <option>Tripura</option>
+                                                                                <option>Uttar Pradesh</option>
+                                                                                <option>Uttarakhand</option>
+                                                                                <option>West Bengal</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6   col-lg-5">
+                                                                            <label for="inputLandmark">Landmark
+                                                                                (Optional)</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputLandmark" name="landmark"
+                                                                                placeholder="Enter your landmark">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6   col-lg-5">
+                                                                            <label for="inputAlternatePhone">Alternate
+                                                                                Phone
+                                                                                (Optional)</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="inputAlternatePhone" name="phone2"
+                                                                                placeholder="Enter your alternate phone">
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#shippingAddressCollapse"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="shippingAddressCollapse">Save</button>
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#shippingAddressCollapse"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="shippingAddressCollapse">Cancel</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <% } %>
 
 
