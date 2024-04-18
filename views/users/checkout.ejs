@@ -131,8 +131,10 @@
                                 <a href="#">Links</a>
                                 <ul>
 
-                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist
-                                            <span>(3)</span></a></li>
+                                    <li><a href="/wishlist"><i class="icon-heart-o"></i>Wishlist
+                                        <% if(wishlist) {%>
+                                            <span>(<%= wishlist.products.length %>)</span></a></li>
+                                    <% } %>
                                     <% if(isLoggedIn){ %>
                                         <li><a href="/logout"><i class="icon-user"></i>Logout</a></li>
                                             <% }else{ %>
@@ -216,14 +218,14 @@
                         </div><!-- End .compare-dropdown -->
 
                         <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="icon-shopping-cart"></i>
-                                <span class="cart-count">2</span>
-                            </a>
-
-                            
-                        </div><!-- End .cart-dropdown -->
+	                        <!-- <a href="/cart" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> -->
+								<a href="/cart" class="dropdown-toggle" >
+	                            <i class="icon-shopping-cart"></i>
+	                            <span class="cart-count"><% if(cart){ %>
+									<%= cart.products.length %><% }else{ %>
+									0<% } %></span>
+	                        </a>
+	                    </div>
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
@@ -299,7 +301,7 @@
 
                                     </div>
                                     <button class="btn-primary rounded-pill" data-toggle="modal"
-                                        data-target="#addressModal">Change</button>
+                                        data-target="#addressModal">Select Address</button>
                                 <% } %>
                                 <br><br>
                                 <% console.log(userAddress&&userAddress.address&&userAddress.address.length,'uuaual');  %>
@@ -745,8 +747,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Shipping:</td>
+                                                        <% if(cart.products.length>0) {%>
                                                         <td><%= subtotal>=500 ?"Free":50 %></td>
-                                                        
+                                                        <% }else {%>
+                                                        <td>₹0</td>
+                                                            <% }%>
                                                     </tr>
                                                     <tr class="summary-discount">
                                                         <td>Discount</td>
@@ -756,8 +761,11 @@
                                                     </tr>
                                                     <tr class="summary-total">
                                                         <td>Total Amount:</td>
-                                                        <td>₹<%= totalAmount=subtotal + (subtotal>=500?0:50) %>
-                                                        </td>
+                                                        <%if(cart.products.length>0) {%>
+                                                        <td>₹<%= totalAmount=subtotal + (subtotal>=500?0:50) %></td>
+                                                        <%}else{%>
+                                                            <td>₹0</td>
+                                                        <% } %>
 
                                                     </tr>
                                         </tbody>
@@ -1127,6 +1135,24 @@
         async function saveOrderToDatabase(paymentMethod,status) {
             try {                                                   
                 const totalAmount = parseFloat(document.querySelector('.summary-total td:last-child').innerText.replace('₹', '').trim());
+                if (!selectedAddressId) {
+                    Swal.fire({
+                        title: 'No Address Selected',
+                        text: 'Please select an address before placing the order',
+                        icon: 'warning'
+                    });
+                    return; 
+                }
+
+       
+                if (!paymentMethod) {
+                    Swal.fire({
+                        title: 'No Payment Method Selected',
+                        text: 'Please select a payment method before placing the order',
+                        icon: 'warning'
+                    });
+                    return; 
+                }
                 const response = await fetch('/placeOrder', {
                     method: 'POST',
                     headers: {
@@ -1141,6 +1167,7 @@
                         status
                     })
                 });
+                
                 console.log(selectedAddressId,'after async function');
 
                 if (response.ok) {

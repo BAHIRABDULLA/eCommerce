@@ -41,7 +41,11 @@
                             <li>
                                 <a href="#">Links</a>
                                 <ul>
-                                    <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
+                                    <% if(isLoggedIn){ %>
+                                        <li><a href="/logout"><i class="icon-user"></i>Logout</a></li>
+                                            <% }else{ %>
+                                        <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
+                                        <% } %>
                                 </ul>
                             </li>
                         </ul>

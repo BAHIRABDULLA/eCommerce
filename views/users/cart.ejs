@@ -179,7 +179,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-9">
-                                
+                                <% if(cart.products&& cart.products.length>0) { %>
                                 <table class="table table-cart table-mobile">
                                     <thead>
                                         <tr>
@@ -246,7 +246,7 @@
                                             <% }) %>
                                     </tbody>
                                 </table>
-                                
+                               
 
                                 <div class="cart-bottom">
                                     <div class="cart-discount">
@@ -297,7 +297,9 @@
                                 <a href="/shop" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
                                         SHOPPING</span><i class="icon-refresh"></i></a>
                             </aside><!-- End .col-lg-3 -->
-                           
+                            <% }else{ %>
+                                <h3>Cart is empty</h3>
+                                <% } %>
                         </div><!-- End .row -->
                     </div><!-- End .container -->
                 </div><!-- End .cart -->

@@ -645,13 +645,14 @@ const removeFromCart = async (req, res) => {
 //    checkout page rendering
 const loadCheckout = async (req, res) => {
     try {
+        const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
         const userId = req.session.user_id
         const cart = await Cart.findOne({ userId }).populate('products.productId')
         const userAddress = await Address.findOne({ userId: req.session.user_id })
         const wallet = await Wallet.findOne({ userId: req.session.user_id })
         const walletBalance = wallet ? wallet.balance : 0
         console.log(walletBalance, 'walletbalance');
-        res.render('checkout', { isLoggedIn: res.locals.loggedIn,user_id: userId, userAddress, cart, walletBalance })
+        res.render('checkout', { isLoggedIn: res.locals.loggedIn,wishlist,user_id: userId, userAddress, cart, walletBalance })
 
     } catch (error) {
         console.log(error.message);
@@ -942,11 +943,11 @@ const loadWishlist = async (req, res) => {
         const userId = req.session.user_id
         const wishlist = await Wishlist.findOne({ userId }).populate('products.productId')
         if (!wishlist) {
-            return res.render('wishlist', { wishlist: [] })
+            return res.render('wishlist',  {isLoggedIn: res.locals.loggedIn,wishlist: [] })
         }
         res.render('wishlist', {isLoggedIn: res.locals.loggedIn, wishlist })
     } catch (error) {
-        console.log(error.message);
+        console.error('Error founded in loadwishlist',error);
     }
 }
 

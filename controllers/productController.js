@@ -10,7 +10,7 @@ const productLoad = async (req, res) => {
         const products = await Product.find().populate('category')
         res.render('products', { products, error: req.flash('error') })
     } catch (error) {
-        console.log(error.message);
+        console.error('Error founded in product load',error);
     }
 }
 
