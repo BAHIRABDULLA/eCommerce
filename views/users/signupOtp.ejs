@@ -57,8 +57,6 @@
 </head>
 <body>
 
-
-
   <div class="otp-container">
     <% if (message) { %>
       <div class="alert alert-danger" id="alertMessage">
@@ -85,14 +83,44 @@
     <!-- Submit Button -->
     <button type="submit" class="btn btn-outline-warning mt-4">Submit</button>
 
+
+    <div id="countdown" class="countdown">
+      Timer: <span id="timer">30</span> seconds
+    </div>
+
+
     <!-- Resend Message -->
     <div class="resend-message">
       Haven't received the verification code? <br> 
       <a href="/resendOTP?userId=<%= userId %>&email=<%= encodeURIComponent(email) %>" style="color: #2707fc;">Resend</a>
     </div>
-    </form>
+  </form>
+  <a href="/signUp"   style="color: #2707fc;">Back</a>
   </div>
 
+
+  <script>
+
+    const response= await fetch('/verifyOtp',{
+      
+    })
+      let seconds = 30;
+  const countdown = document.getElementById('timer');
+
+  const timer = setInterval(() => {
+    seconds--;
+    countdown.textContent = seconds;
+
+    if (seconds <= 0) {
+      clearInterval(timer);
+      // Optionally, you can redirect or perform some action when the timer reaches 0.
+      // window.location.href = '/timeout'; // Redirect to a timeout page
+    }
+  }, 1000);
+  </script>
+  
+  
+  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

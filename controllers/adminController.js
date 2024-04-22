@@ -1,7 +1,12 @@
 const User = require('../models/userModel')
 const Order = require('../models/orderModel')
+const Admin = require('../models/adminModel')
 const Coupon = require('../models/couponModel')
 require('dotenv').config()
+const bcrypt = require('bcrypt')
+
+
+
 
 
 //    admin login page rendering 
@@ -17,10 +22,16 @@ const adminLogin = async (req, res) => {
 //     admin login credential checking
 const adminVerify = async (req, res) => {
     try {
+        const { email, password } = req.body
+        
+        const admin = await Admin.findOne({email})
+        if (!admin) {
+            req.flash('error', 'Email or Password is incorrect , please try again')
+            return res.redirect('/admin')
+        }
 
-        const email = process.env.adminEmail
-        const password = process.env.adminPassword
-        if (req.body.email === email && req.body.password === password) {
+        const passwordMatch = await bcrypt.compare(password, admin.password)
+        if (passwordMatch) {
             req.session.dd = { email, password }
             res.redirect('/admin/dashboard')
         } else {
@@ -157,7 +168,7 @@ const dashboardLoad = async (req, res) => {
         const dailyRevenue = dailyOrder.reduce((total, order) => total + order.totalAmount, 0)
         res.render('dashboard', { order, revenue, salesCount, dailyRevenue, top10Products, top10Categories })
     } catch (error) {
-        console.error('error found',error);
+        console.error('error found', error);
     }
 }
 

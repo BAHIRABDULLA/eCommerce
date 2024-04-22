@@ -97,14 +97,15 @@
                                 <ul>
 
                                     <li><a href="/wishlist"><i class="icon-heart-o"></i>Wishlist
-                                        <% if(wishlist) {%>
-                                            <span>(<%= wishlist.products.length %>)</span></a></li>
+                                            <% if(wishlist) {%>
+                                                <span>(<%= wishlist.products.length %>)</span>
+                                        </a></li>
                                     <% } %>
-                                    <% if(isLoggedIn){ %>
-                                    <li><a href="/logout"><i class="icon-user"></i>Logogut</a></li>
-                                    <% }else{ %>
-                                    <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
-                                    <% } %>
+                                        <% if(isLoggedIn){ %>
+                                            <li><a href="/logout"><i class="icon-user"></i>Logogut</a></li>
+                                            <% }else{ %>
+                                                <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
+                                                <% } %>
                                 </ul>
                             </li>
                         </ul>
@@ -138,10 +139,10 @@
 
                                     <ul>
                                         <li>
-                                            <a href="/about" >About</a>
+                                            <a href="/about">About</a>
                                         </li>
                                         <li>
-                                            <a href="contact" >Contact</a>
+                                            <a href="contact">Contact</a>
                                         </li>
                                         <li><a href="#">FAQs</a></li>
                                         <li><a href="*">Error 404</a></li>
@@ -175,16 +176,19 @@
                                 <i class="icon-random"></i>
                             </a>
 
-                            
+
                         </div><!-- End .compare-dropdown -->
 
                         <div class="dropdown cart-dropdown">
-                            <a href="/cart" class="dropdown-toggle" >
-	                            <i class="icon-shopping-cart"></i>
-	                            <span class="cart-count"><% if(isLoggedIn&&cart){ %>
-									<%= cart.products.length %><% }else{ %>
-									0<% } %></span>
-	                        </a>
+                            <a href="/cart" class="dropdown-toggle">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count">
+                                    <% if(isLoggedIn&&cart){ %>
+                                        <%= cart.products.length %>
+                                            <% }else{ %>
+                                                0<% } %>
+                                </span>
+                            </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
                                 <!-- <div class="dropdown-cart-products">   
@@ -289,7 +293,8 @@
                                                 </p>
 
                                                 <strong>Referral link:&nbsp;<a href="">localhost:4000/signUp?referral=
-                                                        <%= users._id %></a></strong>
+                                                        <%= users._id %>
+                                                    </a></strong>
 
                                             </div><!-- .End .tab-pane -->
 
@@ -320,24 +325,26 @@
                                                                                 <p class="product-quantity">Quantity:
                                                                                     <%= product.quantity %>
                                                                                 </p>
-                                                                                <p class="product-price">Price: <%= product.price*product.quantity %>
+                                                                                <p class="product-price">Price: <%=
+                                                                                        product.price*product.quantity
+                                                                                        %>
                                                                                 </p>
                                                                             </div>
                                                                             <div class="product-details">
                                                                                 <a href="/orderDetails/<%= product.productId._id %>,<%= order._id %>"
                                                                                     class="text-danger">Details</a>
-                                                                                <% console.log(order._id,'order._id');%>
-                                                                                
-                                                                                        <p class="order-date">Order
-                                                                                            Date: <%=
-                                                                                                order.orderDate.toDateString()
-                                                                                                %>
-                                                                                        </p>
-                                                                                        <p
-                                                                                            class="order-status  btn-dark text-center  ">
-                                                                                            Status: <%= order.status %>
-                                                                                        </p>
-                                                                                        <!-- <% if(order.status === 'Delivered') { %>
+
+
+                                                                                <p class="order-date">Order
+                                                                                    Date: <%=
+                                                                                        order.orderDate.toDateString()
+                                                                                        %>
+                                                                                </p>
+                                                                                <p
+                                                                                    class="order-status  btn-dark text-center  ">
+                                                                                    Status: <%= order.status %>
+                                                                                </p>
+                                                                                <!-- <% if(order.status === 'Delivered') { %>
                                                                         <a href="#" class="btn btn-primary return-link" data-order-id="<%= order._id %>">Return Order</a>
                                                                     
                                                                         <% }else { %>
@@ -346,26 +353,24 @@
 
 
 
-                                                                                        <% if(order.status==='Delivered'
-                                                                                            ) { %>
-                                                                                            <a href="#"
-                                                                                                class="btn btn-primary return-link"
-                                                                                                data-order-id="<%= order._id %>">Return
-                                                                                                Order</a>
-                                                                                            <% } else if
-                                                                                                (order.status==='Cancelled'
-                                                                                                ) { %>
+                                                                                <% if(order.status==='Delivered' ) { %>
+                                                                                    <a href="#"
+                                                                                        class="btn btn-primary return-link"
+                                                                                        data-order-id="<%= order._id %>">Return
+                                                                                        Order</a>
+                                                                                    <% } else if
+                                                                                        (order.status==='Cancelled' ) {
+                                                                                        %>
 
-                                                                                                <% } else if
-                                                                                                    (order.status==='Pending'
-                                                                                                    ||
-                                                                                                    order.status==='Shipping'
-                                                                                                    ) { %>
-                                                                                                    <a href="#"
-                                                                                                        class="btn btn-primary cancel-link"
-                                                                                                        data-order-id="<%= order._id %>">Cancel
-                                                                                                        Order</a>
-                                                                                                    <% } %>
+                                                                                        <% } else if
+                                                                                            (order.status==='Pending' ||
+                                                                                            order.status==='Shipping' )
+                                                                                            { %>
+                                                                                            <a href="#"
+                                                                                                class="btn btn-primary cancel-link"
+                                                                                                data-order-id="<%= order._id %>">Cancel
+                                                                                                Order</a>
+                                                                                            <% } %>
                                                                             </div>
                                                                         </div>
                                                                         <% }) %>
@@ -386,19 +391,26 @@
                                                     </button>
                                                     <div class="collapse" id="shippingAddressCollapse">
                                                         <div class="card card-body">
-                                                            <form action="/address" method="post">
+                                                            <form action="/address" method="post" id="addressForm">
                                                                 <div class="form-row">
                                                                     <div class="form-group col-md-6     col-lg-5">
                                                                         <label for="inputName">Name</label>
                                                                         <input type="text" class="form-control"
                                                                             id="inputName" name="name"
                                                                             placeholder="Enter your name">
+                                                                        <small class="text-danger " id="nameError"
+                                                                            style="display: none;">Name cannot be
+                                                                            empty</small>
                                                                     </div>
                                                                     <div class="form-group col-md-6  col-lg-5 ">
                                                                         <label for="inputPhone">Phone</label>
+
                                                                         <input type="text" class="form-control"
                                                                             id="inputPhone" name="phone"
                                                                             placeholder="Enter your phone">
+                                                                        <small class="text-danger " id="phoneError"
+                                                                            style="display: none;">Phone cannot be
+                                                                            empty</small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row">
@@ -407,12 +419,18 @@
                                                                         <input type="number" class="form-control"
                                                                             id="inputPincode" name="pincode"
                                                                             placeholder="Enter your pincode">
+                                                                        <small class="text-danger " id="pincodeError"
+                                                                            style="display: none;">Pincode must be
+                                                                            digits</small>
                                                                     </div>
                                                                     <div class="form-group col-md-6     col-lg-5">
                                                                         <label for="inputEmail">Email</label>
                                                                         <input type="email" class="form-control"
                                                                             id="inputEmail" name="email"
                                                                             placeholder="Enter your email">
+                                                                        <small class="text-danger " id="emailError"
+                                                                            style="display: none;">Email cannot be
+                                                                            empty</small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group  col-lg-10">
@@ -421,14 +439,20 @@
                                                                     <textarea class="form-control" id="inputAddress"
                                                                         rows="2" name="streetAddress"
                                                                         placeholder="Enter your address"></textarea>
+                                                                    <small class="text-danger " id="addressError"
+                                                                        style="display: none;">Address cannot be
+                                                                        empty</small>
                                                                 </div>
                                                                 <div class="form-row">
                                                                     <div class="form-group col-md-6     col-lg-5">
                                                                         <label
                                                                             for="inputLocalityDistrict">City/District/Town</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="inputLocalityDistrict" name="city"
+                                                                            id="inputLocality" name="city"
                                                                             placeholder="Enter your city/district/town">
+                                                                        <small class="text-danger " id="cityError"
+                                                                            style="display: none;">Field cannot be
+                                                                            empty</small>
                                                                     </div>
                                                                     <div class="form-group col-md-6   col-lg-5">
                                                                         <label for="inputState">State</label>
@@ -468,6 +492,9 @@
 
                                                                             <!-- Add more options here -->
                                                                         </select>
+                                                                        <small class="text-danger " id="stateError"
+                                                                            style="display: none;">Choose your state
+                                                                        </small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row">
@@ -482,15 +509,15 @@
                                                                         <label for="inputAlternatePhone">Alternate Phone
                                                                             (Optional)</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="inputAlternatePhone" name="phone2"
+                                                                            id="inputPhone2" name="phone2"
                                                                             placeholder="Enter your alternate phone">
+                                                                        <small class="text-danger " id="phone2Error"
+                                                                            style="display: none;">Phone must be
+                                                                            intiger</small>
                                                                     </div>
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary"
-                                                                    data-toggle="collapse"
-                                                                    data-target="#shippingAddressCollapse"
-                                                                    aria-expanded="false"
-                                                                    aria-controls="shippingAddressCollapse">Save</button>
+                                                                <button type="submit" id="saveAddButton"
+                                                                    class="btn btn-primary">Save</button>
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-toggle="collapse"
                                                                     data-target="#shippingAddressCollapse"
@@ -540,87 +567,170 @@
                                                                         </p>
 
                                                                         <div class="collapse"
-                                                                            id="editAddressForm<%= address._id %>">
+                                                                            id="editAddressCollapse<%= address._id %>">
                                                                             <div class="card  card-body ">
-                                                                                <form
-                                                                                    action="/address/<%= address._id %>"
-                                                                                    method="post">
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="editName<%= address._id %>">Name</label>
-                                                                                        <input type="text"
-                                                                                            class="form-control"
-                                                                                            id="editName<%= address._id %>"
-                                                                                            name="name"
-                                                                                            value="<%= address.name %>">
+                                                                                <form action="/editAddress/<%= address._id %>" method="post"
+                                                                                    id="editAddressform<%= address._id %>"
+                                                                                    
+                                                                                    data-address-id="<%= address._id %>">
+                                                                                    <div class="form-row">
+                                                                                        <div
+                                                                                            class="form-group  col-12 col-md-6">
+                                                                                            <label
+                                                                                                for="editName<%= address._id %>">Name</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                id="editName<%= address._id %>"
+                                                                                                name="name"
+                                                                                                value="<%= address.name %>">
+                                                                                            <small class="text-danger "
+                                                                                                id="editNameError<%= address._id %>"
+                                                                                                style="display: none;">Name
+                                                                                                cannot be empty</small>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="form-group  col-12 col-md-6">
+                                                                                            <label
+                                                                                                for="editPhone<%= address._id %>">Phone</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                id="editPhone<%= address._id %>"
+                                                                                                name="phone"
+                                                                                                value="<%= address.phone %>">
+                                                                                            <small class="text-danger "
+                                                                                                id="editPhoneError<%= address._id %>"
+                                                                                                style="display: none;">Phone
+                                                                                                cannot be empty</small>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="editPhone<%= address._id %>">Phone</label>
-                                                                                        <input type="number"
-                                                                                            class="form-control"
-                                                                                            id="editPhone<%= address._id %>"
-                                                                                            name="phone"
-                                                                                            value="<%= address.phone %>">
+                                                                                    <div class="form-row">
+                                                                                        <div
+                                                                                            class="form-group col-md-6 col-12">
+                                                                                            <label
+                                                                                                for="editPincode<%= address._id %>">Pincode</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                id="editPincode<%= address._id %>"
+                                                                                                name="pincode"
+                                                                                                value="<%= address.pincode%>">
+                                                                                            <small class="text-danger "
+                                                                                                style="display: none;"
+                                                                                                id="editPincodeError<%= address._id %>">Pincode
+                                                                                                cannot be empty</small>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="form-group  col-md-6 col-12">
+                                                                                            <label
+                                                                                                for="editEmail<%= address._id %>">Email</label>
+                                                                                            <input type="email"
+                                                                                                class="form-control "
+                                                                                                id="editEmail<%= address._id %>"
+                                                                                                name="email"
+                                                                                                value="<%= address.email %>">
+                                                                                            <small class="text-danger "
+                                                                                                style="display: none;"
+                                                                                                id="editEmailError<%= address._id %>">Email
+                                                                                                cannot be empty</small>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="editPincode<%= address._id %>">Pincode</label>
-                                                                                        <input type="number"
-                                                                                            class="form-control"
-                                                                                            id="editPincode<%= address._id %>"
-                                                                                            name="pincode"
-                                                                                            value="<%= address.name %>">
-                                                                                    </div>
+
+
                                                                                     <div class="form-group">
                                                                                         <label
                                                                                             for="editStreetAddress<%= address._id %>">Address</label>
-                                                                                        <input type="text"
-                                                                                            class="form-control "
-                                                                                            id="editStreetAddress<%= address.streetAddress %>"
+                                                                                        <textarea class="form-control"
+                                                                                            id="editStreetAddress<%= address._id %>"
+                                                                                            rows="2"
                                                                                             name="streetAddress"
-                                                                                            value="<%= address.streetAddress %>">
+                                                                                            placeholder="Enter your address"><%= address.streetAddress %></textarea>
+                                                                                        <small class="text-danger "
+                                                                                            style="display: none;"
+                                                                                            id="editAddressError<%= address._id %>">Address
+                                                                                            cannot be empty</small>
                                                                                     </div>
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="editCity<%= address._id %>">City</label>
-                                                                                        <input type="text"
-                                                                                            class="form-control "
-                                                                                            id="editCity<%= address.city %>"
-                                                                                            name="city"
-                                                                                            value="<%= address.city %>">
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="editEmail<%= address._id %>">Email</label>
-                                                                                        <input type="email"
-                                                                                            class="form-control "
-                                                                                            id="editEmail<%= address.email %>"
-                                                                                            name="email"
-                                                                                            value="<%= address.email %>">
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="editLandmark<%= address._id %>">Landmark</label>
-                                                                                        <input type="text"
-                                                                                            class="form-control "
-                                                                                            id="editLandmark<%= address.landmard %>"
-                                                                                            name="landmark"
-                                                                                            value="<%= address.landmark %>">
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="editPhone2<%= address._id %>">Phone2</label>
-                                                                                        <input type="number"
-                                                                                            class="form-control "
-                                                                                            id="editPhone2<%= address.phone2 %>"
-                                                                                            name="phone2"
-                                                                                            value="<%= address.phone2 %>">
-                                                                                    </div>
+                                                                                    <div class="form-row">
+                                                                                        <div
+                                                                                            class="form-group  col-md-6 col-12">
+                                                                                            <label
+                                                                                                for="editCity<%= address._id %>">City</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control "
+                                                                                                id="editCity<%= address._id %>"
+                                                                                                name="city"
+                                                                                                value="<%= address.city %>">
+                                                                                            <small class="text-danger "
+                                                                                                style="display: none;"
+                                                                                                id="editCityError<%= address._id %>">City
+                                                                                                cannot be empty</small>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="form-group  col-md-6 col-12">
+                                                                                            <label
+                                                                                                for="editState<%= address._id %>">State</label>
+                                                                                            <select
+                                                                                                id="inputState<%= address._id %>"
+                                                                                                name="state"
+                                                                                                class="form-control">
+                                                                                                <option selected>
+                                                                                                    <%= address.state %>
+                                                                                                </option>
 
+                                                                                                <option>Andhra Pradesh
+                                                                                                </option>
+                                                                                                <option>Arunachal
+                                                                                                    Pradesh
+                                                                                                </option>
+                                                                                                <option>Assam</option>
+                                                                                                <option>Bihar</option>
+                                                                                                <option>Chhattisgarh
+                                                                                                </option>
+                                                                                                <option>Goa</option>
+                                                                                                <option>Gujarat</option>
+                                                                                                <option>Haryana</option>
+                                                                                                <option>Himachal Pradesh
+                                                                                                </option>
+                                                                                                <option>Jharkhand
+                                                                                                </option>
+                                                                                                <option>Karnataka
+                                                                                                </option>
+                                                                                                <option>Kerala</option>
+                                                                                                <option>Madhya Pradesh
+                                                                                                </option>
+                                                                                                <option>Maharashtra
+                                                                                                </option>
+                                                                                                <option>Manipur</option>
+                                                                                                <option>Meghalaya
+                                                                                                </option>
+                                                                                                <option>Mizoram</option>
+                                                                                                <option>Nagaland
+                                                                                                </option>
+                                                                                                <option>Odisha</option>
+                                                                                                <option>Punjab</option>
+                                                                                                <option>Rajasthan
+                                                                                                </option>
+                                                                                                <option>Sikkim</option>
+                                                                                                <option>Tamil Nadu
+                                                                                                </option>
+                                                                                                <option>Telangana
+                                                                                                </option>
+                                                                                                <option>Tripura</option>
+                                                                                                <option>Uttar Pradesh
+                                                                                                </option>
+                                                                                                <option>Uttarakhand
+                                                                                                </option>
+                                                                                                <option>West Bengal
+                                                                                                </option>
+
+                                                                                            </select>
+                                                                                            <small class="text-danger "
+                                                                                                style="display: none;"
+                                                                                                id="editStateError<%= address._id %>">state
+                                                                                                cannot be empty</small>
+                                                                                        </div>
+                                                                                    </div>
                                                                                     <br><br>
                                                                                     <button type="submit"
-                                                                                        class="btn btn-primary ">Save</button>
+                                                                                        class="btn btn-primary">Save</button>
                                                                                     <button type="button"
                                                                                         class="btn btn-secondary"
                                                                                         onclick="cancelEdit('<%= address._id %>')">Cancel</button>
@@ -631,8 +741,6 @@
                                                                             <% } else { %>
                                                                                 <p>No addresses found</p>
                                                                                 <% } %>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -871,7 +979,7 @@
                         <ul>
                             <li><a href="/about">About</a></li>
                             <li><a href="/contact">Contact</a></li>
-                           
+
                             <li><a href="#">FAQs</a></li>
                             <li><a href="*">Error 404</a></li>
                             <li><a href="#">Coming Soon</a></li>
@@ -894,27 +1002,7 @@
 
 
 
-    <!-- <script>
-        function deleteAddress(addressId){
-            fetch(`/address/${addressId}`,{
-                method:'DELETE'
-                
-            })
-            .then(res=>res.json())
-            
-            .then(response=>{
-                if(response.ok){
-                    window.location.reload()
-                }else{
-                    console.error('Failed to delete address');
-                }
-            })
-            
-            .catch(error=>{
-                console.error('Error deleting Address',error);
-            })
-        }
-    </script> -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
@@ -993,10 +1081,10 @@
 
 
         function showEditForm(addressId) {
-            $('#editAddressForm' + addressId).collapse('show');
+            $('#editAddressCollapse' + addressId).collapse('show');
         }
         function cancelEdit(addressId) {
-            $('#editAddressForm' + addressId).collapse('hide');
+            $('#editAddressCollapse' + addressId).collapse('hide');
         }
 
         function confirmDelete(addressId) {
@@ -1023,6 +1111,7 @@
                     if (res.ok) {
                         removeAddressFromPage(addressId);
                         Swal.fire('Deleted!', 'The address has been deleted.', 'success');
+                        window.location.href = '/dashboard'
                     } else {
                         throw new Error('Failed to delete address');
                     }
@@ -1041,26 +1130,10 @@
         }
 
 
-        // function confirmCancel(orderId) {
-        //     Swal({
-        //         title: "Are you sure?",
-        //         text: "Once canceled, you will not be able to recover this order!",
-        //         icon: "warning",
-        //         buttons: true,
-        //         dangerMode: true,
-        //     })
-        //         .then((willCancel) => {
-        //             if (willCancel) {
-        //                 console.log(willCancel, 'will cancell  ');
-        //                 window.location.href = "/cancel-order/" + orderId;
-        //             } else {
-
-        //             }
-        //         });
-        // }
 
 
-        document.addEventListener('click',async function (event) {
+
+        document.addEventListener('click', async function (event) {
             if (event.target.classList.contains('return-link')) {
                 event.preventDefault()
 
@@ -1081,7 +1154,7 @@
                         return { reason: reason.trim() }
                     }
 
-                }).then(async(result) => {
+                }).then(async (result) => {
                     if (result.isConfirmed) {
                         console.log('result.isConfirmed')
                         const orderId = event.target.getAttribute('data-order-id')
@@ -1097,7 +1170,7 @@
                                 body: JSON.stringify({ reason })
                             })
                             if (response.ok) {
-                                console.log(response,'response in return order in dashboard page');
+                                console.log(response, 'response in return order in dashboard page');
                                 const refund = await fetch('/processRefund', {
                                     method: "POST",
                                     headers: {
@@ -1113,7 +1186,7 @@
                                 } else {
                                     Swal.fire('Error', 'Failed to submit return request. Please try again later.', 'error');
                                 }
-                            }else{
+                            } else {
                                 throw new Error('Failed to submit return request');
                             }
                         } catch {
@@ -1188,6 +1261,182 @@
                 }
             })
         })
+
+
+
+
+        document.getElementById('addressForm').addEventListener('submit', function (event) {
+
+
+            const name = document.getElementById('inputName').value.trim()
+            const phone = document.getElementById('inputPhone').value.trim()
+            const pincode = document.getElementById('inputPincode').value.trim()
+            const email = document.getElementById('inputEmail').value.trim()
+            const address = document.getElementById('inputAddress').value
+            const city = document.getElementById('inputLocality').value.trim()
+            const state = document.getElementById('inputState').value.trim()
+            const phone2 = document.getElementById('inputPhone2').value.trim()
+
+            let isValid = true;
+            if (!name) {
+                document.getElementById('nameError').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('nameError').style.display = 'none'
+            }
+            if (!phone || isNaN(phone)) {
+                document.getElementById('phoneError').style.display = 'block'
+                isValid = false
+            } else if (phone.length !== 10) {
+                document.getElementById('phoneError').innerText = 'Phone number must be 10 digits'
+                document.getElementById('phoneError').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('phoneError').style.display = 'none'
+            }
+            if (!pincode || isNaN(pincode)) {
+                document.getElementById('pincodeError').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('pincodeError').style.display = 'none'
+            }
+            if (!email) {
+                document.getElementById('emailError').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('emailError').style.display = 'none'
+            }
+            if (!address) {
+                document.getElementById('addressError').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('addressError').style.display = 'none'
+            }
+            if (!city) {
+                document.getElementById('cityError').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('cityError').style.display = 'none'
+            }
+            if (!state || state === 'Select your state') {
+                document.getElementById('stateError').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('stateError').style.display = 'none'
+            }
+            if (isNaN(phone2)) {
+                document.getElementById('phone2Error').style.display = 'block'
+                isValid = false
+            } else if (phone2 && phone2.length !== 10) {
+                document.getElementById('phone2Error').innerText = 'Phone number must be 10 digit'
+                document.getElementById('phone2Error').style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('phone2Error').style.display = 'none'
+            }
+            console.log("is valide : ", isValid);
+            if (!isValid) {
+                event.preventDefault()
+            }
+            // $('#shippingAddressCollapse').collapse('hide');
+        })
+
+
+
+
+
+
+
+        // edit form 
+       
+        // document.getElementById('editAddressform'+addressId).addEventListener('submit', function (event) {
+        function validateEditAddress(id) {
+            // event.preventDefault();
+
+            const addressId = id
+            console.log(addressId, 'addressId')
+            console.log('edit address fform ..........');
+            const name = document.getElementById('editName' + addressId).value.trim()
+            console.log(name, 'name')
+            const phone = document.getElementById('editPhone' + addressId).value.trim()
+            const pincode = document.getElementById('editPincode' + addressId).value.trim()
+            const email = document.getElementById('editEmail' + addressId).value.trim()
+            const address = document.getElementById('editStreetAddress' + addressId).value.trim()
+            const city = document.getElementById('editCity' + addressId).value.trim()
+            const state = document.getElementById('editState' + addressId).value.trim()
+
+            let isValid = true
+            if (!name || name == '') {
+                document.getElementById('editNameError' + addressId).style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('editNameError' + addressId).style.display = 'none'
+            }
+            if (!phone || isNaN(phone)) {
+                document.getElementById('editPhoneError' + addressId).style.display = 'block'
+                isValid = false
+            } else if (phone.length !== 10) {
+                document.getElementById('editPhoneError' + addressId).innerText = 'Phone number must be 10 intiger'
+                document.getElementById('editPhoneError' + addressId).style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('editPhoneError' + addressId).style.display = 'none'
+            }
+            if (!pincode || isNaN(pincode)) {
+                document.getElementById('editPincodeError' + addressId).style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('editPincodeError' + addressId).style.display = 'none'
+            }
+            if (!email) {
+                document.getElementById('editEmailError' + addressId).style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('editEmailError' + addressId).style.display = 'none'
+            }
+            if (!address) {
+                document.getElementById('editAddressError' + addressId).style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('editAddressError' + addressId).style.display = 'none'
+            }
+            if (!city) {
+                document.getElementById('editCityError' + addressId).style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('editCityError' + addressId).style.display = 'none'
+            }
+            if (!state) {
+                document.getElementById('editStateError' + addressId).style.display = 'block'
+                isValid = false
+            } else {
+                document.getElementById('editStateError' + addressId).style.display = 'none'
+            }
+            // if (isNaN(phone2)) {
+            //     document.getElementById('editPhone2Error'+addressId).style.display = 'block'
+            //     isValid = false
+            // } else if (phone2 && phone2.length !== 10) {
+            //     document.getElementById('editPhone2Error'+addressId).innerText = 'Phone number must be 10 digit'
+            //     document.getElementById('editPhone2Error'+addressId).style.display = 'block'
+            //     isValid = false
+            // } else {
+            //     document.getElementById('editPhone2Error'+addressId).style.display = 'none'
+            // }
+
+            console.log(isValid, 'isvalid')
+            // return isValid
+            // event.preventDefault();
+            // if (isValid) {
+            //     event.preventDefault();
+            //     // this.submit()
+            // }
+            if (!isValid) {
+                console.log(isValid, 'isvalid');
+                return false;
+            }
+            
+        }
+
     </script>
 
 

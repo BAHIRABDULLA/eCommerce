@@ -22,7 +22,7 @@ const addressController = require('../controllers/addressController')
 
 address_route.get('/dashboard',auth.isLoggedIn, auth.isLogin,auth.isActive, addressController.getDashboard)
 address_route.post('/address', addressController.updateAddress)
-address_route.post('/address/:addressId', addressController.editAddress)
+address_route.post('/editAddress/:addressId', addressController.editAddress)
 address_route.delete('/address/:addressId', addressController.deleteAddress)
 
 module.exports = address_route
