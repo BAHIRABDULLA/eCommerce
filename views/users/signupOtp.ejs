@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,7 +8,7 @@
   <title>OTP Verification</title>
   <style>
     body {
-      background: url('./users/assets/images/backgrounds/8-otp.jpg') ;
+      background: url('./users/assets/images/backgrounds/8-otp.jpg');
       background-repeat: no-repeat;
       background-size: cover;
       height: 100vh;
@@ -55,74 +56,125 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="otp-container">
-    <% if (message) { %>
-      <div class="alert alert-danger" id="alertMessage">
-          <%= message %>
-      </div>
-      <script>
-        setTimeout(() => {
-          let alertMessage=document.getElementById('alertMessage')
-          alertMessage.style.display='none'
-        }, 3000); 
-      </script>
-    <% } %>
-    <!-- Header -->
-    <form action="/otp" method="post">
-    <div class="verification-header text-warning">Verification</div>
+    
+      <div id="alertMessage"></div>
 
-    <!-- Single OTP Input Box -->
-    <div class="input-field d-flex justify-content-center">
-      <input type="text" class="form-control otp-input" name="otp" maxlength="4" pattern="\d{4}" required>
-    </div>
-    <% console.log('sign up otp  .......'); %>
-  <input type="hidden"  value="<%= userId %>"  name="userId">
+        <!-- Header -->
+        <form action="/otp" id="otpForm" method="post">
+          <div class="verification-header text-warning">Verification</div>
 
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-outline-warning mt-4">Submit</button>
+          <!-- Single OTP Input Box -->
+          <div class="input-field d-flex justify-content-center">
+            <input type="text" class="form-control otp-input" id="otpInput" name="otp" maxlength="4" pattern="\d{4}"
+              required>
+          </div>
+          <% console.log('sign up otp .......'); %>
+            <input type="hidden" value="<%= userId %>" name="userId" id="userId">
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitOTP" class="btn btn-outline-warning mt-4">Submit</button>
 
 
-    <div id="countdown" class="countdown">
-      Timer: <span id="timer">30</span> seconds
-    </div>
+            <div id="countdown" class="countdown">
+              Timer: <span id="timer">30</span> seconds
+            </div>
 
 
-    <!-- Resend Message -->
-    <div class="resend-message">
-      Haven't received the verification code? <br> 
-      <a href="/resendOTP?userId=<%= userId %>&email=<%= encodeURIComponent(email) %>" style="color: #2707fc;">Resend</a>
-    </div>
-  </form>
-  <a href="/signUp"   style="color: #2707fc;">Back</a>
+            <!-- Resend Message -->
+            <div class="resend-message">
+              Haven't received the OTP? 
+              <a href="/resendOTP?userId=<%= userId %>&email=<%= encodeURIComponent(email) %>"
+                style="color: #2707fc;">Resend</a>
+            </div>
+        </form>
+        <a href="/signUp" style="color: #2707fc;">Back</a>
   </div>
 
 
   <script>
 
-    const response= await fetch('/verifyOtp',{
-      
-    })
-      let seconds = 30;
-  const countdown = document.getElementById('timer');
 
-  const timer = setInterval(() => {
-    seconds--;
-    countdown.textContent = seconds;
+    let timerInterval; 
 
-    if (seconds <= 0) {
-      clearInterval(timer);
-      // Optionally, you can redirect or perform some action when the timer reaches 0.
-      // window.location.href = '/timeout'; // Redirect to a timeout page
+   
+    function startTimer() {
+      let timeLeft = parseInt(document.getElementById('timer').innerText);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          showMessage('OTP expired. Please resend.');
+        }
+      }, 1000);
     }
-  }, 1000);
+    startTimer();
+
+
+
+    // const submitOtpBtn = document.getElementById('submitOTP');
+
+// submitOtpBtn.addEventListener('click', async () => {
+  document.getElementById('otpForm').addEventListener('submit', async function(event) {
+    
+    event.preventDefault();
+  const userId = document.getElementById('userId').value;
+  const enteredOTP = document.getElementById('otpInput').value;
+
+  try {
+    const response = await fetch('/otp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, otp: enteredOTP })
+    });
+    console.log(response,'response fdfdf');
+    if (response.ok) {
+      const result = await response.json();
+      console.log(response, 'response');
+      console.log(result, 'result in ejs page');
+      if (result.success) {
+        window.location.href = '/home';
+      } else if (result.error === 'OTP_EXPIRED') {
+        console.log('otp expired in ejs page');
+        showMessage('OTP expired. Please use resend.');
+      } else if(result.error ==='INVALID_OTP'){
+        showMessage('Invalid OTP. Please try again.');
+      }
+    } else {
+      console.error('Failed to verify OTP');
+      showMessage('Failed to verify OTP. Please try again later.');
+    }
+  } catch (error) {
+    console.error('Error', error);
+  }
+});
+
+
+    function showMessage(message) {
+      const alertMessage = document.getElementById('alertMessage');
+      alertMessage.textContent = message;
+      alertMessage.style.display = 'block';
+      setTimeout(() => {
+        alertMessage.style.display = 'none';
+      }, 3000);
+      // clearTimeout(timerInterval);
+      // timerInterval = setTimeout(() => {
+      //   alertMessage.style.display = 'none';
+      // }, 3000);
+    }
   </script>
-  
-  
-  
+
+
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

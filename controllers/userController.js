@@ -133,99 +133,34 @@ const otpPage = async (req, res) => {
 
 
 //   this is OTP verification in signUp side  
-// const verifyOTP = async (req, res) => {
-//     try {
-//         const enteredOTP = req.body.otp
-//         console.log(req.body.otp, 'its body otp');
-//         const { userOTP, userId } = req.body
-//         console.log(req.body.userOTP, 'its in form page');
-//         const userIdObj = new ObjectId(userId)
-//         const userData = await User.findById(userIdObj)
-//         if (!userData) {
-//             res.render('signupOTP', { userId: userId, message: 'User not found' })
-//         }
-//         const storeOtp = req.session.otp
-//         const otpExpireTime = 30 * 1000
-//         const otpAge = Date.now() - storeOtp.timestamp
-//         if (!storeOtp || otpAge > otpExpireTime) {
-//             console.log(req.session.email, 'this is req.session.email');
-//             return res.render('signupOtp', { userId: userId, email: req.session.email, message: 'OTP has expired,please use resend' })
-//         }
-//         const isOTPValid = enteredOTP === storeOtp.value
-//         console.log(enteredOTP, 'its entered otp ');
-//         console.log(storeOtp, 'its stored otp');
-//         if (isOTPValid) {
-//             userData.is_verified = 1
-//             await userData.save()
-//             req.session.user_id = userData._id
-//             await req.session.save();
-
-//             if (req.session.referral) {
-//                 let wallet = await Wallet.findOne({ userId: req.session.referral })
-//                 if (!wallet) {
-//                     wallet = new Wallet({
-//                         userId: req.session.referral,
-//                         balance: 1000,
-//                         transactions: [{
-//                             type: 'credit',
-//                             reason: 'referral',
-//                             date: Date.now(),
-//                             transactionAmount: 1000
-//                         }]
-//                     })
-//                 } else {
-//                     wallet.balance += 1000
-//                     wallet.transactions.push({
-//                         type: 'credit',
-//                         reason: 'referral',
-//                         date: new Date(),
-//                         transactionAmount: 1000
-//                     })
-//                 }
-//                 await wallet.save()
-//             }
-//             res.redirect('/home');
-//         } else {
-//             req.flash('error', 'Invalid OTP')
-//             res.render('signupOtp', { userId: userId, email: req.query.email, message: req.flash('error') })
-//         }
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// };
-
-
- 
 const verifyOTP = async (req, res) => {
     try {
         const enteredOTP = req.body.otp
         console.log(req.body.otp, 'its body otp');
-        const { userOTP, userId } = req.body
-        console.log(req.body.userOTP, 'its in form page',req.body.userId,'its in form page');
+        const {  userId } = req.body
         const userIdObj = new ObjectId(userId)
         const userData = await User.findById(userIdObj)
         if (!userData) {  
-            res.render('signupOTP', { userId: userId, message: 'User not found' })
+            // res.render('signupOTP', { userId: userId, message: 'User not found' })
+            return res.json({error: 'User not found' })
         }
         const storeOtp = req.session.otp
         const date=new Date(storeOtp.timestamp)
-        console.log(date,'date');
         console.log(storeOtp,'storeOtp')
         const otpExpireTime = 30 * 1000
         const otpAge = Date.now() - storeOtp.timestamp
         if (!storeOtp || otpAge > otpExpireTime) {
-            console.log(req.session.email, 'this is req.session.email');
-            return res.render('signupOtp', { userId: userId, email: req.session.email, message: 'OTP has expired,please use resend' })
+            // return res.render('signupOtp', { userId: userId, email: req.session.email, message: 'OTP has expired,please use resend' })
+            return res.json({ error: 'OTP_EXPIRED' });
         }
         const isOTPValid = enteredOTP === storeOtp.value
-        console.log(enteredOTP, 'its entered otp ');
         console.log(storeOtp, 'its stored otp');
+        console.log(isOTPValid,'isOtpValid');
         if (isOTPValid) {
             userData.is_verified = 1
             await userData.save()
             req.session.user_id = userData._id
             await req.session.save();
-
             if (req.session.referral) {
                 let wallet = await Wallet.findOne({ userId: req.session.referral })
                 if (!wallet) {
@@ -250,10 +185,11 @@ const verifyOTP = async (req, res) => {
                 }
                 await wallet.save()
             }
-            res.redirect('/home');
+            return res.json({ success: true });
         } else {
-            req.flash('error', 'Invalid OTP')
-            res.render('signupOtp', { userId: userId, email: req.query.email, message: req.flash('error') })
+            // req.flash('error', 'Invalid OTP')
+            // res.render('signupOtp', { userId: userId, email: req.query.email, message: req.flash('error') })
+            return res.json({ error: 'INVALID_OTP' });
         }
     } catch (error) {
         console.log(error.message);

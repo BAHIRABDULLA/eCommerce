@@ -272,16 +272,7 @@
 
                                 
 
-                        <!-- <div class="input-group  col-lg-6">
-                            <input type="text" class="form-control" required
-                                placeholder="coupon code">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-primary-2" type="submit"><i
-                                            class="icon-long-arrow-right"></i></button>
-                                </div>
-                        </div> -->
-
-                        <!-- <form action="#"> -->
+                        
                         <div class="row">
                             <div class="col-lg-8">
                                 <h2 class="checkout-title">Shipping Address</h2>
@@ -306,9 +297,8 @@
                                 <br><br>
                                 <% console.log(userAddress&&userAddress.address&&userAddress.address.length,'uuaual');  %>
                                 <% console.log(userAddress,'uas');  %>
-                                        <% if(userAddress  && userAddress.adderss && (userAddress.address.length < 3)) { %>
-                                            <p>fdfd</p>
-
+                                        <% if(userAddress ===null  ||(userAddress.address.length < 3)) { %>
+                                            
                                                 <div class="row ">
                                                     <div class="container">
                                                         <button class="btn btn-primary" type="button"
@@ -319,19 +309,25 @@
                                                         </button>
                                                         <div class="collapse" id="shippingAddressCollapse">
                                                             <div class="card card-body">
-                                                                <form action="/address" method="post">
+                                                                <form action="/checkoutAddress" method="post" id="addressForm">
                                                                     <div class="form-row">
                                                                         <div class="form-group col-md-6     col-lg-5">
                                                                             <label for="inputName">Name</label>
                                                                             <input type="text" class="form-control"
                                                                                 id="inputName" name="name"
                                                                                 placeholder="Enter your name">
+                                                                                <small class="text-danger " id="nameError"
+                                                                            style="display: none;">Name cannot be
+                                                                            empty</small>
                                                                         </div>
                                                                         <div class="form-group col-md-6  col-lg-5 ">
                                                                             <label for="inputPhone">Phone</label>
                                                                             <input type="text" class="form-control"
                                                                                 id="inputPhone" name="phone"
                                                                                 placeholder="Enter your phone">
+                                                                                <small class="text-danger " id="phoneError"
+                                                                            style="display: none;">Phone cannot be
+                                                                            empty</small>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-row">
@@ -340,12 +336,18 @@
                                                                             <input type="text" class="form-control"
                                                                                 id="inputPincode" name="pincode"
                                                                                 placeholder="Enter your pincode">
+                                                                                <small class="text-danger " id="pincodeError"
+                                                                            style="display: none;">Pincode must be
+                                                                            digits</small>
                                                                         </div>
                                                                         <div class="form-group col-md-6     col-lg-5">
                                                                             <label for="inputEmail">Email</label>
-                                                                            <input type="email" class="form-control"
+                                                                            <input type="text" class="form-control"
                                                                                 id="inputEmail" name="email"
                                                                                 placeholder="Enter your email">
+                                                                                <small class="text-danger " id="emailError"
+                                                                            style="display: none;">Email cannot be
+                                                                            empty</small>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group  col-lg-10">
@@ -354,14 +356,20 @@
                                                                         <textarea class="form-control" id="inputAddress"
                                                                             rows="1" name="streetAddress"
                                                                             placeholder="Enter your address"></textarea>
+                                                                            <small class="text-danger " id="addressError"
+                                                                        style="display: none;">Address cannot be
+                                                                        empty</small>
                                                                     </div>
                                                                     <div class="form-row">
                                                                         <div class="form-group col-md-6     col-lg-5">
                                                                             <label
-                                                                                for="inputLocalityDistrict">City/District/Town</label>
+                                                                                for="inputLocalityCity">City/District/Town</label>
                                                                             <input type="text" class="form-control"
-                                                                                id="inputLocalityDistrict" name="city"
+                                                                                id="inputLocalityCity" name="city"
                                                                                 placeholder="Enter your city/district/town">
+                                                                                <small class="text-danger " id="cityError"
+                                                                            style="display: none;">Field cannot be
+                                                                            empty</small>
                                                                         </div>
                                                                         <div class="form-group col-md-6   col-lg-5">
                                                                             <label for="inputState">State</label>
@@ -399,6 +407,9 @@
                                                                                 <option>Uttarakhand</option>
                                                                                 <option>West Bengal</option>
                                                                             </select>
+                                                                            <small class="text-danger " id="stateError"
+                                                                            style="display: none;">Choose your state
+                                                                        </small>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-row">
@@ -410,19 +421,24 @@
                                                                                 placeholder="Enter your landmark">
                                                                         </div>
                                                                         <div class="form-group col-md-6   col-lg-5">
-                                                                            <label for="inputAlternatePhone">Alternate
+                                                                            <label for="inputPhone2">Alternate
                                                                                 Phone
                                                                                 (Optional)</label>
                                                                             <input type="text" class="form-control"
-                                                                                id="inputAlternatePhone" name="phone2"
+                                                                                id="inputPhone2" name="phone2"
                                                                                 placeholder="Enter your alternate phone">
+                                                                                <small class="text-danger " id="phone2Error"
+                                                                            style="display: none;">Phone must be
+                                                                            intiger</small>
                                                                         </div>
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-primary"
+                                                                    <!-- <button type="submit" class="btn btn-primary"
                                                                         data-toggle="collapse"
                                                                         data-target="#shippingAddressCollapse"
                                                                         aria-expanded="false"
-                                                                        aria-controls="shippingAddressCollapse">Save</button>
+                                                                        aria-controls="shippingAddressCollapse">Save</button> -->
+                                                                        <button type="submit" id="saveAddButton"
+                                                                        class="btn btn-primary">Save</button>
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-toggle="collapse"
                                                                         data-target="#shippingAddressCollapse"
@@ -432,266 +448,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        <% }else if(userAddress&&userAddress.address.length==0) { %>
-                                           
-                                                <% console.log('518'); %>
-                                                <div class="row ">
-                                                    <div class="container">
-                                                        <button class="btn btn-primary" type="button"
-                                                            data-toggle="collapse"
-                                                            data-target="#shippingAddressCollapse" aria-expanded="false"
-                                                            aria-controls="shippingAddressCollapse">
-                                                            Add a New Address
-                                                        </button>
-                                                        <div class="collapse" id="shippingAddressCollapse">
-                                                            <div class="card card-body">
-                                                                <form action="/address" method="post">
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label for="inputName">Name</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputName" name="name"
-                                                                                placeholder="Enter your name">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6  col-lg-5 ">
-                                                                            <label for="inputPhone">Phone</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputPhone" name="phone"
-                                                                                placeholder="Enter your phone">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label for="inputPincode">Pincode</label>
-                                                                            <input type="number" class="form-control"
-                                                                                id="inputPincode" name="pincode"
-                                                                                placeholder="Enter your pincode">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label for="inputEmail">Email</label>
-                                                                            <input type="email" class="form-control"
-                                                                                id="inputEmail" name="email"
-                                                                                placeholder="Enter your email">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group  col-lg-10">
-                                                                        <label for="inputAddress">Address (Area and
-                                                                            Street)</label>
-                                                                        <textarea class="form-control" id="inputAddress"
-                                                                            rows="2" name="streetAddress"
-                                                                            placeholder="Enter your address"></textarea>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label
-                                                                                for="inputLocalityDistrict">City/District/Town</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputLocalityDistrict" name="city"
-                                                                                placeholder="Enter your city/district/town">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6   col-lg-5">
-                                                                            <label for="inputState">State</label>
-                                                                            <select id="inputState" name="state"
-                                                                                class="form-control">
-                                                                                <option selected>Select your state
-                                                                                </option>
-                                                                                <!-- Add options for all 28 states of India -->
-                                                                                <option>Andhra Pradesh</option>
-                                                                                <option>Arunachal Pradesh</option>
-                                                                                <option>Assam</option>
-                                                                                <option>Bihar</option>
-                                                                                <option>Chhattisgarh</option>
-                                                                                <option>Goa</option>
-                                                                                <option>Gujarat</option>
-                                                                                <option>Haryana</option>
-                                                                                <option>Himachal Pradesh</option>
-                                                                                <option>Jharkhand </option>
-                                                                                <option>Karnataka</option>
-                                                                                <option>Kerala</option>
-                                                                                <option>Madhya Pradesh</option>
-                                                                                <option>Maharashtra</option>
-                                                                                <option>Manipur</option>
-                                                                                <option>Meghalaya</option>
-                                                                                <option>Mizoram</option>
-                                                                                <option>Nagaland</option>
-                                                                                <option>Odisha</option>
-                                                                                <option>Punjab</option>
-                                                                                <option>Rajasthan</option>
-                                                                                <option>Sikkim</option>
-                                                                                <option>Tamil Nadu</option>
-                                                                                <option>Telangana</option>
-                                                                                <option>Tripura</option>
-                                                                                <option>Uttar Pradesh</option>
-                                                                                <option>Uttarakhand</option>
-                                                                                <option>West Bengal</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6   col-lg-5">
-                                                                            <label for="inputLandmark">Landmark
-                                                                                (Optional)</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputLandmark" name="landmark"
-                                                                                placeholder="Enter your landmark">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6   col-lg-5">
-                                                                            <label for="inputAlternatePhone">Alternate
-                                                                                Phone
-                                                                                (Optional)</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputAlternatePhone" name="phone2"
-                                                                                placeholder="Enter your alternate phone">
-                                                                        </div>
-                                                                    </div>
-                                                                    <button type="submit" class="btn btn-primary"
-                                                                        data-toggle="collapse"
-                                                                        data-target="#shippingAddressCollapse"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="shippingAddressCollapse">Save</button>
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-toggle="collapse"
-                                                                        data-target="#shippingAddressCollapse"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="shippingAddressCollapse">Cancel</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <% }else{ %>
-                                                <!-- <p>gjdskfjdsfd</p>
-                                                <p>fdf</p> -->
-                                                <div class="row ">
-                                                    <div class="container">
-                                                        <button class="btn btn-primary" type="button"
-                                                            data-toggle="collapse"
-                                                            data-target="#shippingAddressCollapse" aria-expanded="false"
-                                                            aria-controls="shippingAddressCollapse">
-                                                            Add a New Address
-                                                        </button>
-                                                        <div class="collapse" id="shippingAddressCollapse">
-                                                            <div class="card card-body">
-                                                                <form action="/address" method="post">
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label for="inputName">Name</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputName" name="name"
-                                                                                placeholder="Enter your name">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6  col-lg-5 ">
-                                                                            <label for="inputPhone">Phone</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputPhone" name="phone"
-                                                                                placeholder="Enter your phone">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label for="inputPincode">Pincode</label>
-                                                                            <input type="number" class="form-control"
-                                                                                id="inputPincode" name="pincode"
-                                                                                placeholder="Enter your pincode">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label for="inputEmail">Email</label>
-                                                                            <input type="email" class="form-control"
-                                                                                id="inputEmail" name="email"
-                                                                                placeholder="Enter your email">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group  col-lg-10">
-                                                                        <label for="inputAddress">Address (Area and
-                                                                            Street)</label>
-                                                                        <textarea class="form-control" id="inputAddress"
-                                                                            rows="2" name="streetAddress"
-                                                                            placeholder="Enter your address"></textarea>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6     col-lg-5">
-                                                                            <label
-                                                                                for="inputLocalityDistrict">City/District/Town</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputLocalityDistrict" name="city"
-                                                                                placeholder="Enter your city/district/town">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6   col-lg-5">
-                                                                            <label for="inputState">State</label>
-                                                                            <select id="inputState" name="state"
-                                                                                class="form-control">
-                                                                                <option selected>Select your state
-                                                                                </option>
-                                                                                <!-- Add options for all 28 states of India -->
-                                                                                <option>Andhra Pradesh</option>
-                                                                                <option>Arunachal Pradesh</option>
-                                                                                <option>Assam</option>
-                                                                                <option>Bihar</option>
-                                                                                <option>Chhattisgarh</option>
-                                                                                <option>Goa</option>
-                                                                                <option>Gujarat</option>
-                                                                                <option>Haryana</option>
-                                                                                <option>Himachal Pradesh</option>
-                                                                                <option>Jharkhand </option>
-                                                                                <option>Karnataka</option>
-                                                                                <option>Kerala</option>
-                                                                                <option>Madhya Pradesh</option>
-                                                                                <option>Maharashtra</option>
-                                                                                <option>Manipur</option>
-                                                                                <option>Meghalaya</option>
-                                                                                <option>Mizoram</option>
-                                                                                <option>Nagaland</option>
-                                                                                <option>Odisha</option>
-                                                                                <option>Punjab</option>
-                                                                                <option>Rajasthan</option>
-                                                                                <option>Sikkim</option>
-                                                                                <option>Tamil Nadu</option>
-                                                                                <option>Telangana</option>
-                                                                                <option>Tripura</option>
-                                                                                <option>Uttar Pradesh</option>
-                                                                                <option>Uttarakhand</option>
-                                                                                <option>West Bengal</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-md-6   col-lg-5">
-                                                                            <label for="inputLandmark">Landmark
-                                                                                (Optional)</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputLandmark" name="landmark"
-                                                                                placeholder="Enter your landmark">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6   col-lg-5">
-                                                                            <label for="inputAlternatePhone">Alternate
-                                                                                Phone
-                                                                                (Optional)</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="inputAlternatePhone" name="phone2"
-                                                                                placeholder="Enter your alternate phone">
-                                                                        </div>
-                                                                    </div>
-                                                                    <button type="submit" class="btn btn-primary"
-                                                                        data-toggle="collapse"
-                                                                        data-target="#shippingAddressCollapse"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="shippingAddressCollapse">Save</button>
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-toggle="collapse"
-                                                                        data-target="#shippingAddressCollapse"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="shippingAddressCollapse">Cancel</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </div> 
+                                                
                                                 <% } %>
-
-
-
-
                                                     <br><br>
                                                     <label>Order notes (optional)</label>
                                                     <textarea class="form-control" cols="30" rows="4"
@@ -1080,7 +839,7 @@
                             res.status(500).send('Internal Server Error');
                         }
                         });
-                        rzp1.open();
+                        rzp1.open();   
                     } else {
                         throw new Error('Failed to create Razorpay order');
                     }
@@ -1366,6 +1125,92 @@
             })
         })
 
+
+
+       <!-- address validation --> 
+
+       document.getElementById('addressForm').addEventListener('submit', function (event) {
+
+
+const name = document.getElementById('inputName').value.trim()
+const phone = document.getElementById('inputPhone').value.trim()
+const pincode = document.getElementById('inputPincode').value.trim()
+const email = document.getElementById('inputEmail').value.trim()
+const address = document.getElementById('inputAddress').value
+const city = document.getElementById('inputLocalityCity').value.trim()
+const state = document.getElementById('inputState').value.trim()
+const phone2 = document.getElementById('inputPhone2').value.trim()
+
+let isValid = true;
+if (!name) {
+    document.getElementById('nameError').style.display = 'block'
+    isValid = false
+} else {
+    document.getElementById('nameError').style.display = 'none'
+}
+if (!phone || isNaN(phone)) {
+    document.getElementById('phoneError').style.display = 'block'
+    isValid = false
+} else if (phone.length !== 10) {
+    document.getElementById('phoneError').innerText = 'Phone number must be 10 digits'
+    document.getElementById('phoneError').style.display = 'block'
+    isValid = false
+} else {
+    document.getElementById('phoneError').style.display = 'none'
+}
+if (!pincode || isNaN(pincode)) {
+    document.getElementById('pincodeError').style.display = 'block'
+    isValid = false
+} else {
+    document.getElementById('pincodeError').style.display = 'none'
+}
+if (!email) {
+    document.getElementById('emailError').style.display = 'block'
+    isValid = false
+} else {
+    const emailVal=/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+    if(!emailVal.test(email)){
+        document.getElementById('emailError').innerText='Invalid email'
+    document.getElementById('emailError').style.display = 'block'
+    isValid=false
+    }else{
+
+        document.getElementById('emailError').style.display = 'none'
+    }
+}
+if (!address) {
+    document.getElementById('addressError').style.display = 'block'
+    isValid = false
+} else {
+    document.getElementById('addressError').style.display = 'none'
+}
+if (!city) {
+    document.getElementById('cityError').style.display = 'block'
+    isValid = false
+} else {
+    document.getElementById('cityError').style.display = 'none'
+}
+if (!state || state === 'Select your state') {
+    document.getElementById('stateError').style.display = 'block'
+    isValid = false
+} else {
+    document.getElementById('stateError').style.display = 'none'
+}
+if (isNaN(phone2)) {
+    document.getElementById('phone2Error').style.display = 'block'
+    isValid = false
+} else if (phone2 && phone2.length !== 10) {
+    document.getElementById('phone2Error').innerText = 'Phone number must be 10 digit'
+    document.getElementById('phone2Error').style.display = 'block'
+    isValid = false
+} else {
+    document.getElementById('phone2Error').style.display = 'none'
+}
+console.log("is valide : ", isValid);
+if (!isValid) {
+    event.preventDefault()
+}
+})
 
     </script>
     <!-- Tippy.js CDN -->

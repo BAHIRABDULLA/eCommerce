@@ -24,5 +24,6 @@ address_route.get('/dashboard',auth.isLoggedIn, auth.isLogin,auth.isActive, addr
 address_route.post('/address', addressController.updateAddress)
 address_route.post('/editAddress/:addressId', addressController.editAddress)
 address_route.delete('/address/:addressId', addressController.deleteAddress)
+address_route.post('/checkoutAddress',addressController.checkoutAddress)
 
 module.exports = address_route

@@ -582,11 +582,8 @@
                                                                                                 class="form-control"
                                                                                                 id="editName<%= address._id %>"
                                                                                                 name="name"
-                                                                                                value="<%= address.name %>">
-                                                                                            <small class="text-danger "
-                                                                                                id="editNameError<%= address._id %>"
-                                                                                                style="display: none;">Name
-                                                                                                cannot be empty</small>
+                                                                                                value="<%= address.name %>"  pattern="[A-Za-z]+(\s[A-Za-z]+)*" title="Name must contain only letters" required>
+                                                                                            
                                                                                         </div>
                                                                                         <div
                                                                                             class="form-group  col-12 col-md-6">
@@ -596,11 +593,8 @@
                                                                                                 class="form-control"
                                                                                                 id="editPhone<%= address._id %>"
                                                                                                 name="phone"
-                                                                                                value="<%= address.phone %>">
-                                                                                            <small class="text-danger "
-                                                                                                id="editPhoneError<%= address._id %>"
-                                                                                                style="display: none;">Phone
-                                                                                                cannot be empty</small>
+                                                                                                value="<%= address.phone %>" pattern="[0-9]{10}" title="Phone must be 10 digits" required>
+                                                                                            
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="form-row">
@@ -612,11 +606,8 @@
                                                                                                 class="form-control"
                                                                                                 id="editPincode<%= address._id %>"
                                                                                                 name="pincode"
-                                                                                                value="<%= address.pincode%>">
-                                                                                            <small class="text-danger "
-                                                                                                style="display: none;"
-                                                                                                id="editPincodeError<%= address._id %>">Pincode
-                                                                                                cannot be empty</small>
+                                                                                                value="<%= address.pincode%>"  pattern="[0-9]{6}" title="Pincode must be 6 digits" required>
+                                                                                            
                                                                                         </div>
                                                                                         <div
                                                                                             class="form-group  col-md-6 col-12">
@@ -626,11 +617,8 @@
                                                                                                 class="form-control "
                                                                                                 id="editEmail<%= address._id %>"
                                                                                                 name="email"
-                                                                                                value="<%= address.email %>">
-                                                                                            <small class="text-danger "
-                                                                                                style="display: none;"
-                                                                                                id="editEmailError<%= address._id %>">Email
-                                                                                                cannot be empty</small>
+                                                                                                value="<%= address.email %>" required>
+                                                                                            
                                                                                         </div>
                                                                                     </div>
 
@@ -642,11 +630,8 @@
                                                                                             id="editStreetAddress<%= address._id %>"
                                                                                             rows="2"
                                                                                             name="streetAddress"
-                                                                                            placeholder="Enter your address"><%= address.streetAddress %></textarea>
-                                                                                        <small class="text-danger "
-                                                                                            style="display: none;"
-                                                                                            id="editAddressError<%= address._id %>">Address
-                                                                                            cannot be empty</small>
+                                                                                            placeholder="Enter your address" required><%= address.streetAddress %></textarea>
+                                                                                        
                                                                                     </div>
                                                                                     <div class="form-row">
                                                                                         <div
@@ -657,11 +642,8 @@
                                                                                                 class="form-control "
                                                                                                 id="editCity<%= address._id %>"
                                                                                                 name="city"
-                                                                                                value="<%= address.city %>">
-                                                                                            <small class="text-danger "
-                                                                                                style="display: none;"
-                                                                                                id="editCityError<%= address._id %>">City
-                                                                                                cannot be empty</small>
+                                                                                                value="<%= address.city %>" required>
+                                                                                           
                                                                                         </div>
                                                                                         <div
                                                                                             class="form-group  col-md-6 col-12">
@@ -670,7 +652,7 @@
                                                                                             <select
                                                                                                 id="inputState<%= address._id %>"
                                                                                                 name="state"
-                                                                                                class="form-control">
+                                                                                                class="form-control" required>
                                                                                                 <option selected>
                                                                                                     <%= address.state %>
                                                                                                 </option>
@@ -722,16 +704,13 @@
                                                                                                 </option>
 
                                                                                             </select>
-                                                                                            <small class="text-danger "
-                                                                                                style="display: none;"
-                                                                                                id="editStateError<%= address._id %>">state
-                                                                                                cannot be empty</small>
+                                                                                            
                                                                                         </div>
                                                                                     </div>
                                                                                     <br><br>
                                                                                     <button type="submit"
                                                                                         class="btn btn-primary">Save</button>
-                                                                                    <button type="button"
+                                                                                    <button type="submit"
                                                                                         class="btn btn-secondary"
                                                                                         onclick="cancelEdit('<%= address._id %>')">Cancel</button>
                                                                                 </form>
@@ -1342,100 +1321,6 @@
         })
 
 
-
-
-
-
-
-        // edit form 
-       
-        // document.getElementById('editAddressform'+addressId).addEventListener('submit', function (event) {
-        function validateEditAddress(id) {
-            // event.preventDefault();
-
-            const addressId = id
-            console.log(addressId, 'addressId')
-            console.log('edit address fform ..........');
-            const name = document.getElementById('editName' + addressId).value.trim()
-            console.log(name, 'name')
-            const phone = document.getElementById('editPhone' + addressId).value.trim()
-            const pincode = document.getElementById('editPincode' + addressId).value.trim()
-            const email = document.getElementById('editEmail' + addressId).value.trim()
-            const address = document.getElementById('editStreetAddress' + addressId).value.trim()
-            const city = document.getElementById('editCity' + addressId).value.trim()
-            const state = document.getElementById('editState' + addressId).value.trim()
-
-            let isValid = true
-            if (!name || name == '') {
-                document.getElementById('editNameError' + addressId).style.display = 'block'
-                isValid = false
-            } else {
-                document.getElementById('editNameError' + addressId).style.display = 'none'
-            }
-            if (!phone || isNaN(phone)) {
-                document.getElementById('editPhoneError' + addressId).style.display = 'block'
-                isValid = false
-            } else if (phone.length !== 10) {
-                document.getElementById('editPhoneError' + addressId).innerText = 'Phone number must be 10 intiger'
-                document.getElementById('editPhoneError' + addressId).style.display = 'block'
-                isValid = false
-            } else {
-                document.getElementById('editPhoneError' + addressId).style.display = 'none'
-            }
-            if (!pincode || isNaN(pincode)) {
-                document.getElementById('editPincodeError' + addressId).style.display = 'block'
-                isValid = false
-            } else {
-                document.getElementById('editPincodeError' + addressId).style.display = 'none'
-            }
-            if (!email) {
-                document.getElementById('editEmailError' + addressId).style.display = 'block'
-                isValid = false
-            } else {
-                document.getElementById('editEmailError' + addressId).style.display = 'none'
-            }
-            if (!address) {
-                document.getElementById('editAddressError' + addressId).style.display = 'block'
-                isValid = false
-            } else {
-                document.getElementById('editAddressError' + addressId).style.display = 'none'
-            }
-            if (!city) {
-                document.getElementById('editCityError' + addressId).style.display = 'block'
-                isValid = false
-            } else {
-                document.getElementById('editCityError' + addressId).style.display = 'none'
-            }
-            if (!state) {
-                document.getElementById('editStateError' + addressId).style.display = 'block'
-                isValid = false
-            } else {
-                document.getElementById('editStateError' + addressId).style.display = 'none'
-            }
-            // if (isNaN(phone2)) {
-            //     document.getElementById('editPhone2Error'+addressId).style.display = 'block'
-            //     isValid = false
-            // } else if (phone2 && phone2.length !== 10) {
-            //     document.getElementById('editPhone2Error'+addressId).innerText = 'Phone number must be 10 digit'
-            //     document.getElementById('editPhone2Error'+addressId).style.display = 'block'
-            //     isValid = false
-            // } else {
-            //     document.getElementById('editPhone2Error'+addressId).style.display = 'none'
-            // }
-
-            console.log(isValid, 'isvalid')
-            // return isValid
-            // event.preventDefault();
-            // if (isValid) {
-            //     event.preventDefault();
-            //     // this.submit()
-            // }
-            if (!isValid) {
-                console.log(isValid, 'isvalid');
-                return false;
-            }
-            
-        }
 
     </script>
 

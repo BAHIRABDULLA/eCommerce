@@ -132,9 +132,63 @@ const deleteAddress = async (req, res) => {
 
 
 
+//     check out address updating
+const checkoutAddress= async (req,res)=>{
+    try {
+        const { name, phone, pincode, email, streetAddress, city, state, landmark, phone2 } = req.body;
+
+        console.log(pincode, 'pincode in update Address');
+        const existingAddress = await Address.findOne({ userId: req.session.user_id });
+
+        if (existingAddress && existingAddress.address.length >= 3) {
+
+            req.flash('error', 'You can add only three addresses.');
+            return res.redirect('/checkout');
+        }
+        if (existingAddress) {
+            const update = {
+                name: name,
+                phone: phone,
+                pincode: pincode,
+                email: email,
+                streetAddress: streetAddress,
+                city: city,
+                state: state,
+                landmark: landmark,
+                phone2: phone2
+            }
+            const ab = await Address.updateOne({ userId: req.session.user_id }, { $push: { address: update } });
+        } else {
+
+            const newAddress = new Address({
+                userId: req.session.user_id,
+                address: [{
+                    name,
+                    phone,
+                    pincode,
+                    email,
+                    streetAddress,
+                    city,
+                    state,
+                    landmark,
+                    phone2
+                }]
+            });
+
+            await newAddress.save();
+
+        }
+        return res.redirect('/checkout');
+    } catch (error) {
+        console.error('Error adding address:', error);
+    }
+}
+
+
 module.exports = {
     updateAddress,
     editAddress,
     getDashboard,
-    deleteAddress
+    deleteAddress,
+    checkoutAddress
 }
