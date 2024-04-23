@@ -287,8 +287,13 @@
                                             <%= userAddress.address[0].city %>, <%= userAddress.address[0].state %>
                                                     <%= userAddress.address[0].pincode %>
                                                         <%= userAddress.address[0].email %>
+                                                        <% if(userAddress.address[0].landmark){ %>
                                                             <%= userAddress.address[0].landmark %>
+                                                            <% } %>
+                                                            <% if(userAddress.address[0].phone2&&userAddress.address[0].phone2!==null){ %>
+                                                                <% console.log(userAddress.address[0].phone2,'hgifeiojrf'); %>
                                                                 <%= userAddress.address[0].phone2 %><br>
+                                                                <% } %>
 
                                     </div>
                                     <button class="btn-primary rounded-pill" data-toggle="modal"
@@ -514,7 +519,7 @@
                                                     </tr>
                                                     <tr class="summary-discount">
                                                         <td>Discount</td>
-                                                        <% console.log(typeof offer,'ffd'); %>
+                                                        
                                                         <% console.log(offer,'offer'); %>
                                                         <td>₹ <%= offer %></td>
                                                     </tr>
@@ -762,13 +767,19 @@
 
         function renderSelectedAddress(address) {
             const selectedAddressElement = document.getElementById('selectedAddress');
+            let phone2Info
+            if(address.phone2 && address.phone2!==null){
+                phone2Info=address.phone2
+            }else{
+                phone2Info=''
+            }
             selectedAddressElement.innerHTML = `
                 <strong>${address.name} &nbsp; ${address.phone}</strong><br>
                 ${address.streetAddress}<br>
                 ${address.city}, ${address.state} ${address.pincode}<br>
                 ${address.email}<br>
                 ${address.landmark}<br>
-                ${address.phone2}<br>
+                ${phone2Info}<br>
             `;
         }
 
@@ -811,7 +822,7 @@
                                 
                                 
         
-                             saveOrderToDatabase('Online Payment', 'pending');
+                             saveOrderToDatabase('Online Payment', 'Pending');
                                 
                             },
                             prefill: {
@@ -884,7 +895,7 @@
             } catch (error) {
                 console.error('Error placing order', error);
                 Swal.fire({
-                    title: 'Failed to Place Order',
+                    title: 'Please choose any payment method',
                     text: 'Please try again later',
                     icon: 'error'
                 });
@@ -902,8 +913,6 @@
                     });
                     return; 
                 }
-
-       
                 if (!paymentMethod) {
                     Swal.fire({
                         title: 'No Payment Method Selected',
@@ -923,6 +932,7 @@
                         orderUserDetails: selectedAddressId,
                         paymentMethod,
                         couponApplied,
+                        
                         status
                     })
                 });
@@ -943,6 +953,21 @@
                         Swal.fire({
                             title: 'Order Error',
                             text: 'Failed order',
+                            icon: 'error'
+                        });
+                    }
+                    if(data.ff===true){
+                        Swal.fire({
+                        title: 'Order Placed Successfully',
+                        icon: 'success'
+                        });
+                        setTimeout(() => {
+                            window.location.href='/dashboard'
+                        }, 1000);
+                    }else if(data.ff===false){
+                        Swal.fire({
+                            title: 'EXCEEDED LIMIT',
+                            text: 'You cannot buy more than 1000 rupees',
                             icon: 'error'
                         });
                     }
@@ -1061,6 +1086,8 @@
         });
 
 
+        <!--   coupon applying  -->
+
         document.addEventListener('DOMContentLoaded',()=>{
             const checkCouponsBtn=document.getElementById('checkCouponsBtn');
             const modal=document.getElementById('couponModal')
@@ -1127,7 +1154,7 @@
 
 
 
-       <!-- address validation --> 
+       <!-- address validation process --> 
 
        document.getElementById('addressForm').addEventListener('submit', function (event) {
 

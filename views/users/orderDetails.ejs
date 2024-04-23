@@ -278,8 +278,10 @@
                                                         
                                                             <div class="col-md-4">
                                                                 <h6>Order Date</h6>
-                                                                <p><%= order.orderDate.toLocaleDateString('en-US',{year:'numeric',month:'long',date:'2-digit',hour:'numeric'}) %></p>
-
+                                                                <!-- <p><%= order.orderDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', date: 'numeric', hour: 'numeric' }) %></p> -->
+                                                                <p><%= order.orderDate.toDateString() %></p>
+                                                                <% console.log(order.orderDate); %>
+                                                                
                                                             </div>
                                                         </div>
                                                         <br>
@@ -307,6 +309,10 @@
                                                             </div>
                                                             
                                                             
+                                                        </div>
+                                                        <div class="row " style="display: flex; align-items: center;">
+                                                            <h6 style="margin-right: 10px;">Offer Applied</h6>
+                                                            <p><%= ((orderDetails.productId.price * orderDetails.productId.offerApplied)/100) *aa.products[0].quantity %></p>
                                                         </div>
                                                         <div class="row">
                                                         <div class="col-4 d-flex ">

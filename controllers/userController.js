@@ -686,7 +686,7 @@ const placeOrder = async (req, res) => {
         // COD not allowed above 1000
         if (paymentMethod === 'Cash on Delivery') {
             if (totalAmount > 1000) {
-                return res.json({ mm: false })
+                return res.json({ ff: false })
             }
         }
         const cart = await Cart.findOne({ userId }).populate('products.productId')
