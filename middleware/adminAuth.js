@@ -12,11 +12,11 @@ const isLogin =async(req,res,next)=>{
 const isLogout=async(req,res,next)=>{
     try {
         if(req.session.dd){
-            res.redirect('/admin/dashboard')
+          res.redirect('/admin/dashboard')
         }else{
 
+            next()
         }
-        next()
     } catch (error) {
         console.log(error.message);
     }
