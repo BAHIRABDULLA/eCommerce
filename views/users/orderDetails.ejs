@@ -310,10 +310,12 @@
                                                             
                                                             
                                                         </div>
+                                                        <% if(orderDetails.productId.offerApplied){ %>
                                                         <div class="row " style="display: flex; align-items: center;">
                                                             <h6 style="margin-right: 10px;">Offer Applied</h6>
                                                             <p><%= ((orderDetails.productId.price * orderDetails.productId.offerApplied)/100) *aa.products[0].quantity %></p>
                                                         </div>
+                                                        <% } %>
                                                         <div class="row">
                                                         <div class="col-4 d-flex ">
                                                             <h6>Status</h6>
