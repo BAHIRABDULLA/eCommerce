@@ -301,13 +301,24 @@ const loadHome = async (req, res) => {
             }
         ]);
         const offer = await Offer.findOne({"selectedItems": {"$elemMatch": {"$exists": true}}});
-        const newId=new ObjectId(offer.selectedItems[0])
-        const offeredItem=await Product.findById(newId)
+        if(offer!==null){
+            const newId=new ObjectId(offer.selectedItems[0])
+            const offeredItem=await Product.findById(newId)
+            const active = await User.findOne({ is_active: true })
+            const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
+            const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
+            res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist ,top6Products,offeredItem,offer})
+            
+        }else{
+            const active = await User.findOne({ is_active: true })
+            const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
+            const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
+            res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist ,top6Products})
+        }
         
-        const active = await User.findOne({ is_active: true })
-        const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
-        const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
-        res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist ,top6Products,offeredItem,offer})
+        
+        
+      
     } catch (error) {
         console.log('Error founded on load home ',error);
     }
