@@ -3,7 +3,7 @@ const Order = require('../models/orderModel')
 const Admin = require('../models/adminModel')
 const Coupon = require('../models/couponModel')
 require('dotenv').config()
-const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 
 
 
@@ -30,7 +30,7 @@ const adminVerify = async (req, res) => {
             return res.redirect('/admin')
         }
 
-        const passwordMatch = await bcrypt.compare(password, admin.password)
+        const passwordMatch = await bcryptjs.compare(password, admin.password)
         if (passwordMatch) {
             req.session.dd = { email, password }
             res.redirect('/admin/dashboard')

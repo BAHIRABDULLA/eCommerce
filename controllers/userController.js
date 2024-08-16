@@ -8,7 +8,7 @@ const Coupon = require('../models/couponModel')
 const Wallet = require('../models/walletModel')
 const Wishlist = require('../models/wishlistModel')
 const Offer= require('../models/offerModel')
-const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 const nodemailer = require('nodemailer')
 const { ObjectId } = require('mongodb');
 
@@ -57,7 +57,7 @@ const sendVerifyMail = async (name, email, otp) => {
 // password secure 
 const securePassword = async (password) => {
     try {
-        return await bcrypt.hash(password, 10)
+        return await bcryptjs.hash(password, 10)
     } catch (error) {
         console.log(error.message);
     }
@@ -217,7 +217,7 @@ const verifySignIn = async (req, res) => {
         if (!user) {
             return res.render('signIn', { error: 'invalid email or password' })
         }
-        const passwordMatch = await bcrypt.compare(password, user.password)
+        const passwordMatch = await bcryptjs.compare(password, user.password)
         if (!passwordMatch) {
             req.flash('error', 'Invalid email or password,please ty again ')
 
@@ -1029,7 +1029,7 @@ const changeProfile = async (req, res) => {
         }
 
         const user = await User.findById(userId)
-        const passwordMatch = await bcrypt.compare(currentPassword, user.password)
+        const passwordMatch = await bcryptjs.compare(currentPassword, user.password)
         if (currentPassword) {
             if (passwordMatch) {
                 if (newPassword == confirmPassword) {

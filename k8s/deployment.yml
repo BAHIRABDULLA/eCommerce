@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-app
+  template:
+    metadata:
+      labels:
+        app: ecommerce-app
+    spec:
+      containers:
+      - name: ecommerce-app
+        image: bahirk/ecommerce-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGOURL
+          valueFrom:
+            configMapKeyRef:
+              name: ecommerce-app-config
+              key: MONGOURL
