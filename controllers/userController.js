@@ -761,6 +761,7 @@ const placeOrder = async (req, res) => {
 //  razorpay configuration here
 const Razorpay = require('razorpay');
 const { default: mongoose } = require('mongoose')
+const { adminLogin } = require('./adminController')
 
 const createOrder = async (req, res) => {
     try {

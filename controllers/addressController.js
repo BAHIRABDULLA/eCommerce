@@ -4,6 +4,7 @@ const User = require('../models/userModel')
 const Wishlist=require('../models/wishlistModel')
 const Cart=require('../models/cartModel')
 const Wallet = require('../models/walletModel')
+const { adminLogin } = require('./adminController')
 
 //     address page rendering
 const getDashboard = async (req, res) => {

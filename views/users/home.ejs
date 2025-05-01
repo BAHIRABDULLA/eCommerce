@@ -3,23 +3,23 @@
 
 <!-- molla/index-24.html  22 Nov 2019 10:02:28 GMT -->
 <head>
-	<title>Molla - Bootstrap eCommerce Template</title>
+	<title>ChicCart - Bootstrap eCommerce Template</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="description" content="ChicCart - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/users/assets/images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/users/assets/images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/users/assets/images/icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/users/assets/images/icons/favicon-new.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/users/assets/images/icons/favicon-new.png">
     <link rel="manifest" href="/users/assets/images/icons/site.html">
     <link rel="mask-icon" href="/users/assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="/users/assets/images/icons/favicon.ico">
-    <meta name="apple-mobile-web-app-title" content="Molla">
-    <meta name="application-name" content="Molla">
+    <!-- <link rel="shortcut icon" href="/users/assets/images/icons/favicon.ico"> -->
+    <meta name="apple-mobile-web-app-title" content="ChicCart">
+    <meta name="application-name" content="ChicCart">
     <meta name="msapplication-TileColor" content="#cc9966">
     <meta name="msapplication-config" content="/users/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
@@ -68,8 +68,8 @@
                         </button>
 
 	                    <a href="/home" class="logo">
-	                        <img src="/users/assets/images/demos/demo-24/logo.png" alt="Molla Logo" width="110" height="25">
-	                    </a>
+	                        <img src="/users/assets/images/chiccart-high-resolution.png" alt="ChicCart Logo" width="110" height="25">
+	                    </a>	
 	                </div><!-- End .header-left -->
 
 	                <div class="header-center">
@@ -658,8 +658,8 @@
 	            			<div class="product product-10 product-lg text-center">
 	                            <figure class="product-media">
 	                            	<span class="product-label label-deal">deal of the day</span>
-	                                <a href="/singleProduct/<%= offeredItem._id %>">
-	                                    <img src="/uploads/<%= offeredItem.image[0] %>" alt="Product image" class="product-image">
+	                                <a href="/singleProduct/<%= offeredItem?._id %>">
+	                                    <img src="/uploads/<%= offeredItem?.image[0] %>" alt="Product image" class="product-image">
 	                                </a>
 
 	                                <div class="product-action-vertical">
@@ -674,11 +674,11 @@
 
 	                            	<div class="product-intro">
 	                                    <h3 class="product-title">
-	                                    	<a href="product.html"><%= offeredItem.name %></a>
+	                                    	<a href="product.html"><%= offeredItem?.name %></a>
 	                                    </h3><!-- End .product-title -->
 	                                    <div class="product-price">
 
-	                                        <% let offerPrice=offeredItem.price-((offeredItem.price*offeredItem.offerApplied)/100) %>
+	                                        <% let offerPrice=offeredItem?.price-((offeredItem?.price*offeredItem?.offerApplied)/100) %>
 											$<%= offerPrice %>
 	                                    </div><!-- End .product-price -->
 	                            	</div>
@@ -818,7 +818,7 @@
             		<div class="row">
 	            		<div class="col-lg-3 col-md-12">
 		                    <div class="widget widget-about">
-                            	<img src="/users/assets/images/demos/demo-24/logo.png" class="footer-logo" alt="Footer Logo" width="110" height="25">
+                            	<img src="/users/assets/images/chiccart-high-resolution.png" class="footer-logo" alt="Footer Logo" width="110" height="25">
 		                        <p>Praesent dapibus, neque id cursus ucibus, tortor  neque egestas augue, eu vulputate magna eros eu erat. </p>
 		                        
 		                        <div class="social-icons">
@@ -836,8 +836,8 @@
 		                        <h4 class="widget-title">useful links</h4><!-- End .widget-title -->
 
 		                        <ul class="widget-list">
-		                            <li><a href="about.html">About Molla</a></li>
-		                            <li><a href="#">How to shop on Molla</a></li>
+		                            <li><a href="about.html">About ChicCart</a></li>
+		                            <li><a href="#">How to shop on ChicCart</a></li>
 		                            <li><a href="#">FAQ</a></li>
 		                            <li><a href="contact.html">Contact us</a></li>
 		                            <li><a href="login.html">Log in</a></li>
@@ -878,7 +878,7 @@
 			</div>
 			<div class="footer-bottom">
                 <div class="container">
-                    <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+                    <p class="footer-copyright">Copyright © 2019 ChicCart Store. All Rights Reserved.</p><!-- End .footer-copyright -->
 
                         <figure class="footer-payments">
                             <img src="/users/assets/images/payments.png" alt="Payment methods" width="272" height="20">
@@ -949,7 +949,7 @@
                         <div class="banner-content text-center">
                             <img src="/users/assets/images/popup/newsletter/logo.png" class="logo" alt="logo" width="60" height="15">
                             <h2 class="banner-title">get <span>25<light>%</light></span> off</h2>
-                            <p>Subscribe to the Molla eCommerce newsletter to receive timely updates from your favorite products.</p>
+                            <p>Subscribe to the ChicCart eCommerce newsletter to receive timely updates from your favorite products.</p>
                             <form action="#">
                                 <div class="input-group input-group-round">
                                     <input type="email" class="form-control form-control-white" placeholder="Your Email Address" aria-label="Email Adress" required>
