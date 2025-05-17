@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
 </head>
@@ -143,7 +143,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Offer Add</h4>
-                  <form action="/admin/offer-add" method="post" class="form-sample" id="offerForm">
+                  <form action="/admin/offer/add" method="post" class="form-sample" id="offerForm">
 
                     <div class="row">
                       <div class="col-md-6">
@@ -267,7 +267,7 @@
 let selectedItems=[]
 
 async function fetchProductItems() {
-    const response = await fetch('/admin/productOffer');
+    const response = await fetch('/admin/offer/product');
     const data = await response.json();
     console.log(data,'fetchProductItems');
     return data;
@@ -275,7 +275,7 @@ async function fetchProductItems() {
 
 
 async function fetchCategoryItems() {
-    const response = await fetch('/admin/categoriesOffer');
+    const response = await fetch('/admin/offer/categories');
     const data = await response.json();
     console.log(data,'fetchCategoryItems');
     return data;
@@ -399,7 +399,7 @@ function submitForm() {
                 selectedItems: selectedItems
             };
 
-            fetch('/admin/offer-add', {
+            fetch('/admin/offer/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

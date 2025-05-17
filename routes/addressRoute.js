@@ -7,11 +7,11 @@ const address_route = express()
 address_route.use(express.json())
 address_route.use(express.urlencoded({ extended: true }))
 
-address_route.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-}))
+// address_route.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }))
 
 address_route.use(flash())
 

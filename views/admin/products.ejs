@@ -56,10 +56,10 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
           <!-- <li class="nav-item dropdown d-lg-flex d-none">
-                <a href="/admin/productAdd"><button type="button" class="btn btn-info font-weight-bold">+ Add product</button></a>
+                <a href="/admin/product/add"><button type="button" class="btn btn-info font-weight-bold">+ Add product</button></a>
             </li> -->
           <li class="nav-item dropdown d-lg-flex d-none">
-            <a href="/admin/productAdd" class="btn btn-info font-weight-bold">+ Add product</a>
+            <a href="/admin/product/add" class="btn btn-info font-weight-bold">+ Add product</a>
           </li>
 
 
@@ -234,7 +234,7 @@
                               <%= product.size %>
                             </td>
                             <td>
-                              <a href="/admin/productEdit/<%= product._id %>"><button class="btn btn-outline-primary ">Edit</button></a>
+                              <a href="/admin/product/edit/<%= product._id %>"><button class="btn btn-outline-primary ">Edit</button></a>
                               <!-- <button class="btn  btn-outline-danger  ">Delete</button> -->
 
                               <a href="#" class="btn btn-danger" onclick="confirmDelete('<%= product._id %>')">Delete</a>
@@ -307,7 +307,7 @@
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = `/admin/deleteProduct/${productId}`
+          window.location.href = `/admin/product/delete/${productId}`
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",

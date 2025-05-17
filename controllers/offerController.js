@@ -5,10 +5,11 @@ const Product = require('../models/productModel')
 
 //     offer page rendering
 const loadOffer = async (req, res) => {
+    console.log('we are reaching to offer load')
     try {
         const offers = await Offer.find()
-        res.render('offer', { offers, error: req.flash('error') })
         console.log('offer load is working ');
+        return res.render('offer', { offers, error: req.flash('error') })
 
     } catch (error) {
         console.log(error.message);

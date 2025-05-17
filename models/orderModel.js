@@ -55,7 +55,8 @@ const orderSchema = new mongoose.Schema({
     },
     couponApplied: {
         type: Number,
-        ref: 'Coupon'
+        ref: 'Coupon',
+        price: Number
     },
     offerApplied: {
         type: Number,

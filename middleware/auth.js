@@ -27,6 +27,8 @@ const isLogin = async (req, res, next) => {
             next()
         }
         else {
+            console.log('its entere to else condition');
+            
             res.redirect('/')
         }
 

@@ -7,7 +7,7 @@ const Order = require('../models/orderModel')
 const Coupon = require('../models/couponModel')
 const Wallet = require('../models/walletModel')
 const Wishlist = require('../models/wishlistModel')
-const Offer= require('../models/offerModel')
+const Offer = require('../models/offerModel')
 const bcryptjs = require('bcryptjs')
 const nodemailer = require('nodemailer')
 const { ObjectId } = require('mongodb');
@@ -137,16 +137,16 @@ const verifyOTP = async (req, res) => {
     try {
         const enteredOTP = req.body.otp
         console.log(req.body.otp, 'its body otp');
-        const {  userId } = req.body
+        const { userId } = req.body
         const userIdObj = new ObjectId(userId)
         const userData = await User.findById(userIdObj)
-        if (!userData) {  
+        if (!userData) {
             // res.render('signupOTP', { userId: userId, message: 'User not found' })
-            return res.json({error: 'User not found' })
+            return res.json({ error: 'User not found' })
         }
         const storeOtp = req.session.otp
-        const date=new Date(storeOtp.timestamp)
-        console.log(storeOtp,'storeOtp')
+        const date = new Date(storeOtp.timestamp)
+        console.log(storeOtp, 'storeOtp')
         const otpExpireTime = 30 * 1000
         const otpAge = Date.now() - storeOtp.timestamp
         if (!storeOtp || otpAge > otpExpireTime) {
@@ -155,7 +155,7 @@ const verifyOTP = async (req, res) => {
         }
         const isOTPValid = enteredOTP === storeOtp.value
         console.log(storeOtp, 'its stored otp');
-        console.log(isOTPValid,'isOtpValid');
+        console.log(isOTPValid, 'isOtpValid');
         if (isOTPValid) {
             userData.is_verified = 1
             await userData.save()
@@ -202,7 +202,7 @@ const loadSignIn = async (req, res) => {
     try {
         res.render('signIn', { error: req.flash('error') })
     } catch (error) {
-        console.error('Error founded in load sign in ',error);
+        console.error('Error founded in load sign in ', error);
     }
 }
 
@@ -226,7 +226,7 @@ const verifySignIn = async (req, res) => {
         if (user.is_verified === 0 || user.is_active === false) {
             req.flash('error', 'User registration failed.Please try again ')
 
-            res.render('signIn',{error:req.flash('error')})
+            res.render('signIn', { error: req.flash('error') })
         } else {
             req.session.user_id = user._id;
             await req.session.save();
@@ -262,8 +262,8 @@ const resendOTP = async (req, res) => {
 //   this is for loading home page
 const loadHome = async (req, res) => {
     try {
-        const product=await Product.find()
-        const category=await Category.find()
+        const product = await Product.find()
+        const category = await Category.find()
         const top6Products = await Order.aggregate([
             {
                 $match: {
@@ -287,7 +287,7 @@ const loadHome = async (req, res) => {
             {
                 $group: {
                     '_id': '$productDetails._id',
-                    'price':{'$first':'$products.price'},
+                    'price': { '$first': '$products.price' },
                     'name': { '$first': '$productDetails.name' },
                     'image': { '$first': '$productDetails.image' },
                     'count': { '$sum': '$products.quantity' }
@@ -300,27 +300,27 @@ const loadHome = async (req, res) => {
                 $limit: 6
             }
         ]);
-        const offer = await Offer.findOne({"selectedItems": {"$elemMatch": {"$exists": true}}});
-        if(offer!==null){
-            const newId=new ObjectId(offer.selectedItems[0])
-            const offeredItem=await Product.findById(newId)
+        const offer = await Offer.findOne({ "selectedItems": { "$elemMatch": { "$exists": true } } });
+        if (offer !== null) {
+            const newId = new ObjectId(offer.selectedItems[0])
+            const offeredItem = await Product.findById(newId)
             const active = await User.findOne({ is_active: true })
             const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
             const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
-            res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist ,top6Products,offeredItem,offer})
-            
-        }else{
+            res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist, top6Products, offeredItem, offer })
+
+        } else {
             const active = await User.findOne({ is_active: true })
             const cart = await Cart.findOne({ userId: req.session.user_id }).populate('products')
             const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
-            res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist ,top6Products})
+            res.render('home', { isLoggedIn: res.locals.loggedIn, active, cart, wishlist, top6Products })
         }
-        
-        
-        
-      
+
+
+
+
     } catch (error) {
-        console.log('Error founded on load home ',error);
+        console.log('Error founded on load home ', error);
     }
 }
 
@@ -557,7 +557,8 @@ const loadSingleProduct = async (req, res) => {
         const productId = req.params.productId
         const product = await Product.findById(productId)
         const products = await Product.find()
-        res.render('singleProduct', {isLoggedIn: res.locals.loggedIn, product, products,wishlist,cart })
+        console.log(res.locals.loggedIn, 'res.locals.loogeddddd - - - -')
+        res.render('singleProduct', { isLoggedIn: res.locals.loggedIn, product, products, wishlist, cart })
     } catch (error) {
         console.log(error.message);
     }
@@ -567,20 +568,24 @@ const loadSingleProduct = async (req, res) => {
 //   cart page rendering
 const loadCart = async (req, res) => {
     try {
-        const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
+        let wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products') || { products: [] }
+
+        console.log('its here  - - - -  ');
 
         const userId = req.session.user_id
         if (!userId) {
             return res.render('signIn')
         } else {
             const cart = await Cart.findOne({ userId }).populate('products.productId')
+            console.log(wishlist, 'wishlist  - - - - ')
             if (!cart || !cart.products) {
-                return res.render('cart', { cart: { products: [] } })
+                return res.render('cart', { cart: { products: [] }, wishlist, isLoggedIn: res.locals.loggedIn })
             }
-            res.render('cart', {isLoggedIn: res.locals.loggedIn, cart: cart ,wishlist})
+            res.render('cart', { isLoggedIn: res.locals.loggedIn, cart: cart, wishlist })
         }
     } catch (error) {
-        console.log(error.message);
+
+        console.log(error.message, 'its here in err or');
     }
 }
 
@@ -589,7 +594,13 @@ const loadCart = async (req, res) => {
 const addToCart = async (req, res) => {
     try {
         const { productId, quantity } = req.body;
+        console.log(productId, 'product id  - - -');
 
+        let isProductExist = await Product.findById(productId)
+        if (isProductExist.quantity == 0) {
+            return res.json({ message: 'OUt of stock , Please try again later' })
+        }
+        console.log(isProductExist, 'isproduct exist ')
         let cart = await Cart.findOne({ userId: req.session.user_id });
         if (!cart) {
             cart = new Cart({
@@ -661,23 +672,25 @@ const loadCheckout = async (req, res) => {
         const wishlist = await Wishlist.findOne({ userId: req.session.user_id }).populate('products')
         const userId = req.session.user_id
         const cart = await Cart.findOne({ userId }).populate('products.productId')
+        console.log(cart, 'cart details found - -  - ')
         const userAddress = await Address.findOne({ userId: req.session.user_id })
         const wallet = await Wallet.findOne({ userId: req.session.user_id })
         const walletBalance = wallet ? wallet.balance : 0
         console.log(walletBalance, 'walletbalance');
-        res.render('checkout', { isLoggedIn: res.locals.loggedIn,wishlist,user_id: userId, userAddress, cart, walletBalance })
+        req.session.appliedCoupon = false
+        res.render('checkout', { isLoggedIn: res.locals.loggedIn, wishlist, user_id: userId, userAddress, cart, walletBalance })
 
     } catch (error) {
         console.log(error.message);
     }
 }
 
-
-//  order place work  here
 const placeOrder = async (req, res) => {
 
     try {
-        const { userId, products, totalAmount, status, orderUserDetails, paymentMethod, couponApplied } = req.body
+        const { userId, status, orderUserDetails, paymentMethod, couponApplied } = req.body
+
+        console.log(couponApplied, 'coupon applied')
         let check = await Address.findOne({ 'address._id': orderUserDetails })
         let matched = check.address.find(address => address._id.toString() === orderUserDetails)
 
@@ -692,15 +705,45 @@ const placeOrder = async (req, res) => {
             landmark: matched.landmark,
             phone2: matched.phone2
         }
+        const cart = await Cart.findOne({ userId }).populate('products.productId')
+        console.log(cart, 'cart')
+        const productsTotal = cart?.products.reduce((acc, curr) => {
+            console.log(curr,'curr - --- - -    ')
+            const price = curr.productId.price
+            const offer = curr.productId.offerApplied 
+            const quantity = curr.quantity
 
+            const discountedPrice = offer
+                ? price - (price * offer / 100)
+                : price
 
+            const total = discountedPrice * quantity
+
+            return acc + total
+        }, 0)
+        console.log(productsTotal, 'products total ')
+        let totalAmount = productsTotal
+        console.log(totalAmount, 'total amount &&   &&   ')
+        let couponCode = req.session.appliedCoupon
+        const date = new Date()
+        const couponCheck = await Coupon.findOne({ code: couponCode, expireDate: { $gte: date } });
+
+        if (couponCheck) {
+            const couponAmount = couponCheck.discountAmount
+            if (couponAmount > productsTotal) {
+                return res.json({ status: false })
+            }
+            totalAmount = productsTotal - couponAmount
+            console.log(totalAmount, ' = = = = = = = ')
+        }
         // COD not allowed above 1000
         if (paymentMethod === 'Cash on Delivery') {
+            console.log('payment method is cash on delivery')
             if (totalAmount > 1000) {
+                console.log(' - - -- totaol amouint   > 1000    == = ==  = ')
                 return res.json({ ff: false })
             }
         }
-        const cart = await Cart.findOne({ userId }).populate('products.productId')
 
         //we are using here checking quantity for admin fixed quanitty
         const quantityCheck = await Promise.all(cart.products.map(async (product) => {
@@ -723,14 +766,14 @@ const placeOrder = async (req, res) => {
             price: product.productId.offerApplied ? product.productId.price - (product.productId.price * product.productId.offerApplied / 100)
                 : product.productId.price
         }))
-
+        console.log(productData, ' - - - product data - - -  ')
 
         //  we are  checking here coupon amount greater than total amount
-        if (couponApplied > totalAmount) {
-            console.log(couponApplied, 'coupon applied ', totalAmount, 'totalamount');
+        // if (couponApplied > totalAmount) {
+        //     console.log(couponApplied, 'coupon applied ', totalAmount, 'totalamount');
 
-            return res.json({ status: false })
-        }
+        //     return res.json({ status: false })
+        // }
 
         const order = new Order({
             userId,
@@ -742,7 +785,12 @@ const placeOrder = async (req, res) => {
             orderDate: new Date(),
             couponApplied
         })
-        await order.save()
+
+        const orderSave = await order.save()
+        console.log(orderSave, 'order save in user controller')
+        if (couponCheck) {
+            await Coupon.updateOne({ code: couponCode }, { $push: { usedUser: userId } })
+        }
         for (const product of productData) {
             const updateProduct = await Product.findByIdAndUpdate(product.productId, {
                 $inc: { quantity: -product.quantity }
@@ -756,6 +804,91 @@ const placeOrder = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
+//  order place work  here
+// const placeOrder = async (req, res) => {
+
+//     try {
+//         const { userId, products, totalAmount, status, orderUserDetails, paymentMethod, couponApplied } = req.body
+//         let check = await Address.findOne({ 'address._id': orderUserDetails })
+//         let matched = check.address.find(address => address._id.toString() === orderUserDetails)
+
+//         let address = {
+//             name: matched.name,
+//             phone: matched.phone,
+//             email: matched.email,
+//             pincode: matched.pincode,
+//             streetAddress: matched.streetAddress,
+//             city: matched.city,
+//             state: matched.state,
+//             landmark: matched.landmark,
+//             phone2: matched.phone2
+//         }
+
+
+//         // COD not allowed above 1000
+//         if (paymentMethod === 'Cash on Delivery') {
+//             if (totalAmount > 1000) {
+//                 return res.json({ ff: false })
+//             }
+//         }
+//         const cart = await Cart.findOne({ userId }).populate('products.productId')
+
+//         //we are using here checking quantity for admin fixed quanitty
+//         const quantityCheck = await Promise.all(cart.products.map(async (product) => {
+//             let productId = product.productId._id;
+//             let quantity = product.quantity;
+
+//             let check = await Product.findOne({ _id: productId, quantity: { $gte: quantity } });
+//             console.log(!!check, 'value');
+//             return !!check;
+//         }));
+
+//         if (quantityCheck.includes(false)) {
+//             return res.json({ mm: false });
+//         }
+
+//         const productData = cart.products.map((product) => ({
+//             productId: product.productId._id,
+//             quantity: product.quantity,
+//             name: product.productId.name,
+//             price: product.productId.offerApplied ? product.productId.price - (product.productId.price * product.productId.offerApplied / 100)
+//                 : product.productId.price
+//         }))
+
+
+//         //  we are  checking here coupon amount greater than total amount
+//         if (couponApplied > totalAmount) {
+//             console.log(couponApplied, 'coupon applied ', totalAmount, 'totalamount');
+
+//             return res.json({ status: false })
+//         }
+
+//         const order = new Order({
+//             userId,
+//             products: productData,
+//             totalAmount,
+//             orderUserDetails: address,
+//             paymentMethod,
+//             status,
+//             orderDate: new Date(),
+//             couponApplied
+//         })
+//         await order.save()
+//         for (const product of productData) {
+//             const updateProduct = await Product.findByIdAndUpdate(product.productId, {
+//                 $inc: { quantity: -product.quantity }
+//             })
+
+//         }
+
+//         await Cart.updateOne({ userId }, { $set: { products: [] } });
+//         res.json({ status: true })
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
 
 
 //  razorpay configuration here
@@ -844,9 +977,16 @@ const applyCoupon = async (req, res) => {
         const { couponCode } = req.body;
         console.log(couponCode, 'coupon code in apply code');
         let date = new Date()
+        const userId = req.session.user_id
         const coupon = await Coupon.findOne({ code: couponCode, expireDate: { $gte: date } });
         if (!coupon) {
             return res.json({ success: false, message: 'Coupon not found' });
+        }
+
+        req.session.appliedCoupon = couponCode
+        const checkIsUserUsedCoupon = coupon.usedUser.includes(userId)
+        if (checkIsUserUsedCoupon) {
+            return res.json({ success: false, message: 'Coupon alreay used ' })
         }
         const discountAmount = coupon.discountAmount || 0;
         res.json({ success: true, message: 'Coupon applied', discountAmount });
@@ -957,11 +1097,11 @@ const loadWishlist = async (req, res) => {
         const userId = req.session.user_id
         const wishlist = await Wishlist.findOne({ userId }).populate('products.productId')
         if (!wishlist) {
-            return res.render('wishlist',  {isLoggedIn: res.locals.loggedIn,wishlist: [] })
+            return res.render('wishlist', { isLoggedIn: res.locals.loggedIn, wishlist: [] })
         }
-        res.render('wishlist', {isLoggedIn: res.locals.loggedIn, wishlist })
+        res.render('wishlist', { isLoggedIn: res.locals.loggedIn, wishlist })
     } catch (error) {
-        console.error('Error founded in loadwishlist',error);
+        console.error('Error founded in loadwishlist', error);
     }
 }
 
@@ -1062,12 +1202,13 @@ const loadOrderDetails = async (req, res) => {
         const orderId = req.params.orderId
         const productId = req.params.id
         const order = await Order.findOne({ _id: orderId }).populate('products.productId')
+        console.log(order,'order , - - -  - - ')
         const orderDetails = order.products.find(product => product.productId._id == productId)
         const aa = await Order.findOne(
             { _id: orderId, 'products.productId': productId },
             { 'products.$': 1 }
         ).populate('products.productId');
-        res.render('orderDetails', {isLoggedIn: res.locals.loggedIn, order, orderDetails, aa })
+        res.render('orderDetails', { isLoggedIn: res.locals.loggedIn, order, orderDetails, aa })
     } catch (error) {
         console.error('Error founded in loadOrder', error);
     }
@@ -1114,17 +1255,17 @@ const loadAbout = async (req, res) => {
 }
 
 
-const repayment=async(req,res)=>{
+const repayment = async (req, res) => {
     try {
-        const orderId=req.params.id
-        console.log(orderId,'orderId in reapyment')
+        const orderId = req.params.id
+        console.log(orderId, 'orderId in reapyment')
         const order = await Order.findById(orderId)
-        order.status='Pending'
+        order.status = 'Pending'
         await order.save()
-        res.json({status:true})
-        
+        res.json({ status: true })
+
     } catch (error) {
-        console.error("Error founded in repayment",error);
+        console.error("Error founded in repayment", error);
     }
 }
 

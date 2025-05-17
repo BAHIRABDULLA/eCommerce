@@ -99,7 +99,7 @@
                                     <li><a href="/wishlist"><i class="icon-heart-o"></i>Wishlist
                                             <span>(3)</span></a></li>
 
-                                    <li><a href="/signIn" ><i class="icon-user"></i>Login</a>
+                                    <li><a href="/signIn"><i class="icon-user"></i>Login</a>
                                     </li>
                                 </ul>
                             </li>
@@ -117,7 +117,8 @@
                         </button>
 
                         <a href="/home" class="logo">
-                            <img src="/users/assets/images/chiccart-high-resolution.png" alt="ChicCart Logo" width="105" height="25">
+                            <img src="/users/assets/images/chiccart-high-resolution.png" alt="ChicCart Logo" width="105"
+                                height="25">
                         </a>
 
                         <nav class="main-nav">
@@ -141,9 +142,9 @@
                                             <a href="/about">About</a>
                                         </li>
                                         <li>
-                                            <a href="/contact" >Contact</a>
+                                            <a href="/contact">Contact</a>
                                         </li>
-                                        
+
                                         <li><a href="#">FAQs</a></li>
                                         <li><a href="*">Error 404</a></li>
                                         <li><a href="#">Coming Soon</a></li>
@@ -176,7 +177,7 @@
                                 <i class="icon-random"></i>
                             </a>
 
-                            
+
                         </div><!-- End .compare-dropdown -->
 
                         <div class="dropdown cart-dropdown">
@@ -214,147 +215,178 @@
                 <div class="dashboard">
                     <div class="container">
 
-                        
-                       
+
+
 
 
                         <div class="row">
                             <aside class="col-md-4 col-lg-3">
                                 <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                                    <li class="nav-item"  >
-                                        <a class="nav-link" >Dashboard</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link">Dashboard</a>
                                     </li>
-                                    <li class="nav-item" >
-                                        <a class="nav-link active" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
-                                            role="tab" aria-controls="tab-orders" aria-selected="true">Orders</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab-orders-link" data-toggle="tab"
+                                            href="#tab-orders" role="tab" aria-controls="tab-orders"
+                                            aria-selected="true">Orders</a>
                                     </li>
 
-                                    <li class="nav-item" disabled >
-                                        <a class="nav-link" >Adresses</a>
+                                    <li class="nav-item" disabled>
+                                        <a class="nav-link">Adresses</a>
                                     </li>
-                                    <li class="nav-item" disabled >
-                                        <a class="nav-link" >Wallet</a>
+                                    <li class="nav-item" disabled>
+                                        <a class="nav-link">Wallet</a>
                                     </li>
-                                    <li class="nav-item" disabled >
+                                    <li class="nav-item" disabled>
                                         <a class="nav-link">Account
                                             Details</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" >Sign Out</a>
+                                        <a class="nav-link">Sign Out</a>
                                     </li>
                                 </ul>
                             </aside><!-- End .col-lg-3 -->
 
                             <div class="col-md-8 col-lg-9">
-                               
-                                        <div class="tab-content">
-                                            <div class="tab-pane fade  " id="tab-dashboard"   role="tabpanel"
-                                                aria-labelledby="tab-dashboard-link">
 
-                                                
-                                            </div><!-- .End .tab-pane -->
+                                <div class="tab-content">
+                                    <div class="tab-pane fade  " id="tab-dashboard" role="tabpanel"
+                                        aria-labelledby="tab-dashboard-link">
 
-                                            <div class="tab-pane fade show  active " href="#tab-orders" id="tab-orders" role="tabpanel"
-                                                aria-labelledby="tab-orders-link">
-                                                <h5 style="color: #c96;">Order Details</h5>
-                                                <div class="card ">
-                                                    <a href="/dashboard" class="btn btn-primary rounded ">Back</a>
 
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            
-                                                            <div class="col-md-4">
-                                                                <img src="/uploads/<%= orderDetails.productId.image[0] %>" alt="Product Image" class="img-fluid">
-                                                            </div>
-                                                            
-                                                            <div class="col-md-4">
-                                                                <h6>Address</h6>
-                                                                <p><%= order.orderUserDetails.name %>&nbsp;<%= order.orderUserDetails.phone %></p>
-                                                                <p><%= order.orderUserDetails.email %>&nbsp;<%= order.orderUserDetails.pincode %></p>
-                                                                <p></p>
-                                                                <p><%= order.orderUserDetails.city %>&nbsp;<%= order.orderUserDetails.state %></p>
-                                                                <p></p>
-                                                            </div>
-                                                        
-                                                            <div class="col-md-4">
-                                                                <h6>Order Date</h6>
-                                                                <!-- <p><%= order.orderDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', date: 'numeric', hour: 'numeric' }) %></p> -->
-                                                                <p><%= order.orderDate.toDateString() %></p>
-                                                                <% console.log(order.orderDate); %>
-                                                                
-                                                            </div>
-                                                        </div>
-                                                        <br>
-                                                        <h6>Order Id :  <%= order._id %></h6>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <h6>Product Name</h6>
+                                    </div><!-- .End .tab-pane -->
 
-                                                                <p><%= orderDetails.productId?.name %></p>
-                                                            </div>
-                                                        
-                                                            <div class="col-md-4">
-                                                                <h6>Quantity</h6>
-                                                                <p><%= aa.products[0].quantity %></p>
-                                                            </div>
-                                                          
-                                                            <div class="col-md-2">
-                                                                <h6>Price</h6>
-                                                                <p><%= aa.products[0].price %></p>
-                                                                
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <h6>Total Price</h6>
-                                                                <p><%= aa.products[0].quantity*aa.products[0].price %></p>
-                                                            </div>
-                                                            
-                                                            
-                                                        </div>
-                                                        <% if(orderDetails.productId.offerApplied){ %>
-                                                        <div class="row " style="display: flex; align-items: center;">
-                                                            <h6 style="margin-right: 10px;">Offer Applied</h6>
-                                                            <p><%= ((orderDetails.productId.price * orderDetails.productId.offerApplied)/100) *aa.products[0].quantity %></p>
-                                                        </div>
-                                                        <% } %>
-                                                        <div class="row">
-                                                        <div class="col-4 d-flex ">
-                                                            <h6>Status</h6>
-                                                            
-                                                            <button class="btn btn-primary  rounded "><%= order.status %></button>
-                                                        </div>
-                                                        <div class="col-4 ">
-                                                            <% if(order.status=== 'Payment Failed'){ %>
-                                                                <button class="btn btn-dark " id="failedPay">Pay Now</button>
-                                                            <% } %>
-                                                        </div>
-                                                        <div class="col-4 ">
-                                                            <div class="col-md-12  text-center">
-                                                               
-                                                            <a class="btn btn-outline-primary rounded " href="/invoice/<%= order._id %>,<%= aa.products[0].productId._id %>">Invoice</a>
+                                    <div class="tab-pane fade show  active " href="#tab-orders" id="tab-orders"
+                                        role="tabpanel" aria-labelledby="tab-orders-link">
+                                        <h5 style="color: #c96;">Order Details</h5>
+                                        <div class="card ">
+                                            <a href="/dashboard" class="btn btn-primary rounded ">Back</a>
 
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        </div>
+                                            <div class="card-body">
+                                                <div class="row">
+
+                                                    <div class="col-md-4">
+                                                        <img src="/uploads/<%= orderDetails.productId.image[0] %>"
+                                                            alt="Product Image" class="img-fluid">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <h6>Address</h6>
+                                                        <p>
+                                                            <%= order.orderUserDetails.name %>&nbsp;<%=
+                                                                    order.orderUserDetails.phone %>
+                                                        </p>
+                                                        <p>
+                                                            <%= order.orderUserDetails.email %>&nbsp;<%=
+                                                                    order.orderUserDetails.pincode %>
+                                                        </p>
+                                                        <p></p>
+                                                        <p>
+                                                            <%= order.orderUserDetails.city %>&nbsp;<%=
+                                                                    order.orderUserDetails.state %>
+                                                        </p>
+                                                        <p></p>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <h6>Order Date</h6>
+                                                        <!-- <p><%= order.orderDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', date: 'numeric', hour: 'numeric' }) %></p> -->
+                                                        <p>
+                                                            <%= order.orderDate.toDateString() %>
+                                                        </p>
+                                                        <% console.log(order.orderDate); %>
+
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <br>
+                                                <h6>Order Id : <%= order._id %>
+                                                </h6>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <h6>Product Name</h6>
 
-                                            <div class="tab-pane fade" id="tab-address" role="tabpanel"
-                                                aria-labelledby="tab-address-link">
-                                                
-                                            </div>
+                                                        <p>
+                                                            <%= orderDetails.productId?.name %>
+                                                        </p>
+                                                    </div>
 
-                                            <div class="tab-pane fade" id="tab-wallet" role="tabpanel"
-                                                aria-labelledby="tab-wallet-link">
-                                                
-                                            </div>
-                                            
-                                            <div class="tab-pane fade" id="tab-account" role="tabpanel"
-                                                aria-labelledby="tab-account-link">
-                                                
+                                                    <div class="col-md-4">
+                                                        <h6>Quantity</h6>
+                                                        <p>
+                                                            <%= aa.products[0].quantity %>
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <h6>Price</h6>
+                                                        <p>
+                                                            <%= aa.products[0].price %>
+                                                        </p>
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h6>Total Price</h6>
+                                                        <p>
+                                                            <%= aa.products[0].quantity*aa.products[0].price %>
+                                                        </p>
+                                                    </div>
+
+
+                                                </div>
+                                                <% if(orderDetails.productId.offerApplied){ %>
+                                                    <div class="row " style="display: flex; align-items: center;">
+                                                        <h6 style="margin-right: 10px;">Offer Applied</h6>
+                                                        <p>
+                                                            <%= ((orderDetails.productId.price *
+                                                                orderDetails.productId.offerApplied)/100)
+                                                                *aa.products[0].quantity %>
+                                                        </p>
+                                                    </div>
+                                                    <% } %>
+                                                        <div class="row">
+                                                            <div class="col-4 ">
+                                                                <h6>Status</h6>
+
+                                                                <p class="text-primary">
+                                                                    <%= order.status %>
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-4 ">
+                                                                <% if(order.status==='Payment Failed' ){ %>
+                                                                    <button class="btn btn-dark " id="failedPay">
+                                                                        Pay Now
+                                                                    </button>
+                                                                    <% } %>
+                                                            </div>
+                                                            <div class="col-4 ">
+                                                                <div class="col-md-12  text-center">
+
+                                                                    <a class="btn btn-outline-primary rounded "
+                                                                        href="/invoice/<%= order._id %>,<%= aa.products[0].productId._id %>">Invoice</a>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab-address" role="tabpanel"
+                                        aria-labelledby="tab-address-link">
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab-wallet" role="tabpanel"
+                                        aria-labelledby="tab-wallet-link">
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab-account" role="tabpanel"
+                                        aria-labelledby="tab-account-link">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -368,8 +400,8 @@
                     <div class="row">
                         <div class="col-sm-6 col-lg-3">
                             <div class="widget widget-about">
-                                <img src="/users/assets/images/chiccart-high-resolution.png" class="footer-logo" alt="Footer Logo"
-                                    width="105" height="25">
+                                <img src="/users/assets/images/chiccart-high-resolution.png" class="footer-logo"
+                                    alt="Footer Logo" width="105" height="25">
                                 <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
                                     magna eros eu erat. </p>
 
@@ -480,7 +512,7 @@
                             <li>
                                 <a href="/contact">Contact</a>
                             </li>
-                            
+
                             <li><a href="#">FAQs</a></li>
                             <li><a href="*">Error 404</a></li>
                             <li><a href="#">Coming Soon</a></li>
@@ -501,10 +533,13 @@
         </div><!-- End .mobile-menu-wrapper -->
     </div><!-- End .mobile-menu-container -->
 
-   
 
-    
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const order = <%- JSON.stringify(order) %>;
+    </script>
     <script>
 
 
@@ -573,12 +608,6 @@
 
 
 
-        
-
-
-        
-
-
         document.addEventListener('click', function (event) {
             if (event.target.classList.contains('return-link')) {
                 event.preventDefault()
@@ -635,73 +664,79 @@
 
 
     <script>
-        const totalAmount= order.totalAmount
-        const orderIdd= order._id
-        console.log(totalAmount,'toatlfdfd');
-        const failedPay=document.getElementById('failedPay')
-        failedPay.addEventListener('click',async()=>{
-            const response = await fetch('/createOrder', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ totalAmount})
-                    });
 
-                    if (response.ok) {
-                        console.log(response, 'response');
-                        const data = await response.json();
-                        console.log(data, 'data in razorpay');
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log(' - - - - - ' , order   ,' 0 - - - - ')
+            const totalAmount = order.totalAmount
+            console.log(order.totalAmount, 'order total amound')
+            const orderIdd = order._id
+            console.log(totalAmount, 'toatlfdfd');
+            const failedPay = document.getElementById('failedPay')
 
-                        const orderId = data.orderId;
-                        console.log(orderId, 'orderId in razorpay');
-                        const options = {
-                            key: '<%= process.env.RAZORPAYKEYID %>',
-                            amount: totalAmount * 100,
-                            currency: 'INR',
-                            name: 'ChicCart',
-                            description: 'Payment for Order',
-                            order_id: orderId,
-                            handler: function (response) {
-                               
-                                console.log(response);
-                                axios.post(`/orderDetails/rePay/${orderIdd}`)
-                                .then((res)=>{
+
+            failedPay.addEventListener('click', async () => {
+                const response = await fetch('/createOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ totalAmount })
+                });
+
+                if (response.ok) {
+                    console.log(response, 'response');
+                    const data = await response.json();
+                    console.log(data, 'data in razorpay');
+
+                    const orderId = data.orderId;
+                    console.log(orderId, 'orderId in razorpay');
+                    const options = {
+                        key: '<%= process.env.RAZORPAYKEYID %>',
+                        amount: totalAmount * 100,
+                        currency: 'INR',
+                        name: 'ChicCart',
+                        description: 'Payment for Order',
+                        order_id: orderId,
+                        handler: function (response) {
+
+                            console.log(response);
+                            axios.post(`/orderDetails/rePay/${orderIdd}`)
+                                .then((res) => {
                                     console.log(res.data);
                                     window.location.href = '/dashboard';
                                 })
-                            },
-                            prefill: {
-                                name: 'Customer Name',
-                                email: 'customer@example.com',
-                                contact: '+919876543210'
-                            },
-                            notes: {
-                                address: 'Customer Address'
-                            },
-                            theme: {
-                                color: '#F37254'
-                            }
-                        };
+                        },
+                        prefill: {
+                            name: 'Customer Name',
+                            email: 'customer@example.com',
+                            contact: '+919876543210'
+                        },
+                        notes: {
+                            address: 'Customer Address'
+                        },
+                        theme: {
+                            color: '#F37254'
+                        }
+                    };
 
-                        const rzp1 = new Razorpay(options);
-                        rzp1.on('payment.failed',async function (response){
-                            try {
-                                console.log('Payment failed for order:');
-                                
-                                window.location.href='/dashboard'
+                    const rzp1 = new Razorpay(options);
+                    rzp1.on('payment.failed', async function (response) {
+                        try {
+                            console.log('Payment failed for order:');
+
+                            window.location.href = '/dashboard'
                         } catch (error) {
                             console.error('Error handling payment failure:', error);
-                            
+
                             res.status(500).send('Internal Server Error');
                         }
-                        });
-                        rzp1.open();
-                    } else {
-                        throw new Error('Failed to create Razorpay order');
-                    }
+                    });
+                    rzp1.open();
+                } else {
+                    throw new Error('Failed to create Razorpay order');
+                }
+            })
         })
-        
     </script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 

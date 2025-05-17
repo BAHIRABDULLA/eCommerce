@@ -11,11 +11,11 @@ const user_route = express()
 user_route.use(express.json())
 user_route.use(express.urlencoded({ extended: true }))
 
-user_route.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-}))
+// user_route.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }))
 
 user_route.use(flash())
 
@@ -49,7 +49,7 @@ user_route.get('/products', userController.products)
 user_route.get('/search', userController.searchProducts)
 user_route.get('/singleProduct/:productId',auth.isLoggedIn, userController.loadSingleProduct)
 user_route.get('/cart' ,auth.isLoggedIn,auth.isLogin,auth.isActive, userController.loadCart)
-user_route.post('/addToCart', userController.addToCart)
+user_route.post('/addToCart',auth.isLogin, userController.addToCart)
 user_route.post('/updateCartQuantity/:productId', userController.updateCartQuantity)
 user_route.delete('/cart/remove/:productId', userController.removeFromCart)
 user_route.get('/checkout',auth.isLoggedIn, auth.isLogin,auth.isActive, userController.loadCheckout)

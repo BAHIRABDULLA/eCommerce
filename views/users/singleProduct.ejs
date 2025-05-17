@@ -1,238 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- molla/product.html  22 Nov 2019 09:54:50 GMT -->
 
-
-<!-- molla/product.html  22 Nov 2019 09:54:50 GMT -->
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>ChicCart - Bootstrap eCommerce Template</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="ChicCart - Bootstrap eCommerce Template">
-    <meta name="author" content="p-themes">
+    <meta name="keywords" content="HTML5 Template" />
+    <meta
+      name="description"
+      content="ChicCart - Bootstrap eCommerce Template"
+    />
+    <meta name="author" content="p-themes" />
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/users/assets/images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/users/assets/images/icons/favicon-new.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/users/assets/images/icons/favicon-new.png">
-    <link rel="manifest" href="/users/assets/images/icons/site.html">
-    <link rel="mask-icon" href="/users/assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="/users/assets/images/icons/favicon.ico">
-    <meta name="apple-mobile-web-app-title" content="ChicCart">
-    <meta name="application-name" content="ChicCart">
-    <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="/users/assets/images/icons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/users/assets/images/icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/users/assets/images/icons/favicon-new.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/users/assets/images/icons/favicon-new.png"
+    />
+    <link rel="manifest" href="/users/assets/images/icons/site.html" />
+    <link
+      rel="mask-icon"
+      href="/users/assets/images/icons/safari-pinned-tab.svg"
+      color="#666666"
+    />
+    <link rel="shortcut icon" href="/users/assets/images/icons/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="ChicCart" />
+    <meta name="application-name" content="ChicCart" />
+    <meta name="msapplication-TileColor" content="#cc9966" />
+    <meta
+      name="msapplication-config"
+      content="/users/assets/images/icons/browserconfig.xml"
+    />
+    <meta name="theme-color" content="#ffffff" />
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="/users/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/users/assets/css/plugins/owl-carousel/owl.carousel.css">
-    <link rel="stylesheet" href="/users/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/users/assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="/users/assets/css/plugins/owl-carousel/owl.carousel.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/users/assets/css/plugins/magnific-popup/magnific-popup.css"
+    />
     <!-- Main CSS File -->
 
-    <link rel="stylesheet" href="/users/assets/css/style.css">
-    <link rel="stylesheet" href="/users/assets/css/plugins/nouislider/nouislider.css">
+    <link rel="stylesheet" href="/users/assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="/users/assets/css/plugins/nouislider/nouislider.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
 
-
-</head>
-
-<body>
+  <body>
     <div class="page-wrapper">
-        <header class="header">
-            <div class="header-top">
-                <div class="container">
-                    
+      <header class="header">
+        <div class="header-top">
+          <div class="container">
+            <div class="header-right">
+              <ul class="top-menu">
+                <li>
+                  <a href="#">Links</a>
+                  <ul>
+                    <li>
+                      <a href="/wishlist"
+                        ><i class="icon-heart-o"></i>Wishlist <% if(wishlist)
+                        {%>
+                        <span>(<%= wishlist.products.length %>)</span>
+                      </a>
+                    </li>
+                    <% } %> <% if(isLoggedIn){ %>
+                    <li>
+                      <a href="/logout"><i class="icon-user"></i>Logout</a>
+                    </li>
+                    <% }else{ %>
+                    <li>
+                      <a href="/signIn"><i class="icon-user"></i>Login</a>
+                    </li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <!-- End .top-menu -->
+            </div>
+            <!-- End .header-right -->
+          </div>
+          <!-- End .container -->
+        </div>
+        <!-- End .header-top -->
 
-                    <div class="header-right">
-                        <ul class="top-menu">
-                            <li>
-                                <a href="#">Links</a>
-                                <ul>
-                                    <li><a href="/wishlist"><i class="icon-heart-o"></i>Wishlist
-                                        <% if(wishlist) {%>
-                                            <span>(<%= wishlist.products.length %>)</span></a></li>
-                                    <% } %>
+        <div class="header-middle sticky-header">
+          <div class="container">
+            <div class="header-left">
+              <button class="mobile-menu-toggler">
+                <span class="sr-only">Toggle mobile menu</span>
+                <i class="icon-bars"></i>
+              </button>
 
-                                    <% if(isLoggedIn){ %>
-                                        <li><a href="/logout"><i class="icon-user"></i>Logogut</a></li>
-                                            <% }else{ %>
-                                        <li><a href="/signIn"><i class="icon-user"></i>Login</a></li>
-                                        <% } %>
-                                </ul>
-                            </li>
-                        </ul><!-- End .top-menu -->
-                    </div><!-- End .header-right -->
-                </div><!-- End .container -->
-            </div><!-- End .header-top -->
+              <a href="index.html" class="logo">
+                <img
+                  src="/users/assets/images/chiccart-high-resolution.png"
+                  alt="ChicCart Logo"
+                  width="105"
+                  height="25"
+                />
+              </a>
 
-            <div class="header-middle sticky-header">
-                <div class="container">
-                    <div class="header-left">
-                        <button class="mobile-menu-toggler">
-                            <span class="sr-only">Toggle mobile menu</span>
-                            <i class="icon-bars"></i>
-                        </button>
+              <nav class="main-nav">
+                <ul class="menu sf-arrows">
+                  <li class="megamenu-container active">
+                    <a href="/home" class="sf-with-ul">Home</a>
+                  </li>
+                  <li>
+                    <a href="/shop" class="sf-with-ul">Shop</a>
+                  </li>
 
-                        <a href="index.html" class="logo">
-                            <img src="/users/assets/images/chiccart-high-resolution.png" alt="ChicCart Logo" width="105" height="25">
-                        </a>
+                  <li>
+                    <a href="#" class="sf-with-ul">Pages</a>
+                  </li>
 
-                        <nav class="main-nav">
-                            <ul class="menu sf-arrows">
-                                <li class="megamenu-container active">
-                                    <a href="/home" class="sf-with-ul">Home</a>
+                  <li>
+                    <a href="elements-list.html" class="sf-with-ul">Profile</a>
+                  </li>
+                </ul>
+                <!-- End .menu -->
+              </nav>
+              <!-- End .main-nav -->
+            </div>
+            <!-- End .header-left -->
 
-                                    
-                                </li>
-                                <li>
-                                    <a href="/shop" class="sf-with-ul">Shop</a>
+            <div class="header-right">
+              <div class="header-search">
+                <a href="#" class="search-toggle" role="button" title="Search"
+                  ><i class="icon-search"></i
+                ></a>
+                <form action="#" method="get">
+                  <div class="header-search-wrapper">
+                    <label for="q" class="sr-only">Search</label>
+                    <input
+                      type="search"
+                      class="form-control"
+                      name="q"
+                      id="q"
+                      placeholder="Search in..."
+                      required
+                    />
+                  </div>
+                  <!-- End .header-search-wrapper -->
+                </form>
+              </div>
+              <!-- End .header-search -->
+              <div class="dropdown compare-dropdown">
+                <a
+                  href="#"
+                  class="dropdown-toggle"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  data-display="static"
+                  title="Compare Products"
+                  aria-label="Compare Products"
+                >
+                  <i class="icon-random"></i>
+                </a>
+              </div>
+              <!-- End .compare-dropdown -->
 
-                                    
-                                </li>
-                                
-                                <li>
-                                    <a href="#" class="sf-with-ul">Pages</a>
+              <div style="margin-left: 15px">
+                <!-- <button type="button" class="btn btn-primary position-relative"> -->
+                <a href="/cart"
+                  ><i
+                    class="icon-shopping-cart position-relative"
+                    style="font-size: 30px"
+                  ></i
+                ></a>
 
-                                    
-                                </li>
-                                
-                                <li>
-                                    <a href="elements-list.html" class="sf-with-ul">Profile</a>
+                <span class="cart-count">
+                  <% if(isLoggedIn&&cart){ %> <%= cart.products.length %> <%
+                  }else{ %> 0<% } %>
+                </span>
+              </div>
+            </div>
+            <!-- End .header-right -->
+          </div>
+          <!-- End .container -->
+        </div>
+        <!-- End .header-middle -->
+      </header>
+      <!-- End .header -->
 
-                                   
-                                </li>
-                            </ul><!-- End .menu -->
-                        </nav><!-- End .main-nav -->
-                    </div><!-- End .header-left -->
+      <main class="main">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+          <div class="container d-flex align-items-center">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Single</li>
+            </ol>
 
-                    <div class="header-right">
-                        <div class="header-search">
-                            <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper">
-                                    <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
-                                </div><!-- End .header-search-wrapper -->
-                            </form>
-                        </div><!-- End .header-search -->
-                        <div class="dropdown compare-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
-                                <i class="icon-random"></i>
-                            </a>
+            <nav class="product-pager ml-auto" aria-label="Product">
+              <a
+                class="product-pager-link product-pager-prev"
+                href="#"
+                aria-label="Previous"
+                tabindex="-1"
+              >
+                <i class="icon-angle-left"></i>
+                <span>Prev</span>
+              </a>
 
-                            
-                        </div><!-- End .compare-dropdown -->
-
-                    
-                        <div style="margin-left: 15px;">
-                        <!-- <button type="button" class="btn btn-primary position-relative"> -->
-                            <a href="/cart"><i class="icon-shopping-cart  position-relative "  style="font-size: 30px;"></i></a>
-                            
-                           
-                            <span class="cart-count"><% if(isLoggedIn&&cart){ %>
-                                <%= cart.products.length %><% }else{ %>
-                                0<% } %></span>
-                          
-                        </div>
-
-                    </div><!-- End .header-right -->
-                </div><!-- End .container -->
-            </div><!-- End .header-middle -->
-        </header><!-- End .header -->
-
-        <main class="main">
-            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-                <div class="container d-flex align-items-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                        <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Single</li>
-                    </ol>
-
-                    <nav class="product-pager ml-auto" aria-label="Product">
-                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-
-                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                    </nav>
-                </div>
+              <a
+                class="product-pager-link product-pager-next"
+                href="#"
+                aria-label="Next"
+                tabindex="-1"
+              >
+                <span>Next</span>
+                <i class="icon-angle-right"></i>
+              </a>
             </nav>
+          </div>
+        </nav>
 
-            <div class="page-content">
-                <div class="container">
-                    <div class="product-details-top">
-                        <div class="row">
-                          
-                            <div class="col-md-6">
-                                <div class="product-gallery product-gallery-vertical">
-                                    <div class="row">
-                                        <figure class="product-main-image">
-                                            <!-- <img id="product-zoom" src="/users/assets/images/products/single/1.jpg" data-zoom-image="/users/assets/images/products/single/1-big.jpg" alt="product image"> -->
-                                            <img id="product-zoom" src="/uploads/<%= product.image[0] %>" data-zoom-image="/uploads/<%= product.image[0] %>" alt="product image">
-                                            <% if(product.offerApplied) { %>
-                                            <span class="product-label rounded  label-new"><%= product.offerApplied %>% OFF</span>
-                                            <% } %>
+        <div class="page-content">
+          <div class="container">
+            <div class="product-details-top">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="product-gallery product-gallery-vertical">
+                    <div class="row">
+                      <figure class="product-main-image">
+                        <!-- <img id="product-zoom" src="/users/assets/images/products/single/1.jpg" data-zoom-image="/users/assets/images/products/single/1-big.jpg" alt="product image"> -->
+                        <img
+                          id="product-zoom"
+                          src="/uploads/<%= product.image[0] %>"
+                          data-zoom-image="/uploads/<%= product.image[0] %>"
+                          alt="product image"
+                        />
+                        <% if(product.offerApplied) { %>
+                        <span class="product-label rounded label-new">
+                          <%= product.offerApplied %>% OFF
+                        </span>
+                        <% } %>
 
-                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                                <i class="icon-arrows"></i>
-                                            </a>
-                                        </figure>
+                        <a
+                          href="#"
+                          id="btn-product-gallery"
+                          class="btn-product-gallery"
+                        >
+                          <i class="icon-arrows"></i>
+                        </a>
+                      </figure>
 
-                                        <div id="product-zoom-gallery" class="product-image-gallery">
-                                            <a class="product-gallery-item active" href="#" data-image="/uploads/<%= product.image[0] %>" data-zoom-image="/uploads/<%= product.image[0] %>">
-                                                <img src="/uploads/<%= product.image[0] %>" alt="product side">
-                                            </a>
+                      <div
+                        id="product-zoom-gallery"
+                        class="product-image-gallery"
+                      >
+                        <a
+                          class="product-gallery-item active"
+                          href="#"
+                          data-image="/uploads/<%= product.image[0] %>"
+                          data-zoom-image="/uploads/<%= product.image[0] %>"
+                        >
+                          <img
+                            src="/uploads/<%= product.image[0] %>"
+                            alt="product side"
+                          />
+                        </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="/uploads/<%= product.image[1] %>" data-zoom-image="/uploads/<%= product.image[1] %>">
-                                                <img src="/uploads/<%= product.image[1] %>" alt="product cross">
-                                            </a>
+                        <a
+                          class="product-gallery-item"
+                          href="#"
+                          data-image="/uploads/<%= product.image[1] %>"
+                          data-zoom-image="/uploads/<%= product.image[1] %>"
+                        >
+                          <img
+                            src="/uploads/<%= product.image[1] %>"
+                            alt="product cross"
+                          />
+                        </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="/uploads/<%= product.image[2] %>" data-zoom-image="/uploads/<%= product.image[2] %>">
-                                                <img src="/uploads/<%= product.image[2] %>" alt="product with model">
-                                            </a>
+                        <a
+                          class="product-gallery-item"
+                          href="#"
+                          data-image="/uploads/<%= product.image[2] %>"
+                          data-zoom-image="/uploads/<%= product.image[2] %>"
+                        >
+                          <img
+                            src="/uploads/<%= product.image[2] %>"
+                            alt="product with model"
+                          />
+                        </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="/uploads/<%= product.image[3] %>" data-zoom-image="/uploads/<%= product.image[3] %>">
-                                                <img src="/uploads/<%= product.image[3] %>" alt="product back">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <a
+                          class="product-gallery-item"
+                          href="#"
+                          data-image="/uploads/<%= product.image[3] %>"
+                          data-zoom-image="/uploads/<%= product.image[3] %>"
+                        >
+                          <img
+                            src="/uploads/<%= product.image[3] %>"
+                            alt="product back"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                            <div class="col-md-6">
-                                <div class="product-details">
-                                    <h1 class="product-title"><%= product.name %></h1>
+                <div class="col-md-6">
+                  <div class="product-details">
+                    <h1 class="product-title"><%= product.name %></h1>
 
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div>
-                                        </div>
-                                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                                    </div>
+                    <div class="ratings-container">
+                      <div class="ratings">
+                        <div class="ratings-val" style="width: 80%"></div>
+                      </div>
+                      <a
+                        class="ratings-text"
+                        href="#product-review-link"
+                        id="review-link"
+                        >( 2 Reviews )</a
+                      >
+                    </div>
 
-                                    <div class="product-price">
-                                        <% if(product.offerApplied){ %>
-                                        
-                                        <span class="small text-dark original-price" style="text-decoration: line-through;">₹<%= product.price %></span>&nbsp;
-                                        <% let discountPrice =product.price -(product.price*(product.offerApplied /100)) %>
-                                        <span class="discount-price">₹  <%= discountPrice %></span>
-                                        <% }else{ %>
-                                            ₹<%= product.price %>
-                                        <% } %>
-                                    </div>
+                    <div class="product-price">
+                      <% if(product.offerApplied){ %>
 
-                                    <div class="product-content">
-                                        <p><%= product.description %></p>
-                                    </div>
+                      <span
+                        class="small text-dark original-price"
+                        style="text-decoration: line-through"
+                        >₹<%= product.price %> </span
+                      >&nbsp; <% let discountPrice=product.price
+                      -(product.price*(product.offerApplied /100)) %>
+                      <span class="discount-price">₹ <%= discountPrice %></span>
+                      <% }else{ %> ₹<%= product.price %> <% } %>
+                    </div>
 
-                                    
+                    <div class="product-content">
+                      <p><%= product.description %></p>
+                    </div>
 
-                                    <!-- <div class="details-filter-row details-row-size">
+                    <!-- <div class="details-filter-row details-row-size">
                                         <label for="size">Size:</label>
                                         <div class="select-custom">
                                             <select name="size" id="size" class="form-control">
@@ -247,156 +374,301 @@
                                         <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
                                     </div> -->
 
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="qty">Qty:</label>
-                                        <div class="product-details-quantity">
-                                            <input type="number" id="qty" class="form-control" value="1" min="1" max="<%= product.quantity %>" step="1" data-decimals="0" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="product-details-action">
-                                        <a href="#" class="btn-product btn-cart" id="addToCartButton" onclick="addToCart('<%= product._id %>')" ><span>add to cart</span></a>
-                                       
-                                        <div class="details-action-wrapper">
-                                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                            <!-- <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a> -->
-                                        </div>
-                                    </div>
-
-                                    <div class="product-details-footer">
-                                        <div class="product-cat">
-                                            <span>Category:</span>
-                                            <a href="#"><%= product.category?.name %></a>
-                                            
-                                            
-                                        </div>
-
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                      
-                        </div>
+                    <div class="details-filter-row details-row-size">
+                      <label for="qty">Qty:</label>
+                      <div class="product-details-quantity">
+                        <input
+                          type="number"
+                          id="qty"
+                          class="form-control"
+                          value="1"
+                          min="1"
+                          max="<%= product.quantity %>"
+                          step="1"
+                          data-decimals="0"
+                          required
+                        />
+                      </div>
                     </div>
 
-                    <div class="product-details-tab">
-                        <ul class="nav nav-pills justify-content-center" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
-                                <div class="product-desc-content">
-                                    <h3>Product Information</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
-                                    <ul>
-                                        <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit. </li>
-                                        <li>Vivamus finibus vel mauris ut vehicula.</li>
-                                        <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>
-                                    </ul>
+                    <div class="product-details-action">
+                      <% if(isLoggedIn){ %>
+                      <a
+                        href="#"
+                        class="btn-product btn-cart"
+                        id="addToCartButton"
+                        onclick="addToCart('<%= product._id %>')"
+                        ><span>add to cart</span></a>
+                      <% }else{ %>
+                      <a
+                        href="#"
+                        class="btn-product btn-cart"
+                        id="loginButton"
+                        onclick="loginAlert()"
+                        ><span>add to cart</span></a>
 
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
-                                <div class="product-desc-content">
-                                    <h3>Information</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
-
-                                    <h3>Fabric & care</h3>
-                                    <ul>
-                                        <li>Faux suede fabric</li>
-                                        <li>Gold tone metal hoop handles.</li>
-                                        <li>RI branding</li>
-                                        <li>Snake print trim interior </li>
-                                        <li>Adjustable cross body strap</li>
-                                        <li> Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>
-                                    </ul>
-
-                                    <h3>Size</h3>
-                                    <p>one size</p>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
-                                <div class="product-desc-content">
-                                    <h3>Delivery & returns</h3>
-                                    <p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our <a href="#">Delivery information</a><br>
-                                    We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
-                                <div class="reviews">
-                                    <h3>Reviews (2)</h3>
-                                    <div class="review">
-                                        <div class="row no-gutters">
-                                            <div class="col-auto">
-                                                <h4><a href="#">Samanta J.</a></h4>
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 80%;"></div>
-                                                    </div>
-                                                </div>
-                                                <span class="review-date">6 days ago</span>
-                                            </div>
-                                            <div class="col">
-                                                <h4>Good, perfect size</h4>
-
-                                                <div class="review-content">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae voluptas!</p>
-                                                </div>
-
-                                                <div class="review-action">
-                                                    <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                                    <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="review">
-                                        <div class="row no-gutters">
-                                            <div class="col-auto">
-                                                <h4><a href="#">John Doe</a></h4>
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 100%;"></div>
-                                                    </div>
-                                                </div>
-                                                <span class="review-date">5 days ago</span>
-                                            </div>
-                                            <div class="col">
-                                                <h4>Very good</h4>
-
-                                                <div class="review-content">
-                                                    <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas iure illum repellendus, blanditiis perspiciatis beatae!</p>
-                                                </div>
-
-                                                <div class="review-action">
-                                                    <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                                                    <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <% } %>
+                      <div class="details-action-wrapper">
+                        <a
+                          href="#"
+                          class="btn-product btn-wishlist"
+                          title="Wishlist"
+                          ><span>Add to Wishlist</span></a>
+                        <!-- <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a> -->
+                      </div>
                     </div>
 
-                    <h2 class="title text-center mb-4">You May Also Like</h2>
+                    <div class="product-details-footer">
+                      <div class="product-cat">
+                        <span>Category:</span>
+                        <a href="#"> <%= product.category?.name %> </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                        data-owl-options='{
+            <div class="product-details-tab">
+              <ul class="nav nav-pills justify-content-center" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="product-desc-link"
+                    data-toggle="tab"
+                    href="#product-desc-tab"
+                    role="tab"
+                    aria-controls="product-desc-tab"
+                    aria-selected="true"
+                    >Description</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="product-info-link"
+                    data-toggle="tab"
+                    href="#product-info-tab"
+                    role="tab"
+                    aria-controls="product-info-tab"
+                    aria-selected="false"
+                    >Additional information</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="product-shipping-link"
+                    data-toggle="tab"
+                    href="#product-shipping-tab"
+                    role="tab"
+                    aria-controls="product-shipping-tab"
+                    aria-selected="false"
+                    >Shipping & Returns</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="product-review-link"
+                    data-toggle="tab"
+                    href="#product-review-tab"
+                    role="tab"
+                    aria-controls="product-review-tab"
+                    aria-selected="false"
+                    >Reviews (2)</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div
+                  class="tab-pane fade show active"
+                  id="product-desc-tab"
+                  role="tabpanel"
+                  aria-labelledby="product-desc-link"
+                >
+                  <div class="product-desc-content">
+                    <h3>Product Information</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      Donec odio. Quisque volutpat mattis eros. Nullam malesuada
+                      erat ut turpis. Suspendisse urna viverra non, semper
+                      suscipit, posuere a, pede. Donec nec justo eget felis
+                      facilisis fermentum. Aliquam porttitor mauris sit amet
+                      orci. Aenean dignissim pellentesque felis. Phasellus
+                      ultrices nulla quis nibh. Quisque a lectus. Donec
+                      consectetuer ligula vulputate sem tristique cursus.
+                    </p>
+                    <ul>
+                      <li>
+                        Nunc nec porttitor turpis. In eu risus enim. In vitae
+                        mollis elit.
+                      </li>
+                      <li>Vivamus finibus vel mauris ut vehicula.</li>
+                      <li>
+                        Nullam a magna porttitor, dictum risus nec, faucibus
+                        sapien.
+                      </li>
+                    </ul>
+
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      Donec odio. Quisque volutpat mattis eros. Nullam malesuada
+                      erat ut turpis. Suspendisse urna viverra non, semper
+                      suscipit, posuere a, pede. Donec nec justo eget felis
+                      facilisis fermentum. Aliquam porttitor mauris sit amet
+                      orci. Aenean dignissim pellentesque felis. Phasellus
+                      ultrices nulla quis nibh. Quisque a lectus. Donec
+                      consectetuer ligula vulputate sem tristique cursus.
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="product-info-tab"
+                  role="tabpanel"
+                  aria-labelledby="product-info-link"
+                >
+                  <div class="product-desc-content">
+                    <h3>Information</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      Donec odio. Quisque volutpat mattis eros. Nullam malesuada
+                      erat ut turpis. Suspendisse urna viverra non, semper
+                      suscipit, posuere a, pede. Donec nec justo eget felis
+                      facilisis fermentum. Aliquam porttitor mauris sit amet
+                      orci.
+                    </p>
+
+                    <h3>Fabric & care</h3>
+                    <ul>
+                      <li>Faux suede fabric</li>
+                      <li>Gold tone metal hoop handles.</li>
+                      <li>RI branding</li>
+                      <li>Snake print trim interior</li>
+                      <li>Adjustable cross body strap</li>
+                      <li>
+                        Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop:
+                        61cm
+                      </li>
+                    </ul>
+
+                    <h3>Size</h3>
+                    <p>one size</p>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="product-shipping-tab"
+                  role="tabpanel"
+                  aria-labelledby="product-shipping-link"
+                >
+                  <div class="product-desc-content">
+                    <h3>Delivery & returns</h3>
+                    <p>
+                      We deliver to over 100 countries around the world. For
+                      full details of the delivery options we offer, please view
+                      our <a href="#">Delivery information</a><br />
+                      We hope you’ll love every purchase, but if you ever need
+                      to return an item you can do so within a month of receipt.
+                      For full details of how to make a return, please view our
+                      <a href="#">Returns information</a>
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="product-review-tab"
+                  role="tabpanel"
+                  aria-labelledby="product-review-link"
+                >
+                  <div class="reviews">
+                    <h3>Reviews (2)</h3>
+                    <div class="review">
+                      <div class="row no-gutters">
+                        <div class="col-auto">
+                          <h4><a href="#">Samanta J.</a></h4>
+                          <div class="ratings-container">
+                            <div class="ratings">
+                              <div class="ratings-val" style="width: 80%"></div>
+                            </div>
+                          </div>
+                          <span class="review-date">6 days ago</span>
+                        </div>
+                        <div class="col">
+                          <h4>Good, perfect size</h4>
+
+                          <div class="review-content">
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur
+                              adipisicing elit. Ducimus cum dolores assumenda
+                              asperiores facilis porro reprehenderit animi culpa
+                              atque blanditiis commodi perspiciatis doloremque,
+                              possimus, explicabo, autem fugit beatae quae
+                              voluptas!
+                            </p>
+                          </div>
+
+                          <div class="review-action">
+                            <a href="#"
+                              ><i class="icon-thumbs-up"></i>Helpful (2)</a
+                            >
+                            <a href="#"
+                              ><i class="icon-thumbs-down"></i>Unhelpful (0)</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="review">
+                      <div class="row no-gutters">
+                        <div class="col-auto">
+                          <h4><a href="#">John Doe</a></h4>
+                          <div class="ratings-container">
+                            <div class="ratings">
+                              <div
+                                class="ratings-val"
+                                style="width: 100%"
+                              ></div>
+                            </div>
+                          </div>
+                          <span class="review-date">5 days ago</span>
+                        </div>
+                        <div class="col">
+                          <h4>Very good</h4>
+
+                          <div class="review-content">
+                            <p>
+                              Sed, molestias, tempore? Ex dolor esse iure hic
+                              veniam laborum blanditiis laudantium iste amet.
+                              Cum non voluptate eos enim, ab cumque nam, modi,
+                              quas iure illum repellendus, blanditiis
+                              perspiciatis beatae!
+                            </p>
+                          </div>
+
+                          <div class="review-action">
+                            <a href="#"
+                              ><i class="icon-thumbs-up"></i>Helpful (0)</a
+                            >
+                            <a href="#"
+                              ><i class="icon-thumbs-down"></i>Unhelpful (0)</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="title text-center mb-4">You May Also Like</h2>
+
+            <div
+              class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow"
+              data-toggle="owl"
+              data-owl-options='{
                             "nav": false, 
                             "dots": true,
                             "margin": 20,
@@ -420,309 +692,458 @@
                                     "dots": false
                                 }
                             }
-                        }'>
-                        
-                        <% products.forEach(product=> { %>
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-new">New</span>
-                                <a href="product.html">
-                                    <img src="/uploads/<%= product.image[0] %>" alt="Product image" class="product-image">
-                                </a>
+                        }'
+            >
+              <% products.forEach(product=> { %>
+              <div class="product product-7 text-center">
+                <figure class="product-media">
+                  <span class="product-label label-new">New</span>
+                  <a href="product.html">
+                    <img
+                      src="/uploads/<%= product.image[0] %>"
+                      alt="Product image"
+                      class="product-image"
+                    />
+                  </a>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div>
+                  <div class="product-action-vertical">
+                    <a
+                      href="#"
+                      class="btn-product-icon btn-wishlist btn-expandable"
+                      ><span>add to wishlist</span></a
+                    >
+                    <a
+                      href="popup/quickView.html"
+                      class="btn-product-icon btn-quickview"
+                      title="Quick view"
+                      ><span>Quick view</span></a
+                    >
+                    <a
+                      href="#"
+                      class="btn-product-icon btn-compare"
+                      title="Compare"
+                      ><span>Compare</span></a
+                    >
+                  </div>
 
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart" ><span>add to cart</span></a>
-                                </div>
-                            </figure>
+                  <div class="product-action">
+                    <a href="#" class="btn-product btn-cart"
+                      ><span>add to cart</span></a
+                    >
+                  </div>
+                </figure>
 
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#"><%= product.category?.name %></a>
-                                </div>
-                                <h3 class="product-title"><a href="l"><%= product.name %></a></h3>
-                                <div class="product-price">
-                                    ₹<%= product.price %>
-                                </div>
-                                <div class="ratings-container">
-                                              <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div>
-                                    </div>
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div>
-
-                                <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
-                                        <img src="/uploads/<%= product.image[1] %>" alt="product desc">
-                                    </a>
-                                    <a href="#">
-                                        <img src="/uploads/<%= product.image[2] %>" alt="product desc">
-                                    </a>
-
-                                    <a href="#">
-                                        <img src="/uploads/<%= product.image[3] %>" alt="product desc">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <% }) %>
-                        
-                        
+                <div class="product-body">
+                  <div class="product-cat">
+                    <a href="#"> <%= product.category?.name %> </a>
+                  </div>
+                  <h3 class="product-title">
+                    <a href="l"> <%= product.name %> </a>
+                  </h3>
+                  <div class="product-price">₹<%= product.price %></div>
+                  <div class="ratings-container">
+                    <div class="ratings">
+                      <div class="ratings-val" style="width: 20%"></div>
                     </div>
+                    <span class="ratings-text">( 2 Reviews )</span>
+                  </div>
+
+                  <div class="product-nav product-nav-thumbs">
+                    <a href="#" class="active">
+                      <img
+                        src="/uploads/<%= product.image[1] %>"
+                        alt="product desc"
+                      />
+                    </a>
+                    <a href="#">
+                      <img
+                        src="/uploads/<%= product.image[2] %>"
+                        alt="product desc"
+                      />
+                    </a>
+
+                    <a href="#">
+                      <img
+                        src="/uploads/<%= product.image[3] %>"
+                        alt="product desc"
+                      />
+                    </a>
+                  </div>
                 </div>
+              </div>
+              <% }) %>
             </div>
-        </main>
+          </div>
+        </div>
+      </main>
 
-        <footer class="footer">
-        	<div class="footer-middle">
-	            <div class="container">
-	            	<div class="row">
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget widget-about">
-	            				<img src="/users/assets/images/chiccart-high-resolution.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
-	            				<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+      <footer class="footer">
+        <div class="footer-middle">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-lg-3">
+                <div class="widget widget-about">
+                  <img
+                    src="/users/assets/images/chiccart-high-resolution.png"
+                    class="footer-logo"
+                    alt="Footer Logo"
+                    width="105"
+                    height="25"
+                  />
+                  <p>
+                    Praesent dapibus, neque id cursus ucibus, tortor neque
+                    egestas augue, eu vulputate magna eros eu erat.
+                  </p>
 
-	            				<div class="social-icons">
-	            					<a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
-	            				</div><!-- End .soial-icons -->
-	            			</div><!-- End .widget about-widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
+                  <div class="social-icons">
+                    <a
+                      href="#"
+                      class="social-icon"
+                      target="_blank"
+                      title="Facebook"
+                      ><i class="icon-facebook-f"></i
+                    ></a>
+                    <a
+                      href="#"
+                      class="social-icon"
+                      target="_blank"
+                      title="Twitter"
+                      ><i class="icon-twitter"></i
+                    ></a>
+                    <a
+                      href="#"
+                      class="social-icon"
+                      target="_blank"
+                      title="Instagram"
+                      ><i class="icon-instagram"></i
+                    ></a>
+                    <a
+                      href="#"
+                      class="social-icon"
+                      target="_blank"
+                      title="Youtube"
+                      ><i class="icon-youtube"></i
+                    ></a>
+                    <a
+                      href="#"
+                      class="social-icon"
+                      target="_blank"
+                      title="Pinterest"
+                      ><i class="icon-pinterest"></i
+                    ></a>
+                  </div>
+                  <!-- End .soial-icons -->
+                </div>
+                <!-- End .widget about-widget -->
+              </div>
+              <!-- End .col-sm-6 col-lg-3 -->
 
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+              <div class="col-sm-6 col-lg-3">
+                <div class="widget">
+                  <h4 class="widget-title">Useful Links</h4>
+                  <!-- End .widget-title -->
 
-	            				<ul class="widget-list">
-	            					<li><a href="about.html">About ChicCart</a></li>
-	            					<li><a href="#">How to shop on ChicCart</a></li>
-	            					<li><a href="#">FAQ</a></li>
-	            					<li><a href="contact.html">Contact us</a></li>
-	            					<li><a href="login.html">Log in</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
+                  <ul class="widget-list">
+                    <li><a href="about.html">About ChicCart</a></li>
+                    <li><a href="#">How to shop on ChicCart</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="contact.html">Contact us</a></li>
+                    <li><a href="login.html">Log in</a></li>
+                  </ul>
+                  <!-- End .widget-list -->
+                </div>
+                <!-- End .widget -->
+              </div>
+              <!-- End .col-sm-6 col-lg-3 -->
 
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+              <div class="col-sm-6 col-lg-3">
+                <div class="widget">
+                  <h4 class="widget-title">Customer Service</h4>
+                  <!-- End .widget-title -->
 
-	            				<ul class="widget-list">
-	            					<li><a href="#">Payment Methods</a></li>
-	            					<li><a href="#">Money-back guarantee!</a></li>
-	            					<li><a href="#">Returns</a></li>
-	            					<li><a href="#">Shipping</a></li>
-	            					<li><a href="#">Terms and conditions</a></li>
-	            					<li><a href="#">Privacy Policy</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
+                  <ul class="widget-list">
+                    <li><a href="#">Payment Methods</a></li>
+                    <li><a href="#">Money-back guarantee!</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Terms and conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                  </ul>
+                  <!-- End .widget-list -->
+                </div>
+                <!-- End .widget -->
+              </div>
+              <!-- End .col-sm-6 col-lg-3 -->
 
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+              <div class="col-sm-6 col-lg-3">
+                <div class="widget">
+                  <h4 class="widget-title">My Account</h4>
+                  <!-- End .widget-title -->
 
-	            				<ul class="widget-list">
-	            					<li><a href="#">Sign In</a></li>
-	            					<li><a href="cart.html">View Cart</a></li>
-	            					<li><a href="#">My Wishlist</a></li>
-	            					<li><a href="#">Track My Order</a></li>
-	            					<li><a href="#">Help</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
-	            	</div><!-- End .row -->
-	            </div><!-- End .container -->
-	        </div><!-- End .footer-middle -->
+                  <ul class="widget-list">
+                    <li><a href="#">Sign In</a></li>
+                    <li><a href="cart.html">View Cart</a></li>
+                    <li><a href="#">My Wishlist</a></li>
+                    <li><a href="#">Track My Order</a></li>
+                    <li><a href="#">Help</a></li>
+                  </ul>
+                  <!-- End .widget-list -->
+                </div>
+                <!-- End .widget -->
+              </div>
+              <!-- End .col-sm-6 col-lg-3 -->
+            </div>
+            <!-- End .row -->
+          </div>
+          <!-- End .container -->
+        </div>
+        <!-- End .footer-middle -->
 
-	        <div class="footer-bottom">
-	        	<div class="container">
-	        		<p class="footer-copyright">Copyright © 2019 ChicCart Store. All Rights Reserved.</p><!-- End .footer-copyright -->
-	        		<figure class="footer-payments">
-	        			<img src="/users/assets/images/payments.png" alt="Payment methods" width="272" height="20">
-	        		</figure><!-- End .footer-payments -->
-	        	</div><!-- End .container -->
-	        </div><!-- End .footer-bottom -->
-        </footer><!-- End .footer -->
-    </div><!-- End .page-wrapper -->
-    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+        <div class="footer-bottom">
+          <div class="container">
+            <p class="footer-copyright">
+              Copyright © 2019 ChicCart Store. All Rights Reserved.
+            </p>
+            <!-- End .footer-copyright -->
+            <figure class="footer-payments">
+              <img
+                src="/users/assets/images/payments.png"
+                alt="Payment methods"
+                width="272"
+                height="20"
+              />
+            </figure>
+            <!-- End .footer-payments -->
+          </div>
+          <!-- End .container -->
+        </div>
+        <!-- End .footer-bottom -->
+      </footer>
+      <!-- End .footer -->
+    </div>
+    <!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top">
+      <i class="icon-arrow-up"></i>
+    </button>
 
     <!-- Sticky Bar -->
     <div class="sticky-bar">
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <figure class="product-media">
-                        <a href="">
-                            <img src="/uploads/<%= product.image[0] %>" alt="Product image">
-                        </a>
-                    </figure><!-- End .product-media -->
-                    <h4 class="product-title"><a href=""><%= product.name %></a></h4><!-- End .product-title -->
-                </div><!-- End .col-6 -->
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <figure class="product-media">
+              <a href="">
+                <img
+                  src="/uploads/<%= product.image[0] %>"
+                  alt="Product image"
+                />
+              </a>
+            </figure>
+            <!-- End .product-media -->
+            <h4 class="product-title"><a href=""> <%= product.name %> </a></h4>
+            <!-- End .product-title -->
+          </div>
+          <!-- End .col-6 -->
 
-                <div class="col-6 justify-content-end">
-                    <div class="product-price">
-                        <% if(product.offerApplied){ %>
-                                        
-                            <span class="small text-dark original-price" style="text-decoration: line-through;">₹<%= product.price %></span>&nbsp;
-                            <% let discountPrice =product.price -(product.price*(product.offerApplied /100)) %>
-                            <span class="discount-price">₹  <%= discountPrice %></span>
-                            <% }else{ %>
-                                ₹<%= product.price %>
-                            <% } %>
-                    </div><!-- End .product-price -->
-                    <div class="product-details-quantity">
-                        <input type="number" id="sticky-cart-qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                    </div><!-- End .product-details-quantity -->
+          <div class="col-6 justify-content-end">
+            <div class="product-price">
+              <% if(product.offerApplied){ %>
 
-                    <div class="product-details-action">
-                        <a href="/checkout" class="btn btn-outline-primary  text-dark "><span>Go to Checkout</span></a>
-                        <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a> -->
-                    </div><!-- End .product-details-action -->
-                </div><!-- End .col-6 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-    </div><!-- End .sticky-bar -->
+              <span
+                class="small text-dark original-price"
+                style="text-decoration: line-through"
+                >₹<%= product.price %></span
+              >&nbsp; <% let discountPrice=product.price
+              -(product.price*(product.offerApplied /100)) %>
+              <span class="discount-price">₹ <%= discountPrice %></span>
+              <% }else{ %> ₹<%= product.price %> <% } %>
+            </div>
+            <!-- End .product-price -->
+            <div class="product-details-quantity">
+              <input
+                type="number"
+                id="sticky-cart-qty"
+                class="form-control"
+                value="1"
+                min="1"
+                max="10"
+                step="1"
+                data-decimals="0"
+                required
+              />
+            </div>
+            <!-- End .product-details-quantity -->
+
+            <div class="product-details-action">
+              <a href="/checkout" class="btn btn-outline-primary text-dark"
+                ><span>Go to Checkout</span></a
+              >
+              <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a> -->
+            </div>
+            <!-- End .product-details-action -->
+          </div>
+          <!-- End .col-6 -->
+        </div>
+        <!-- End .row -->
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .sticky-bar -->
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+    <div class="mobile-menu-overlay"></div>
+    <!-- End .mobil-menu-overlay -->
 
     <div class="mobile-menu-container">
-        <div class="mobile-menu-wrapper">
-            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+      <div class="mobile-menu-wrapper">
+        <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-            <form action="#" method="get" class="mobile-search">
-                <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
-                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-            </form>
-            
-            <nav class="mobile-nav">
-                <ul class="mobile-menu">
-                    <li class="active">
-                        <a href="/home">Home</a>
+        <form action="#" method="get" class="mobile-search">
+          <label for="mobile-search" class="sr-only">Search</label>
+          <input
+            type="search"
+            class="form-control"
+            name="mobile-search"
+            id="mobile-search"
+            placeholder="Search in..."
+            required
+          />
+          <button class="btn btn-primary" type="submit">
+            <i class="icon-search"></i>
+          </button>
+        </form>
 
-                        
-                    </li>
-                    <li>
-                        <a href="/shop">Shop</a>
-                       
-                    </li>
-                    
-                    <li>
-                        <a href="#">Pages</a>
-                        <ul>
-                            <li>
-                                <a href="about.html">About</a>
+        <nav class="mobile-nav">
+          <ul class="mobile-menu">
+            <li class="active">
+              <a href="/home">Home</a>
+            </li>
+            <li>
+              <a href="/shop">Shop</a>
+            </li>
 
-                                <ul>
-                                    <li><a href="about.html">About 01</a></li>
-                                 
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="contact.html">Contact</a>
+            <li>
+              <a href="#">Pages</a>
+              <ul>
+                <li>
+                  <a href="about.html">About</a>
 
-                                <ul>
-                                    <li><a href="contact.html">Contact 01</a></li>
-                                  
-                                </ul>
-                            </li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="faq.html">FAQs</a></li>
-                            <li><a href="404.html">Error 404</a></li>
-                            <li><a href="coming-soon.html">Coming Soon</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li>
-                        <a href="">Profile</a>
-                        <ul>
-                            <li><a href="/dashboard">My Account</a></li>
-                            <li><a href="">Typography</a></li>
-                            <li><a href="">Titles</a></li>
-                            <li><a href="">Banners</a></li>
-                  
-                        </ul>
-                    </li>
-                </ul>
-            </nav><!-- End [[]]{{}}obile-nav -->
+                  <ul>
+                    <li><a href="about.html">About 01</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="contact.html">Contact</a>
 
-            <div class="social-icons">
-                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
-                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
-                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
-            </div><!-- End .social-icons -->
-        </div><!-- End .mobile-menu-wrapper -->
-    </div><!-- End .mobile-menu-container -->
+                  <ul>
+                    <li><a href="contact.html">Contact 01</a></li>
+                  </ul>
+                </li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="faq.html">FAQs</a></li>
+                <li><a href="404.html">Error 404</a></li>
+                <li><a href="coming-soon.html">Coming Soon</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="">Profile</a>
+              <ul>
+                <li><a href="/dashboard">My Account</a></li>
+                <li><a href="">Typography</a></li>
+                <li><a href="">Titles</a></li>
+                <li><a href="">Banners</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- End [[]]{{}}obile-nav -->
+
+        <div class="social-icons">
+          <a href="#" class="social-icon" target="_blank" title="Facebook"
+            ><i class="icon-facebook-f"></i
+          ></a>
+          <a href="#" class="social-icon" target="_blank" title="Twitter"
+            ><i class="icon-twitter"></i
+          ></a>
+          <a href="#" class="social-icon" target="_blank" title="Instagram"
+            ><i class="icon-instagram"></i
+          ></a>
+          <a href="#" class="social-icon" target="_blank" title="Youtube"
+            ><i class="icon-youtube"></i
+          ></a>
+        </div>
+        <!-- End .social-icons -->
+      </div>
+      <!-- End .mobile-menu-wrapper -->
+    </div>
+    <!-- End .mobile-menu-container -->
 
     <!-- Sign in / Register Modal -->
-   <!-- End .modal -->
+    <!-- End .modal -->
 
-   
-<script>
-
-
-    function addToCart(productId){
-        const quantity=$('#qty').val()
+    <script>
+      function addToCart(productId) {
+        const quantity = $("#qty").val();
         $.ajax({
-            type:'POST',
-            url:'/addToCart',
-            data:{productId:productId,quantity:quantity},
-            success:function(response){
-                if(response.success){
-                    console.log(response,'just checking response');
-                    if(response.exists){
-                        console.log(response.exists,'true or false');
-                        Swal.fire({
-                            title:"Success!",
-                            text:'Product Quantity Updated',
-                            icon:'success'
-
-                        });
-                    }else{
-                        Swal.fire({
-                            title:"Success!",
-                            text:'Product Added To Cart',
-                            icon:'success'
-
-                    });
-                    }
-                    
-                }else{
-                    console.log('wrong');
-                    Swal.fire({
-                        title:'Error',
-                        text:'Something Went Wrong',
-                        icon:'error'
-                    })
-                }
-            },
-            error:function(xhr,status,error){
-                console.log('wronggggg');
+          type: "POST",
+          url: "/addToCart",
+          data: { productId: productId, quantity: quantity },
+          success: function (response) {
+            console.log(response, "just checking response");
+            if (response.success) {
+              if (response.exists) {
+                console.log(response.exists, "true or false");
                 Swal.fire({
-                        title:'Error',
-                        text:'Something Went Wrong',
-                        icon:'error'
-                    })
+                  title: "Success!",
+                  text: "Product Quantity Updated",
+                  icon: "success",
+                });
+              } else {
+                Swal.fire({
+                  title: "Success!",
+                  text: "Product Added To Cart",
+                  icon: "success",
+                });
+              }
+            } else {
+              console.log("wrong");
+              Swal.fire({
+                title: "Error",
+                text: response.message ||"Something Went Wrong",
+                icon: "error",
+              });
+            }
+          },
+          error: function (xhr, status, error) {
+            console.log("wronggggg");
+            Swal.fire({
+              title: "Error",
+              text: "Something Went Wrong",
+              icon: "error",
+            });
+          },
+        });
+      }
+
+      function loginAlert(){
+        Swal.fire({
+            title: 'Please login',
+            text: 'You need to login to continue.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Login',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+      // Redirect to login page or trigger login logic
+            window.location.href = '/signin'
             }
         })
-    }
+      }
+    </script>
 
-
-    
-   </script>   
-
-   
     <!-- Plugins JS File -->
     <script src="/users/assets/js/jquery.min.js"></script>
     <script src="/users/assets/js/bootstrap.bundle.min.js"></script>
@@ -736,8 +1157,7 @@
     <script src="/users/assets/js/jquery.magnific-popup.min.js"></script>
     <!-- Main JS File -->
     <script src="/users/assets/js/main.js"></script>
-</body>
+  </body>
 
-
-<!-- molla/product.html  22 Nov 2019 09:55:05 GMT -->
+  <!-- molla/product.html  22 Nov 2019 09:55:05 GMT -->
 </html>

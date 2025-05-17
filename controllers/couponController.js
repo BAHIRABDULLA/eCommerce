@@ -4,7 +4,7 @@ const Coupon = require('../models/couponModel');
 const loadCoupon = async (req, res) => {
     try {
         const coupons = await Coupon.find({})
-        res.render('coupon', { coupons, error: req.flash('error') })
+        return res.render('coupon', { coupons, error: req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
@@ -14,7 +14,7 @@ const loadCoupon = async (req, res) => {
 //    coupon add page rendering 
 const loadCouponAdd = async (req, res) => {
     try {
-        res.render('couponAdd', { error: req.flash('error') })
+        return res.render('couponAdd', { error: req.flash('error') })
     } catch (error) {
         console.log(error.message);
     }
@@ -24,7 +24,9 @@ const loadCouponAdd = async (req, res) => {
 //    coupon adding from coupon add page
 const couponAdding = async (req, res) => {
     try {
-        const { couponName, couponCode, description, discount, expireDate } = req.body
+        const { couponName, couponCode, description, discount, criteria, expireDate } = req.body
+        console.log(discount, 'dis count', criteria, 'criteria');
+
         const existCouponName = await Coupon.findOne({ name: { $regex: `${couponName}`, $options: 'i' } })
         if (existCouponName) {
             req.flash('error', 'This coupon already existed')
@@ -35,6 +37,7 @@ const couponAdding = async (req, res) => {
                 code: couponCode,
                 description,
                 discountAmount: discount,
+                criteriaAmount: criteria,
                 expireDate
             })
             await newCoupon.save()
@@ -74,7 +77,7 @@ const couponEdit = async (req, res) => {
 const couponEditPost = async (req, res) => {
     try {
         const { couponId } = req.params
-        const { couponName, couponCode, description, discount, expireDate } = req.body;
+        const { couponName, couponCode, description, discount, criteria, expireDate } = req.body;
         const existCouponName = await Coupon.findOne({ name: { $regex: `${couponName}`, $options: 'i' }, _id: { $ne: couponId } })
         if (existCouponName) {
             req.flash('error', 'This coupon already existed')
@@ -85,6 +88,7 @@ const couponEditPost = async (req, res) => {
                 code: couponCode,
                 description,
                 discountAmount: discount,
+                criteriaAmount: criteria,
                 expireDate
             }, { new: true })
             res.redirect('/admin/coupon')

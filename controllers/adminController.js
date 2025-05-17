@@ -11,6 +11,7 @@ const bcryptjs = require('bcryptjs')
 
 //    admin login page rendering 
 const adminLogin = async (req, res) => {
+    
     try {
         res.render('login', { error: req.flash('error') })
     } catch (error) {
@@ -22,8 +23,9 @@ const adminLogin = async (req, res) => {
 //     admin login credential checking
 const adminVerify = async (req, res) => {
     try {
+        console.log(' - - - - -- - - -- - -n --  - - - - - -')
         const { email, password } = req.body
-        
+        console.log(email,'email',password,'password')
         const admin = await Admin.findOne({email})
         if (!admin) {
             req.flash('error', 'Email or Password is incorrect , please try again')
@@ -333,7 +335,7 @@ const showReport = async (req, res) => {
 const customerLoad = async (req, res) => {
     try {
         const users = await User.find()
-        res.render('customer', { users })
+        return res.render('customer', { users })
     } catch (error) {
         console.log(error.message);
     }
@@ -345,7 +347,7 @@ const deleteUser = async (req, res) => {
     try {
         const userId = req.params.id
         await User.findByIdAndDelete(userId)
-        res.redirect('/admin/customer')
+        return res.redirect('/admin/customer')
     } catch (error) {
         console.log(error.message);
     }
@@ -380,6 +382,7 @@ const updateUserStatus = async (req, res) => {
 //     logout working
 const logout = async (req, res) => {
     try {
+        console.log('its going to destroy session')
         req.session.destroy(err => {
             if (err) {
                 console.error('error destroying sessions', err)

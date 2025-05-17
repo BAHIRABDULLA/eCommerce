@@ -45,7 +45,7 @@
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown d-lg-flex ">
                 <!-- <button type="button" class="btn btn-info font-weight-bold">+ Create New</button> -->
-                <a href="/admin/offerAdd" class="btn btn-info font-weight-bold">+ Create New</a>
+                <a href="/admin/offer/add" class="btn btn-info font-weight-bold">+ Create New</a>
             </li>
           
           <li class="nav-item dropdown d-flex mr-4 ">
@@ -212,7 +212,7 @@
                           <%= offer.expireDate.toLocaleDateString('en-Us',{year:'numeric',month:'short',day:'2-digit'}) %>
                           </td>
                           <td><Button class="btn btn-warning  "><%= offer.status %></Button></td>
-                          <td><a href="/admin/offerEdit/<%= offer._id %>" class="btn btn-dark ">Edit</a></td>
+                          <td><a href="/admin/offer/edit/<%= offer._id %>" class="btn btn-dark ">Edit</a></td>
                           <td><a href=""  class="btn btn-danger  delete-offer" onclick="deleteOffer('<%= offer._id %>','<%= index %>')" data-offer-id="<%= offer._id %>">Delete</a></td>
                         </tr>
                         <% }) %>
@@ -236,7 +236,7 @@
   <script>
 
     function deleteOffer(offerId,i){
-        fetch(`/admin/deleteOffer/${offerId}`,{
+        fetch(`/admin/offer/delete/${offerId}`,{
             method:'DELETE'
         })
            .then(response=>{

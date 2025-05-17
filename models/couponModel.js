@@ -19,10 +19,19 @@ const couponSchema = new mongoose.Schema({
     discountAmount: {
         type: Number
     },
+    criteriaAmount:{
+        type:Number
+    },
     active: {
         type: Boolean,
         default: true
-    }
+    },
+    usedUser: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
+
+
 
 })
 

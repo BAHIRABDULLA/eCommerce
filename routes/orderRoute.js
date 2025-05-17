@@ -5,11 +5,11 @@ const order_route = express()
 order_route.use(express.json())
 order_route.use(express.urlencoded({ extended: true }))
 
-order_route.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-}))
+// order_route.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }))
 
 order_route.set('view engine', 'ejs')
 order_route.set('views', './views/users')

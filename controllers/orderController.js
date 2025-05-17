@@ -14,7 +14,7 @@ const userOrderCancel = async (req, res) => {
                 const productId = product.productId
                 const quantity = product.quantity
 
-                const updateProductQuantity = await Product.findByIdAndUpdate(productId, { $inc: { quantity: quantity } })
+                await Product.findByIdAndUpdate(productId, { $inc: { quantity: quantity } })
             }
         }
         const updatedOrder = await Order.findByIdAndUpdate(

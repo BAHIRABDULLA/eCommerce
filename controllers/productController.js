@@ -138,10 +138,10 @@ const updateProductStatus = async (req, res) => {
 const loadOrderAdmin = async (req, res) => {
     try {
         const orders = await Order.find({}).populate('userId').populate('orderUserDetails');
-        res.render('orders', { orders: orders });
+       return res.render('orders', { orders: orders });
     } catch (error) {
         console.log(error.message);
-        res.render('orders', { orders: [] });
+        return res.render('orders', { orders: [] });
     }
 }
 

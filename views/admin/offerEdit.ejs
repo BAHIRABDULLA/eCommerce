@@ -141,7 +141,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Offer Add</h4>
-                  <form action="/admin/offerEditPost/<%= offer._id %>" method="post"  class="form-sample">
+                  <form action="/admin/offer/editPost/<%= offer._id %>" method="post"  class="form-sample">
                     
                     <div class="row">
                       <div class="col-md-6">
@@ -257,7 +257,7 @@
 let selectedItems=[]
 
 async function fetchProductItems() {
-    const response = await fetch('/admin/productOffer');
+    const response = await fetch('/admin/offer/product');
     const data = await response.json();
     console.log(data,'fetchProductItems');
     return data;
@@ -265,7 +265,7 @@ async function fetchProductItems() {
 
 
 async function fetchCategoryItems() {
-    const response = await fetch('/admin/categoriesOffer');
+    const response = await fetch('/admin/offer/categories');
     const data = await response.json();
     console.log(data,'fetchCategoryItems');
     return data;
@@ -389,7 +389,7 @@ function submitForm() {
                 selectedItems: selectedItems
             };
 
-            fetch('/admin/offerEditPost/<%= offer._id %>', {
+            fetch('/admin/offer/editPost/<%= offer._id %>', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

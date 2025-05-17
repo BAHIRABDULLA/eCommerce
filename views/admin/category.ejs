@@ -360,7 +360,7 @@
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = `/admin/deleteCategory/${categoryId}`
+          window.location.href = `/admin/category/deleteCategory/${categoryId}`
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",

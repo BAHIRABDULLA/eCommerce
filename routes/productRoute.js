@@ -3,8 +3,17 @@ const product_route = express()
 const path = require('path')
 const flash = require('connect-flash')
 const fs = require('fs')
+const session = require('express-session')
+
 
 product_route.use(flash())
+
+// product_route.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }))
+
 product_route.set('view engine', 'ejs')
 product_route.set('views', './views/admin')
 const productController = require('../controllers/productController')
@@ -27,11 +36,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 product_route.get('/products', adminAuth.isLogin, productController.productLoad)
-product_route.get('/productAdd', adminAuth.isLogin, productController.addProductLoad)
-product_route.post('/productAdd', upload.array('image'), productController.insertProduct)
-product_route.get('/productEdit/:productId', adminAuth.isLogin, productController.EditProductLoad)
-product_route.post('/productEdit/:productId', upload.array('img[]'), productController.editProduct)
-product_route.get('/deleteProduct/:id', productController.deleteProduct)
+product_route.get('/product/add', adminAuth.isLogin, productController.addProductLoad)
+product_route.post('/product/add', upload.array('image'), productController.insertProduct)
+product_route.get('/product/edit/:productId', adminAuth.isLogin, productController.EditProductLoad)
+product_route.post('/product/edit/:productId', upload.array('img[]'), productController.editProduct)
+product_route.get('/product/delete/:id', productController.deleteProduct)
 product_route.post('/product/:id/updateStatus', productController.updateProductStatus)
 
 

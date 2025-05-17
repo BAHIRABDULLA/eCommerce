@@ -44,7 +44,7 @@
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown d-lg-flex d-none">
                 <!-- <button type="button" class="btn btn-info font-weight-bold">+ Create New</button> -->
-                <a href="/admin/couponAdd" class="btn btn-info font-weight-bold">+ Create New</a>
+                <a href="/admin/coupon/add" class="btn btn-info font-weight-bold">+ Create New</a>
             </li>
           <li class="nav-item dropdown d-flex">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
@@ -229,6 +229,9 @@
                           <th>
                             Discount Amount
                           </th>
+                             <th>
+                            Criteria Amount
+                          </th>
                           <th>
                             Active
                           </th>
@@ -254,8 +257,11 @@
                           <td>
                             ₹ <%= coupon.discountAmount %>
                           </td>
+                           <td>
+                            ₹ <%= coupon.criteriaAmount %>
+                          </td>
                           <td><Button class="btn btn-warning  "><%= coupon.active %></Button></td>
-                          <td><a href="/admin/couponEdit/<%= coupon._id %>" class="btn btn-dark">Edit</a></td>
+                          <td><a href="/admin/coupon/edit/<%= coupon._id %>" class="btn btn-dark">Edit</a></td>
 
                           <td><a href="" class="btn btn-danger "  onclick="deleteCoupon('<%= coupon._id %>','<%= index %>')">Delete</a></td>
                         </tr>
@@ -277,7 +283,7 @@
 
   <script>
     function deleteCoupon(couponId,i){
-      fetch(`/admin/deleteCoupon/${couponId}`,{
+      fetch(`/admin/coupon/delete/${couponId}`,{
         method:'DELETE'
       })
       .then((response)=>{

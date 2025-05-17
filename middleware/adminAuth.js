@@ -1,19 +1,23 @@
-const isLogin =async(req,res,next)=>{
+const isLogin = async (req, res, next) => {
     try {
-        if(req.session.dd){}
-            else{
+        console.log(req.session.dd, 'req.session.dd', req.url, 'req.url')
+        if (req.session.dd) {
+            next()
+        }
+        else {
+            console.log('is login pure function ', req.session.dd)
             res.redirect('/admin')
         }
-        next()
     } catch (error) {
         console.log(error.message);
     }
 }
-const isLogout=async(req,res,next)=>{
+const isLogout = async (req, res, next) => {
     try {
-        if(req.session.dd){
-          res.redirect('/admin/dashboard')
-        }else{
+        if (req.session.dd) {
+            console.log('req.session.dd', req.session.dd)
+            res.redirect('/admin/dashboard')
+        } else {
 
             next()
         }
@@ -21,7 +25,7 @@ const isLogout=async(req,res,next)=>{
         console.log(error.message);
     }
 }
-module.exports={
+module.exports = {
     isLogin,
     isLogout
 }
